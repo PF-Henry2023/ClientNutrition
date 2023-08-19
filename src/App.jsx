@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'
+import NavBar from './Components/NavBar/NavBar';
 
 
 function App() {
@@ -9,6 +10,7 @@ function App() {
 
   return (
     <div className='App'>
+      <NavBar/>
       <Routes>
         <Route path='/login'></Route>
         <Route path='/home'></Route>
