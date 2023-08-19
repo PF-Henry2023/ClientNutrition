@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './zucca-theme.css'
 import './App.css'
-
 
 function App() {
   const [count, setCount] = useState(0)
