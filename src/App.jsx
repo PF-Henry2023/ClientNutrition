@@ -1,11 +1,11 @@
 import { useState } from 'react'
 import { Route, Routes, useLocation } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './zucca-theme.css'
 import './App.css'
 import Create from './Components/Create/Create';
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <div className='App'>
@@ -19,4 +19,4 @@ function App() {
   )
 }
 
-export default App
+export default App;
