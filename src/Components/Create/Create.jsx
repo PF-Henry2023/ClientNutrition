@@ -6,13 +6,14 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Validate from "./Validate";
+import axios from "axios"
 
 export default function Create() {
   const [userInformation, setInfo] = useState({
     name: "",
     lastName: "",
     email: "",
-    birthDate: "",
+    birthDate: new Date(),
     password: "",
     phone: "",
     image: "",
@@ -45,7 +46,7 @@ export default function Create() {
       !errors.lastName &&
       !errors.email &&
       !errors.birthDate &&
-      !errors.password &&
+      
       !errors.phone &&
       !errors.address &&
       !errors.gender &&
@@ -55,6 +56,18 @@ export default function Create() {
       console.log(userInformation);
     }
   };
+  const createAccount = async (event) => {
+    event.preventDefault();  
+    try {
+      const response = await axios.post('http://localhost:3001/users/signup', userInformation);
+      const data = response.data;
+      console.log(data);
+      alert('User successfully created');
+      console.log(data); // Aquí debería mostrar el token
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
   return (
     <Container className={style.container}>
@@ -194,7 +207,7 @@ export default function Create() {
               </Form.Control.Feedback>
             </Form.Group>
 
-            <Button className="my-2" variant="primary" type="submit">
+            <Button className="my-2" variant="primary" type="submit" onClick={createAccount}>
               Enviar
             </Button>
           </Form>
