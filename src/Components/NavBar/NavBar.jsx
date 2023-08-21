@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from '../../assets/logo.png';
 import { Button, Image } from 'react-bootstrap';
 import styles from './NavBar.module.css'
+import {Link} from 'react-router-dom'
 
 function NavBar() {
   return (
@@ -19,7 +20,13 @@ function NavBar() {
             <Nav.Link href="#link">Testimonios</Nav.Link>
           </Nav>
         </Navbar.Collapse>
-        <Button variant="primary">Iniciar sesión</Button>
+        <Link to="/login">
+          <Button variant="primary">Iniciar sesión</Button>
+        </Link>
+        <Link to="/signup">
+          <Button variant="primary">Registrarse</Button>
+        </Link>
+        
       </Container>
     </Navbar>
   );

@@ -5,70 +5,60 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Validate from "./Validate";
+
+import axios from "axios";
 
 export default function Login() {
-    const [user, setUser] = useState("");
-    const [password, setPassword] = useState("");
-    const [errors, setErrors] = useState({});
+    const [user, setUser] = useState({
+      email:"",
+      password:""
+    });
+  
+  /*   const handleChange = (event) => {
+      const {name, value} = event.target
+      setUser({
+          ...user,
+          [name]: value
+      })
+  } */
+  const changeHandler = (field, value) => {
+    setUser({
+      ...user,
+      [field]: value,
+    });}
+    
 
-    const submitHandler = (event) => {
-        event.preventDefault();
-    
-        const validationErrors = {};
-        // Validar el campo de usuario
-        if (!user) {
-          validationErrors.user = true;
-          validationErrors.user1 = true;
-        }
-        
-        // Validar la contraseña
-        if (!Validate.password(password)) {
-          validationErrors.password = true;
-        }
-    
-        // Si hay errores de validación, establecer el estado de errores
-        if (Object.keys(validationErrors).length > 0) {
-          setErrors(validationErrors);
-          return;
-        }
-    
-        // Aquí puedes realizar la lógica de autenticación, como enviar los datos al servidor
-        // y verificar si las credenciales son válidas. 
-        // Por ahora, simplemente imprimiré los datos en la consola.
-    
-        console.log("Usuario:", user);
-        console.log("Contraseña:", password);
-      };
-    
-      const changeHandler = (field, value) => {
-        // Actualizar el estado correspondiente al campo que está cambiando
-        if (field === "user") {
-          setUser(value);
-        } else if (field === "password") {
-          setPassword(value);
-        }
-      };
+    const userLogin = async (event) => {
+        event.preventDefault();  
+        try {
+          const response = await axios.post('http://localhost:3001/users/login', user);
+          const data = response.data;
+          console.log(data);
+          alert('User successfully created');
+          console.log(data); // Aquí debería mostrar el token
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
 
   return (
     <Container className={style.container}>
       <Row className="justify-content-md-center">
         <Col xs={12} md={12}>
           <h2 className="mb-4">Ingresa usuario y contraseña</h2>
-          <Form onSubmit={submitHandler}>
+          <Form >
             <Form.Group className="mb-3" controlId="user">
               <Form.Label>Usuario</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingresa tu usuario"
                 onChange={(event) => {
-                  changeHandler("user", event.target.value);
+                  changeHandler("email", event.target.value);
                 }}
-                isInvalid={errors.user || errors.user1}
+               
               />
               <Form.Control.Feedback type="invalid">
-                {errors.user && "Ingresa un usuario"}
-                {errors.user1 && "El usuario no puede ser vacio"}
+               
               </Form.Control.Feedback>
               {/* <Form.Text className="text-muted">
             We'll never share your email with anyone else.
@@ -84,7 +74,7 @@ export default function Login() {
                 onChange={(event) => {
                   changeHandler("password", event.target.value);
                 }}
-                isInvalid={errors.password}
+                
               />
               <Form.Control.Feedback type="invalid">
                 Contraseña debe contener 6 caracteres o mas, una mayuscula y un
@@ -97,7 +87,7 @@ export default function Login() {
                 </Button>
             </div>            
             <div className="d-flex justify-content-end">
-                <Button className="my-2" variant="primary" type="submit">
+                <Button className="my-2" variant="primary" type="submit" onClick={userLogin}>
                     INGRESA CON GOOGLE
                 </Button>
             </div>
