@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Validate from "./Validate";
-import axios from "axios"
+import axios from "axios";
 
 export default function Create() {
   const [userInformation, setInfo] = useState({
