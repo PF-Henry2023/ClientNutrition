@@ -9,6 +9,7 @@ import Calendar from "./Components/Calendar/Calendar";
 import Create from './Components/Create/Create';
 import Login from './Components/Login/Login';
 import UserProfile from './Components/UserProfile/UserProfile';
+import NavBar from './Components/NavBar/NavBar';
 
 const URL = "http://localhost:5173/"
 axios.defaults.baseURL = URL;
@@ -16,6 +17,7 @@ axios.defaults.baseURL = URL;
 function App() {
   return (
     <div className="App">
+      <NavBar/>
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/login' element={<Login />}></Route>        
