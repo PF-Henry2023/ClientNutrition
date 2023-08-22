@@ -26,7 +26,7 @@ const {pathname} = useLocation()
         {pathname === '/' && <Link to="/login">
           <Button variant="primary">Iniciar sesión</Button>
         </Link>}
-        {pathname === '/' && <Link to="/signup">
+        {pathname === '/' && <Link to="/signup" style={{ marginLeft: "10px" }}>
           <Button variant="primary">Registrarse</Button>
         </Link>}
         
