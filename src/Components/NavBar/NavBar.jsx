@@ -4,9 +4,12 @@ import Navbar from 'react-bootstrap/Navbar';
 import logo from '../../assets/logo.png';
 import { Button, Image } from 'react-bootstrap';
 import styles from './NavBar.module.css'
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router-dom';
 
 function NavBar() {
+const {pathname} = useLocation()
+
   return (
     <Navbar fixed="top" className="bg-body-tertiary">
       <Container>
@@ -20,12 +23,12 @@ function NavBar() {
             <Nav.Link href="#link">Testimonios</Nav.Link>
           </Nav>
         </Navbar.Collapse>
-        <Link to="/login">
+        {pathname === '/' && <Link to="/login">
           <Button variant="primary">Iniciar sesión</Button>
-        </Link>
-        <Link to="/signup">
+        </Link>}
+        {pathname === '/' && <Link to="/signup">
           <Button variant="primary">Registrarse</Button>
-        </Link>
+        </Link>}
         
       </Container>
     </Navbar>

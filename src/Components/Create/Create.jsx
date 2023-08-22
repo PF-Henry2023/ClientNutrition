@@ -13,7 +13,7 @@ export default function Create() {
     name: "",
     lastName: "",
     email: "",
-    birthDate: new Date(),
+    birthDate: "",
     password: "",
     phone: "",
     image: "",
@@ -46,30 +46,31 @@ export default function Create() {
       !errors.lastName &&
       !errors.email &&
       !errors.birthDate &&
-      
+      !errors.password &&
       !errors.phone &&
       !errors.address &&
       !errors.gender &&
       !errors.errors
     ) {
-      // await axios.post('/', userInformation)
-      console.log(userInformation);
+      try {
+          console.log(userInformation);
+          const response = await axios.post('http://localhost:3001/users/signup', userInformation);
+          const data = response.data;
+          console.log(data);
+          alert('User successfully created');
+          console.log(data); // Aquí debería mostrar el token
+      } catch (error) {
+        console.log(error.message);
+      }
+      }
+      
+      
+      
     }
-  };
-  const createAccount = async (event) => {
-    event.preventDefault();  
-    try {
-      const response = await axios.post('http://localhost:3001/users/signup', userInformation);
-      const data = response.data;
-      console.log(data);
-      alert('User successfully created');
-      console.log(data); // Aquí debería mostrar el token
-  } catch (error) {
-    console.log(error.message);
-  }
-}
+  
+  
 
-  return (
+  return console.log(userInformation.birthDate),(
     <Container className={style.container}>
       <Row className="justify-content-md-center">
         <Col xs={12} md={12}>
@@ -84,6 +85,7 @@ export default function Create() {
                   changeHandler("name", event.target.value);
                 }}
                 isInvalid={errors.name || errors.name1}
+                isValid={!errors.name && !errors.name1 && userInformation.name !== "" && true }
               />
               <Form.Control.Feedback type="invalid">
                 {errors.name && "Ingresa un nombre."}
@@ -92,7 +94,7 @@ export default function Create() {
               {/* <Form.Text className="text-muted">
             We'll never share your email with anyone else.
           </Form.Text> */}
-              <div className="valid-feedback">Looks good!</div>
+              <div className="valid-feedback">Se ve perfecto!</div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="lastName">
@@ -104,11 +106,13 @@ export default function Create() {
                   changeHandler("lastName", event.target.value);
                 }}
                 isInvalid={errors.lastName || errors.lastName1}
+                isValid={!errors.lastName && !errors.lastName1 && userInformation.lastName !== "" && true}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.lastName && "Ingresa tus apellidos."}
                 {errors.lastName1 && "Los apellidos no pueden incluir numeros."}
               </Form.Control.Feedback>
+              <div className="valid-feedback">Se ve perfecto!</div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="email">
@@ -120,10 +124,12 @@ export default function Create() {
                   changeHandler("email", event.target.value);
                 }}
                 isInvalid={errors.email}
+                isValid={!errors.email && userInformation.email !== "" &&  true}
               />
               <Form.Control.Feedback type="invalid">
                 Verifica la información del email.
               </Form.Control.Feedback>
+              <div className="valid-feedback">Correo correcto!</div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="password">
@@ -135,11 +141,13 @@ export default function Create() {
                   changeHandler("password", event.target.value);
                 }}
                 isInvalid={errors.password}
+                isValid={!errors.password && userInformation.password !== "" && true}
               />
               <Form.Control.Feedback type="invalid">
                 Contraseña debe contener 6 caracteres o mas, una mayuscula y un
                 caracter especial.
               </Form.Control.Feedback>
+              <div className="valid-feedback">Formato correcto!</div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="dob">
@@ -150,11 +158,13 @@ export default function Create() {
                   changeHandler("birthDate", event.target.value);
                 }}
                 isInvalid={errors.birthDate}
-              />
+                isValid={!errors.birthDate && userInformation.birthDate !== "" && true}
+              /> 
 
               <Form.Control.Feedback type="invalid">
                 Selecciona una fecha.
               </Form.Control.Feedback>
+              <div className="valid-feedback">Se ve perfecto!</div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="phone">
@@ -166,11 +176,13 @@ export default function Create() {
                   changeHandler("phone", event.target.value);
                 }}
                 isInvalid={errors.phone || errors.phone1}
+                isValid={!errors.phone && !errors.phone1 && userInformation.phone !== "" && true}
               />
               <Form.Control.Feedback type="invalid">
                 {errors.phone && "Ingresa 10 digitos."}
                 {errors.phone1 && "El campo telefono no puede estar vacio."}
               </Form.Control.Feedback>
+              <div className="valid-feedback">Se ve perfecto!</div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="address">
@@ -182,10 +194,12 @@ export default function Create() {
                   changeHandler("address", event.target.value);
                 }}
                 isInvalid={errors.address}
+                isValid={!errors.address && userInformation.address !== "" && true}
               />
               <Form.Control.Feedback type="invalid">
                 Ingresa un domicilio.
               </Form.Control.Feedback>
+              <div className="valid-feedback">Se ve perfecto!</div>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="gender">
@@ -196,8 +210,9 @@ export default function Create() {
                   changeHandler("gender", event.target.value);
                 }}
                 isInvalid={errors.gender}
+                isValid={!errors.gender && userInformation.gender !== "" && true}
               >
-                <option>Selecciona tu genero:</option>
+                <option value={""} >Selecciona tu genero:</option>
                 <option value="Masculino">Masculino</option>
                 <option value="Femenino">Femenino</option>
               </Form.Select>
@@ -205,9 +220,10 @@ export default function Create() {
               <Form.Control.Feedback type="invalid">
                 Selecciona uno.
               </Form.Control.Feedback>
+              <div className="valid-feedback">Se ve perfecto!</div>
             </Form.Group>
 
-            <Button className="my-2" variant="primary" type="submit" onClick={createAccount}>
+            <Button className="my-2" variant="primary" type="submit">
               Enviar
             </Button>
           </Form>
