@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState } from 'react';
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
+import jwtDecode from 'jwt-decode';
 import axios from "axios";
 
 export default function Login() {
@@ -13,36 +13,58 @@ export default function Login() {
       email:"",
       password:""
     });
-  
-  /*   const handleChange = (event) => {
-      const {name, value} = event.target
-      setUser({
-          ...user,
-          [name]: value
-      })
-  } */
+    const [authenticated, setAuthenticated] = useState(false);
+    const [decodedToken, setDecodedToken] = useState(null); // State para almacenar el token decodificado
+ 
+
+
   const changeHandler = (field, value) => {
     setUser({
       ...user,
       [field]: value,
-    });}
-    
+    });
+  }   
+ 
 
-    const userLogin = async (event) => {
-        event.preventDefault();  
-        try {
-          const response = await axios.post('http://localhost:3001/users/login', user);
-          const data = response.data;
-          console.log(data);
-          alert('User successfully created');
-          console.log(data); // Aquí debería mostrar el token
-      } catch (error) {
+  const userLogin = async (event) => {
+    event.preventDefault();
+    try {
+        const response = await axios.post('http://localhost:3001/users/login', user);
+        const data = response.data;
+
+        // Verificar el token aquí
+        const token = data.token;
+        const decoded = jwtDecode(token); // Decodificar el token
+        setDecodedToken(decoded); // Guardar el token decodificado en el estado
+
+        setAuthenticated(true);
+
+        alert('Inicio de sesión exitoso');
+        console.log(data); // Aquí debería mostrar el token
+    } catch (error) {
         console.log(error.message);
-      }
+        alert('Error al iniciar sesión. Por favor, verifica tus credenciales.');
+        setDecodedToken(null); // Limpiar el token decodificado en caso de inicio de sesión fallido
     }
+};  
+
+   
+  
 
   return (
     <Container className={style.container}>
+
+{authenticated && decodedToken ? (
+                <div>
+                    <h3>Token Decodificado:</h3>
+                    <p>ID: {decodedToken.id}</p>
+                    <p>Nombre: {decodedToken.name}</p>
+                    <p>Apellido: {decodedToken.lastName}</p>
+                    <p>Fecha de Nacimiento: {decodedToken.birthDate}</p>
+                    {/* Mostrar otras propiedades del token según sea necesario */}
+                </div>
+            ) : null}
+
       <Row className="justify-content-md-center">
         <Col xs={12} md={12}>
           <h2 className="mb-4">Ingresa usuario y contraseña</h2>
@@ -81,13 +103,16 @@ export default function Login() {
                 caracter especial.
               </Form.Control.Feedback>
             </Form.Group> 
-            <div className="d-flex justify-content-end">    
-                <Button className="my-2" variant="primary" type="submit">
+            <div className="d-flex justify-content-end">  
+
+             
+                <Button className="my-2" variant="primary" type="submit" onClick={userLogin}>
                     INGRESAR
                 </Button>
+               
             </div>            
             <div className="d-flex justify-content-end">
-                <Button className="my-2" variant="primary" type="submit" onClick={userLogin}>
+                <Button className="my-2" variant="primary" type="submit" >
                     INGRESA CON GOOGLE
                 </Button>
             </div>
@@ -97,3 +122,5 @@ export default function Login() {
     </Container>
   );
 }
+
+/* const decoded = jwt.verify(token, secretKey, { algorithms: ['RS256'] }) */
