@@ -51,7 +51,7 @@ export const addUser = (dataAct) => {
 
 export function getUsers() {
   return async function (dispatch) {
-    var json = await axios.get("http://localhost:3001/user/");
+    var json = await axios.get("http://localhost:3001/users/allUsers");
 
     dispatch({
       type: "GET_USERS",

@@ -10,6 +10,7 @@ import Create from "./Components/Create/Create";
 import Login from "./Components/Login/Login";
 import UserProfile from "./Components/UserProfile/UserProfile";
 import NavBar from "./Components/NavBar/NavBar";
+import NutritionistProfile from "./Components/NutritionistProfile/NutritionistProfile";
 
 const URL = "http://localhost:5173/";
 axios.defaults.baseURL = URL;
@@ -24,6 +25,10 @@ function App() {
         <Route path="/appointment" element={<Calendar />}></Route>
         <Route path="/signup" element={<Create />}></Route>
         <Route path="/userprofile" element={<UserProfile />}></Route>
+        <Route
+          path="/nutritionistprofile"
+          element={<NutritionistProfile />}
+        ></Route>
       </Routes>
     </div>
   );
