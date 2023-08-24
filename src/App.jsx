@@ -10,6 +10,7 @@ import Create from './Components/Create/Create';
 import Login from './Components/Login/Login';
 import UserProfile from './Components/UserProfile/UserProfile';
 import NavBar from './Components/NavBar/NavBar';
+import AdminView from "./Components/AdminView/AdminView";
 
 const URL = "http://localhost:5173/"
 axios.defaults.baseURL = URL;
@@ -22,7 +23,7 @@ function App() {
         <Route path='/' element={<Home />}></Route>
         <Route path='/login' element={<Login />}></Route>        
         <Route path='/appointment'></Route>
-        <Route path='/signup' element={<Create/>} ></Route>
+        <Route path='/signup' element={<AdminView/>} ></Route>
         <Route path='/userprofile' element={<UserProfile/>} ></Route>
       </Routes>
     </div>
