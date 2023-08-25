@@ -11,6 +11,8 @@ import Login from './Components/Login/Login';
 import UserProfile from './Components/UserProfile/UserProfile';
 import NavBar from './Components/NavBar/NavBar';
 import AdminView from "./Components/AdminView/AdminView";
+import NutriDetail from "./Components/AdminView/NutriDetail/NutriDetail";
+import UsersDetail from "./Components/AdminView/UsersDetail/UsersDetail";
 
 const URL = "http://localhost:5173/"
 axios.defaults.baseURL = URL;
@@ -24,7 +26,9 @@ function App() {
         <Route path='/login' element={<Login />}></Route>        
         <Route path='/appointment'></Route>
         <Route path='/signup' element={<AdminView/>} ></Route>
-        <Route path='/userprofile' element={<UserProfile/>} ></Route>
+        <Route path='/userprofile' element={<UserProfile />} ></Route>
+        <Route path='/userprofile/detail/:id' element={<NutriDetail/>} ></Route>
+        <Route path='/userprofile/detail/users/:id' element={<UsersDetail/>} ></Route>
       </Routes>
     </div>
   );

@@ -3,31 +3,33 @@ import style from "./AdminInformation.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { Validate } from "./Validate";
 import axios from "axios";
 
 export default function Create() {
   const [userInformation, setInfo] = useState({
-    name: "",
-    lastName: "",
-    email: "",
-    birthDate: "",
+    name: "Mario",
+    lastName: "Reyes",
+    email: "7588818@gmail.com",
     password: "",
-    phone: "",
-    image: "",
-    address: "",
-    gender: "",
+    passwordConfirmed: ""
   });
+
+  let [db, setDB] = useState({
+    name: "Mario",
+    lastName: "Reyes",
+    email: "7588818@gmail.com",
+    password: "Tumama6814@",
+    passwordConfirmed: ""
+  })
 
   const [errors, setErrors] = useState({
     errors: "zero",
   });
 
-  let user = 0;
 
   const changeHandler = (field, value) => {
+    
     setInfo({
       ...userInformation,
       [field]: value,
@@ -47,45 +49,45 @@ export default function Create() {
       !errors.name1 &&
       !errors.lastName1 &&
       !errors.email1 &&
-      !errors.birthDate1 &&
       !errors.password1 &&
-      !errors.phone1 &&
       !errors.errors
     ) {
       if (
-        userInformation.name.length > 0 &&
+        userInformation.name.length > 0 && 
         userInformation.lastName.length > 0 &&
-        userInformation.email.length > 0 &&
-        userInformation.birthDate.length > 0 &&
-        userInformation.password.length > 0 &&
-        userInformation.phone.length > 0 &&
-        userInformation.address.length > 0 &&
-        userInformation.gender.length > 0
+        userInformation.email.length > 0
       ) {
-        try {
-          console.log(userInformation);
-          const response = await axios.post(
-            "http://localhost:3001/users/signup",
-            userInformation
-          );
-          const data = response.data;
-          console.log(data);
-          alert("User successfully created");
-          console.log(data); // Aquí debería mostrar el token
-        } catch (error) {
-          console.log(error.message);
+
+        if (db.lastName !== userInformation.lastName || 
+          db.name !== userInformation.name || 
+          db.email !== userInformation.email ||
+          userInformation.passwordConfirmed === userInformation.password && userInformation.password.length > 0 && userInformation.password !== db.password) {
+          setDB({ ...userInformation })
+          setInfo({...userInformation, password: "", passwordConfirmed: ""})
+          alert("La información fue actualizada de manera exitosa!")
+        } else {
+          alert("Verifica que los campos 'Nombre', 'Apellido' o 'Correo' no sean iguales al anterior.")
         }
+        
+        
+
       } else {
         alert("Por favor, completa todos los campos.");
+        
       }
     } else {
-      alert("Por favor, completa todos los campos.");
+      alert("Modifica un campo o completa la contraseña.");
+
     }
   };
 
   return (
     <Container className={style.container}>
       <h2 className="mb-4">Modifica tu información de perfil:</h2>
+
+      <label>Actualiza tu foto de perfil:</label>
+      <input type="file" name="avatar" accept="image/png, image/jpeg" />
+
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Nombre(s):</Form.Label>
@@ -97,6 +99,7 @@ export default function Create() {
             }}
             isInvalid={errors.name1 && userInformation.name.length > 0}
             isValid={!errors.name1 && userInformation.name.length > 0 && true}
+            value={userInformation.name}
           />
           <Form.Control.Feedback type="invalid">
             {errors.name1 && "El nombre no puede incluir numeros."}
@@ -119,6 +122,7 @@ export default function Create() {
             isValid={
               !errors.lastName1 && userInformation.lastName.length > 0 && true
             }
+            value={userInformation.lastName}
           />
           <Form.Control.Feedback type="invalid">
             {errors.lastName && "Ingresa tus apellidos."}
@@ -136,6 +140,7 @@ export default function Create() {
             }}
             isInvalid={errors.email1 && userInformation.email.length > 0}
             isValid={!errors.email1 && userInformation.email.length > 0 && true}
+            value={userInformation.email}
           />
           <Form.Control.Feedback type="invalid">
             Verifica la información del email.
@@ -163,22 +168,22 @@ export default function Create() {
           <div className="valid-feedback">Formato correcto.</div>
         </Form.Group>
 
-        <Form.Group className="mb-3" controlId="password">
+        <Form.Group className="mb-3" controlId="passwordConfirmed">
           <Form.Label>Confirma tu nueva contraseña:</Form.Label>
           <Form.Control
             type="password"
             placeholder="Ingresa tu contraseña..."
             onChange={(event) => {
-              changeHandler("password", event.target.value);
+              changeHandler("passwordConfirmed", event.target.value);
             }}
-            isInvalid={errors.password1 && userInformation.password.length > 0}
+            isInvalid={errors.password1Confirmed && userInformation.passwordConfirmed.length > 0 || errors.passwordEqual && userInformation.passwordConfirmed.length > 0}
             isValid={
-              !errors.password1 && userInformation.password.length > 0 && true
+              !errors.passwordEqual && userInformation.passwordConfirmed.length > 0 && true
             }
           />
           <Form.Control.Feedback type="invalid">
-            Contraseña debe contener 6 caracteres o mas, una mayuscula y un
-            caracter especial.
+            {errors.password1Confirmed && 'Contraseña debe contener 6 caracteres o mas, una mayuscula y un caracter especial.'}
+            {errors.passwordEqual && 'Las contraseñas deben de ser iguales'}
           </Form.Control.Feedback>
           <div className="valid-feedback">Formato correcto.</div>
         </Form.Group>

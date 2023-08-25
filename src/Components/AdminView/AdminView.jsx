@@ -5,7 +5,9 @@ import Tabs from "react-bootstrap/Tabs";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import AdminInformation from "../AdminInformation/AdminInformation";
+import AdminInformation from "./AdminInformation/AdminInformation";
+import UserTable from './UserTable/UserTable'
+import NutriTable from "./NutriTable/NutriTable";
 import Button from "react-bootstrap/Button";
 
 export default function AdminView() {
@@ -27,13 +29,14 @@ export default function AdminView() {
 
             <Tab eventKey="home" title="Nutricionistas">
               <Container className="nutriMain">
-                <Button className="my-2" variant="primary" type="submit">
+                <Button className="my-2" variant="primary" type="button">
                   Crear nuevo Nutricionista
                 </Button>
 
                 <Container className="nutriListMain">
                   Mis Nutricionistas
-                  <Container className="nutricionistasList">quepasa!</Container>
+                  <NutriTable />
+                  <Button className="my-2" >Borrar Nutricionista</Button>
                 </Container>
               </Container>
             </Tab>
@@ -43,7 +46,7 @@ export default function AdminView() {
 
                 <Container className="nutriListMain">
                   Mis Usuarios
-                  <Container className="nutricionistasList"></Container>
+                  <UserTable/>
                 </Container>
               </Container>
             </Tab>
