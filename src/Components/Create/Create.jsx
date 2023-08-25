@@ -87,7 +87,7 @@ export default function Create() {
     <Container className={style.container}>
       <Row className="justify-content-md-center">
         <Col xs={12} md={12}>
-          <h2 className="mb-4">Completa tu perfil:</h2>
+          <h2 className="mb-4">Completa tu perfil</h2>
           <Form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Nombre(s):</Form.Label>

@@ -17,18 +17,15 @@ axios.defaults.baseURL = URL;
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <NavBar />
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/appointment" element={<Calendar />}></Route>
+        <Route path="/appointments" element={<UserProfile />}></Route>
         <Route path="/signup" element={<Create />}></Route>
-        <Route path="/userprofile" element={<UserProfile />}></Route>
-        <Route
-          path="/nutritionistprofile"
-          element={<NutritionistProfile />}
-        ></Route>
+        <Route path="/appointments/new" element={<Calendar />}></Route>
+        <Route path="/nutritionistprofile" element={<NutritionistProfile />}></Route>
       </Routes>
     </div>
   );
