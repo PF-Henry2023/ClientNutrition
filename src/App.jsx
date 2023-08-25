@@ -11,6 +11,7 @@ import Login from "./Components/Login/Login";
 import UserProfile from "./Components/UserProfile/UserProfile";
 import NavBar from "./Components/NavBar/NavBar";
 import NutritionistProfile from "./Components/NutritionistProfile/NutritionistProfile";
+import TermsAndConditions from "./Components/TermsAndConditions/TermsAndConditions";
 
 const URL = "http://localhost:5173/";
 axios.defaults.baseURL = URL;
@@ -26,6 +27,7 @@ function App() {
         <Route path="/signup" element={<Create />}></Route>
         <Route path="/appointments/new" element={<Calendar />}></Route>
         <Route path="/nutritionistprofile" element={<NutritionistProfile />}></Route>
+        <Route path="/termsandconditions" element={<TermsAndConditions/>}></Route>
       </Routes>
     </div>
   );
