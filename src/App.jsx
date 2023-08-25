@@ -14,6 +14,7 @@ import NutritionistProfile from "./Components/NutritionistProfile/NutritionistPr
 import AdminView from "./Components/AdminView/AdminView";
 import NutriDetail from "./Components/AdminView/NutriDetail/NutriDetail";
 import UsersDetail from "./Components/AdminView/UsersDetail/UsersDetail";
+import TermsAndConditions from "./Components/TermsAndConditions/TermsAndConditions";
 
 const URL = "http://localhost:5173/";
 axios.defaults.baseURL = URL;
