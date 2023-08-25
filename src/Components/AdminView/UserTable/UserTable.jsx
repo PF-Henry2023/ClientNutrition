@@ -98,7 +98,7 @@ function UserTable() {
   
 
   const openNewWindow = (id) => {
-    window.open(`http://localhost:5173/userprofile/detail/users/${id}`, "_blank", "width=770, height=700");
+    window.open(`http://localhost:5173/adminprofile/detail/users/${id}`, "_blank", "width=770, height=700");
   };
 
   return (
