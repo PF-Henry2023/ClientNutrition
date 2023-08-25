@@ -1,0 +1,25 @@
+.div1 {
+  position: relative;
+  margin-top: -20px;
+  margin-bottom: 10px;
+  right: 265px;
+}
+
+.div2 {
+  display: block;
+  margin-top: 20px;
+}
+
+.btns {
+  height: 40px;
+  width: 130px;
+  padding: 5px;
+  margin: 10px;
+  background-color: #94c47d;
+  border-color: #94c47d;
+}
+
+.btns:hover {
+  background-color: #6aa150;
+  border-color: #6aa150;
+}

@@ -3,6 +3,7 @@ import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import style from "./Calendar.module.css";
+import { getAppointments } from "../../redux/actions/actions";
 
 const localizer = momentLocalizer(moment);
 const events = [
