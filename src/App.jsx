@@ -23,14 +23,15 @@ function App() {
     <div className="app">
       <NavBar />
       <Routes>
-        <Route path="/" element={<Home />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/appointments" element={<UserProfile />}></Route>
-        <Route path="/signup" element={<AdminView />}></Route>
+        <Route path='/' element={<Home />}></Route>
+        <Route path='/login' element={<Login />}></Route>        
+        <Route path='/appointments'></Route>
+        <Route path='/signup' element={<Create/>} ></Route>
+        <Route path='/adminprofile' element={<AdminView/>} ></Route>
+        <Route path='/adminprofile/detail/:id' element={<NutriDetail/>} ></Route>
+        <Route path='/adminprofile/detail/users/:id' element={<UsersDetail />} ></Route>
         <Route path="/appointments/new" element={<Calendar />}></Route>
-        <Route path="/nutritionistprofile" element={<NutritionistProfile  />} ></Route>
-        <Route path='/userprofile/detail/:id' element={<NutriDetail/>} ></Route>
-        <Route path='/userprofile/detail/users/:id' element={<UsersDetail/>}></Route>
+        <Route path="/nutritionistprofile" element={<NutritionistProfile />}></Route>
       </Routes>
     </div>
   );

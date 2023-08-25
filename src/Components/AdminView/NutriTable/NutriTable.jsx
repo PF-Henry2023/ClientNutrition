@@ -77,7 +77,7 @@ function NutriTable() {
   ];
 
   const openNewWindow = (id) => {
-    window.open(`http://localhost:5173/userprofile/detail/${id}`, "_blank", "width=770, height=700");
+    window.open(`http://localhost:5173/adminprofile/detail/${id}`, "_blank", "width=770, height=700");
   };
 
   return (
