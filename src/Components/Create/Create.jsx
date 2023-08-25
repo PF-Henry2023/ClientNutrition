@@ -48,7 +48,7 @@ export default function Create() {
       !errors.lastName1 &&
       !errors.email1 &&
       !errors.birthDate1 &&
-      !errors.password1 &&
+      // !errors.password1 &&
       !errors.phone1 &&
       !errors.errors
     ) {
@@ -84,31 +84,6 @@ export default function Create() {
   };
 
   return (
-    (
-      <Container className={style.container}>
-        <Row className="justify-content-md-center">
-          <Col xs={12} md={12}>
-            <h2 className="mb-4">Completa tu perfil</h2>
-            <Form onSubmit={submitHandler}>
-              <Form.Group className="mb-3" controlId="name">
-                <Form.Label>Nombre(s):</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Ingresa tu nombre..."
-                  onChange={(event) => {
-                    changeHandler("name", event.target.value);
-                  }}
-                  isInvalid={
-                    (errors.name1 && userInformation.name.length > 0)
-                  }
-                  isValid={
-                    !errors.name1 && userInformation.name.length > 0 && true
-                  }
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.name1 && "El nombre no puede incluir numeros."}
-                </Form.Control.Feedback>
-                {/* <Form.Text className="text-muted">
     <Container className={style.container}>
       <Row className="justify-content-md-center">
         <Col xs={12} md={12}>
@@ -287,13 +262,12 @@ export default function Create() {
               </Form.Control.Feedback>
             </Form.Group>
 
-              <Button className="my-2" variant="primary" type="submit">
-                Enviar
-              </Button>
-            </Form>
-          </Col>
-        </Row>
-      </Container>
-    )
+            <Button className="my-2" variant="primary" type="submit">
+              Enviar
+            </Button>
+          </Form>
+        </Col>
+      </Row>
+    </Container>
   );
 }
