@@ -32,6 +32,7 @@ function App() {
         <Route path='/adminprofile/detail/users/:id' element={<UsersDetail />} ></Route>
         <Route path="/appointments/new" element={<Calendar />}></Route>
         <Route path="/nutritionistprofile" element={<NutritionistProfile />}></Route>
+        <Route path="/termsandconditions" element={<TermsAndConditions/>}></Route>
       </Routes>
     </div>
   );
