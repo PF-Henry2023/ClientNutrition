@@ -14,6 +14,7 @@ import NutritionistProfile from "./Components/NutritionistProfile/NutritionistPr
 import AdminView from "./Components/AdminView/AdminView";
 import NutriDetail from "./Components/AdminView/NutriDetail/NutriDetail";
 import UsersDetail from "./Components/AdminView/UsersDetail/UsersDetail";
+import TermsAndConditions from "./Components/TermsAndConditions/TermsAndConditions";
 import {Cloudinary} from "@cloudinary/url-gen";
 
 const URL = "http://localhost:5173/";
@@ -41,6 +42,7 @@ function App() {
         <Route path='/adminprofile/detail/users/:id' element={<UsersDetail />} ></Route>
         <Route path="/appointments/new" element={<Calendar />}></Route>
         <Route path="/nutritionistprofile" element={<NutritionistProfile />}></Route>
+        <Route path="/termsandconditions" element={<TermsAndConditions/>}></Route>
       </Routes>
     </div>
   );
