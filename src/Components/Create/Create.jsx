@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import style from "./Create.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -20,6 +21,8 @@ export default function Create() {
     address: "",
     gender: "",
   });
+
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({
     errors: "zero",
@@ -48,7 +51,7 @@ export default function Create() {
       !errors.lastName1 &&
       !errors.email1 &&
       !errors.birthDate1 &&
-      // !errors.password1 &&
+      !errors.password1 &&
       !errors.phone1 &&
       !errors.errors
     ) {
@@ -68,10 +71,13 @@ export default function Create() {
             "http://localhost:3001/users/signup",
             userInformation
           );
+
           const data = response.data;
           console.log(data);
           alert("User successfully created");
           console.log(data); // Aquí debería mostrar el token
+
+          navigate('/login')
         } catch (error) {
           console.log(error.message);
         }

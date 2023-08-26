@@ -20,9 +20,10 @@ const URL = "http://localhost:5173/";
 axios.defaults.baseURL = URL;
 
 function App() {
+  
   const cld = new Cloudinary({
     cloud: {
-      cloudName: 'demo'
+      cloudName: 'dhmsbud0o'
     }
   });
 
