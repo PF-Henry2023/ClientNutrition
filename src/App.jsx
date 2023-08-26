@@ -35,7 +35,7 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/login' element={<Login />}></Route>        
-        <Route path='/appointments'></Route>
+        <Route path='/appointments' element={<UserProfile/>}></Route>
         <Route path='/signup' element={<Create/>} ></Route>
         <Route path='/adminprofile' element={<AdminView/>} ></Route>
         <Route path='/adminprofile/detail/:id' element={<NutriDetail/>} ></Route>

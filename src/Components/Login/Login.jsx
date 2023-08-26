@@ -62,7 +62,7 @@ export default function Login() {
       console.log(data); // Aquí debería mostrar el token
 
       if (tokenAccess()[0].role === "admin") navigate('/adminprofile')
-      if (tokenAccess()[0].role === "user") navigate('/')
+      if (tokenAccess()[0].role === "user") navigate('/appointments')
     } catch (error) {
       console.log(error.message);
       alert("Error al iniciar sesión. Por favor, verifica tus credenciales.");
