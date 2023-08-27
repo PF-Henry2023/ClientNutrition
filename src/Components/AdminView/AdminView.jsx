@@ -46,7 +46,7 @@ export default function AdminView() {
                 <Container className="nutriListMain">
                   Mis Nutricionistas
                   <NutriTable />
-                  <Button className="my-2" >Borrar Nutricionista</Button>
+                  {/* <Button className="my-2" >Borrar Nutricionista</Button> */}
                 </Container>
               </Container>
             </Tab>

@@ -99,7 +99,7 @@ if(logOut === false) navigate('/')
 }, [])
 
   function drawNavbar() {
-    return tokenAccess()[0].name ? drawLoggedInNavbar() : drawDefaultNavbar()
+    return tokenAccess()[0] ? drawLoggedInNavbar() : drawDefaultNavbar()
   }
 
   function drawDefaultNavbar() {

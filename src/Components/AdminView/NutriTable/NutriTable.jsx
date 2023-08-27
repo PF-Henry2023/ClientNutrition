@@ -90,6 +90,8 @@ function NutriTable() {
           <th key={2}>Apellidos</th>
           <th key={3}>Fecha de contratación</th>
           <th key={4}>Numero de citas</th>
+          <th key={4}>Bloquear</th>
+          <th key={4}>Desbloquear</th>
         </tr>
       </thead>
       <tbody>
@@ -101,6 +103,8 @@ function NutriTable() {
               <td className={style.name} onClick={() => openNewWindow(e.id)} >{e.lastName}</td>
               <td>{e.hireDate}</td>
               <td>{e.numberOfAppointments}</td>
+              <td><button>X</button></td>
+              <td><button>O</button></td>
             </tr>
           );
         })}
