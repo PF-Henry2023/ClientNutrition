@@ -7,6 +7,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { Validate } from "./Validate";
 import axios from "axios";
+import GoogleLogin from "react-google-login";
 
 export default function Create() {
   const [userInformation, setInfo] = useState({
@@ -16,7 +17,7 @@ export default function Create() {
     birthDate: new Date(),
     password: "",
     phone: "",
-    image: "",
+    // image: "",
     address: "",
     gender: "",
   });
@@ -83,11 +84,38 @@ export default function Create() {
     }
   };
 
+  const onSuccessLogin = async (response) => {
+    const { tokenId } = response;
+    const { data } = await axios.post(
+      "http://localhost:3001/users/signup/oauth2.0",
+      { tokenId: tokenId }
+    );
+    setUserId(response.profileObj.email);
+    /* localStorage.setItem('token', JSON.stringify(token))
+        const tokenReducer = token
+        dispatch(setToken(tokenReducer))
+        dispatch(userLoggedIn(true))
+        navigate('/home') */
+    console.log(data);
+  };
+
+  const onFailureLogin = (response) => {
+    console.log(response);
+  };
+
   return (
     <Container className={style.container}>
       <Row className="justify-content-md-center">
         <Col xs={12} md={12}>
           <h2 className="mb-4">Completa tu perfil</h2>
+          <GoogleLogin
+            clientId="659206981480-dpv28b5to1u20p6oncccfrl2pkgmei5b.apps.googleusercontent.com"
+            buttonText="Iniciar sesión con Google"
+            onSuccess={onSuccessLogin}
+            onFailure={onFailureLogin}
+            cookiePolicy={"single_host_origin"}
+            scope="https://www.googleapis.com/auth/calendar"
+          />
           <Form onSubmit={submitHandler}>
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Nombre(s):</Form.Label>
