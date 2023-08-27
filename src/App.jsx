@@ -15,18 +15,27 @@ import AdminView from "./Components/AdminView/AdminView";
 import NutriDetail from "./Components/AdminView/NutriDetail/NutriDetail";
 import UsersDetail from "./Components/AdminView/UsersDetail/UsersDetail";
 import TermsAndConditions from "./Components/TermsAndConditions/TermsAndConditions";
+import {Cloudinary} from "@cloudinary/url-gen";
 
 const URL = "http://localhost:5173/";
 axios.defaults.baseURL = URL;
 
 function App() {
+  
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: 'dhmsbud0o'
+    }
+  });
+
+
   return (
     <div className="app">
       <NavBar />
       <Routes>
         <Route path='/' element={<Home />}></Route>
         <Route path='/login' element={<Login />}></Route>        
-        <Route path='/appointments'></Route>
+        <Route path='/appointments' element={<UserProfile/>}></Route>
         <Route path='/signup' element={<Create/>} ></Route>
         <Route path='/adminprofile' element={<AdminView/>} ></Route>
         <Route path='/adminprofile/detail/:id' element={<NutriDetail/>} ></Route>
