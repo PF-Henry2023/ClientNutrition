@@ -1,13 +1,13 @@
-.div1 {
-  position: relative;
-  margin-top: -20px;
-  margin-bottom: 10px;
-  right: 265px;
+.main {
+  width: 1000px;
+  height: 700px;
+  font-weight: bold;
 }
 
-.div2 {
-  display: block;
-  margin-top: 20px;
+.main .nav-link {
+  color: rgb(0, 0, 0);
+  font-size: large;
+  font-weight: bold;
 }
 
 .btns {
@@ -17,6 +17,7 @@
   margin: 10px;
   background-color: #94c47d;
   border-color: #94c47d;
+  color: white;
 }
 
 .btns:hover {

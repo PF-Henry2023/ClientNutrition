@@ -1,5 +1,7 @@
 import axios from "axios";
 
+export const GET_USERS = "GET_USERS";
+
 export function getNutritionists() {
   return async function (dispatch) {
     var json = await axios.get("http://localhost:3001");
@@ -53,7 +55,7 @@ export function getUsers() {
   return async function (dispatch) {
     var json = await axios.get("http://localhost:3001/users/allUsers");
 
-    dispatch({
+    return dispatch({
       type: "GET_USERS",
       payload: json.data,
     });
