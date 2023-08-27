@@ -1,47 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
-import "react-big-calendar/lib/css/react-big-calendar.css";
-import { getUsers } from "../../redux/actions/actions";
-import style from "./NutritionistProfile.module.css";
+import React from "react";
+import "./NutritionistProfile.module.css";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Tab from "react-bootstrap/Tab";
+import Tabs from "react-bootstrap/Tabs";
+import ClientsTable from "./ClientsTable/ClientsTable";
+import NutriData from "./NutriData/NutriData";
+import FutureDates from "./FutureDates/FutureDates";
 
 const NutritionistProfile = () => {
-  const localizer = momentLocalizer(moment);
-  const events = [
-    {
-      start: moment().toDate(),
-      end: moment().add(0.1, "days").toDate(),
-      title: "An event",
-    },
-  ];
-
-  const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-
-  useEffect(() => {
-    if (users.length < 1) dispatch(getUsers());
-  }, [dispatch, users]);
-
-  console.log(users);
-
   return (
-    <div>
-      <div className={style.div1}>
-        <h4>Mis Citas</h4>
-      </div>
-      <BigCalendar
-        localizer={localizer}
-        defaultDate={new Date()}
-        defaultView="agenda"
-        events={events}
-        style={{ height: "50vh" }}
-      />
-      <div className={style.div2}>
-        <button className={style.btns}>Cargar Archivos</button>
-        <button className={style.btns}>Mi Perfil</button>
-      </div>
-    </div>
+    <Container className="main">
+      <Row>
+        <Tabs
+          defaultActiveKey="profile"
+          id="fill-tab-example"
+          className="myCalss"
+          fill
+        >
+          <Tab eventKey="profile" title="Mi Perfil">
+            <NutriData users />
+          </Tab>
+          <Tab eventKey="citasfuturas" title="Citas Futuras">
+            <FutureDates />
+          </Tab>
+          <Tab eventKey="clientes" title="Mis Clientes">
+            <ClientsTable />
+          </Tab>
+        </Tabs>
+      </Row>
+    </Container>
   );
 };
 
