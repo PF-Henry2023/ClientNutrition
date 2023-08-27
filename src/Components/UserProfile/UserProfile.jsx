@@ -1,5 +1,6 @@
 import style from "./UserProfile.module.css"
 import Calendar from "../Calendar/Calendar";
+import { Link } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
 import { Button, Alert, Card, Container, Row, Col } from "react-bootstrap";
 
@@ -13,7 +14,7 @@ export default function UserProfile(){
        
             <NavBar/>
             <h1>Citas</h1>
-            <Button variant="primary">+ Nueva cita</Button>
+            <Link to={'/appointments/new'}><Button variant="primary">+ Nueva cita</Button></Link>
             <br />
             <br />
             <h2>Próximas</h2>

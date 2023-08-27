@@ -2,3 +2,10 @@
     height: 40px;
     width: 40px;
 }
+
+.profilePicture {
+    height: 26px;
+    width: 26px;
+    margin-right: 10px;
+    border-radius: 13px;
+}
