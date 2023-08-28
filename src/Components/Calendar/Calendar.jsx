@@ -15,6 +15,10 @@ const events = [
 ];
 
 const Calendar = () => {
+  const openNewWindow = () => {
+    window.open(`http://www.stripe.com`, "_blank", "width=770, height=700");
+  };
+
   return (
     <div className={style.Calendar}>
       {/* <Navbar/> */}
@@ -30,6 +34,7 @@ const Calendar = () => {
           style={{ height: "80vh" }}
         />
       </div>
+      <button onClick={() => openNewWindow()}>Pagar con Stripe</button>
     </div>
   );
 };

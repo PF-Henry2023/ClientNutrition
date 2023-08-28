@@ -1,4 +1,5 @@
-import React from "react";
+import {useEffect} from "react";
+import { useNavigate } from "react-router";
 import "./NutritionistProfile.module.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -9,6 +10,19 @@ import NutriData from "./NutriData/NutriData";
 import FutureDates from "./FutureDates/FutureDates";
 
 const NutritionistProfile = () => {
+  const tokenAccess = () => {
+    return [
+      JSON.parse(window.localStorage.getItem("token")),
+      JSON.parse(window.localStorage.getItem("access")),
+    ];
+  };
+
+const navigate = useNavigate();  
+
+  useEffect(() => {
+
+if(tokenAccess()[0].role !== 'nutritionist' || tokenAccess()[1] !== true) navigate('/')
+  })
   return (
     <Container className="main">
       <Row>

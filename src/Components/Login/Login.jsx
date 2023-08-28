@@ -63,6 +63,7 @@ export default function Login() {
 
       if (tokenAccess()[0].role === "admin") navigate('/adminprofile')
       if (tokenAccess()[0].role === "user") navigate('/appointments')
+      if (tokenAccess()[0].role === "nutritionist") navigate('/nutritionistprofile')
     } catch (error) {
       console.log(error.message);
       alert("Error al iniciar sesión. Por favor, verifica tus credenciales.");
