@@ -5,8 +5,8 @@ const initialState = {
   quotes: [],
 };
 
-const rootReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
+const rootReducer = (state = initialState, action) => {
+  switch (action.type) {
     case "GET_NUTRITIONISTS":
       return {
         ...state,
