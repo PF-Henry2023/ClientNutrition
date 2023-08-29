@@ -1,35 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import axios from "axios";
+import { useState } from "react";
+import { Route, Routes, useLocation } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./zucca-theme.css";
+import "./App.css";
+import Home from "./Components/Home/Home";
+import Calendar from "./Components/Calendar/Calendar";
+import Create from "./Components/Create/Create";
+import Login from "./Components/Login/Login";
+import UserProfile from "./Components/UserProfile/UserProfile";
+import NavBar from "./Components/NavBar/NavBar";
+import NutritionistProfile from "./Components/NutritionistProfile/NutritionistProfile";
+import AdminView from "./Components/AdminView/AdminView";
+import NutriDetail from "./Components/AdminView/NutriDetail/NutriDetail";
+import UsersDetail from "./Components/AdminView/UsersDetail/UsersDetail";
+import TermsAndConditions from "./Components/TermsAndConditions/TermsAndConditions";
+// import { Cloudinary } from "@cloudinary/url-gen";
+
+const URL = "http://localhost:5173/";
+axios.defaults.baseURL = URL;
 
 function App() {
-  const [count, setCount] = useState(0)
+  // const cld = new Cloudinary({
+  //   cloud: {
+  //     cloudName: "dhmsbud0o",
+  //   },
+  // });
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app">
+      <NavBar />
+      <Routes>
+        <Route path="/" element={<Home />}></Route>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/appointments" element={<UserProfile />}></Route>
+        <Route path="/signup" element={<Create />}></Route>
+        <Route path="/adminprofile" element={<AdminView />}></Route>
+        <Route
+          path="/adminprofile/detail/:id"
+          element={<NutriDetail />}
+        ></Route>
+        <Route
+          path="/adminprofile/detail/users/:id"
+          element={<UsersDetail />}
+        ></Route>
+        <Route path="/appointments/new" element={<Calendar />}></Route>
+        <Route
+          path="/nutritionistprofile"
+          element={<NutritionistProfile />}
+        ></Route>
+        <Route
+          path="/termsandconditions"
+          element={<TermsAndConditions />}
+        ></Route>
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+export default App;
