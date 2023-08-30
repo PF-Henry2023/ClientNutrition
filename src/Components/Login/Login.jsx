@@ -13,7 +13,13 @@ export default function Login() {
   const [user, setUser] = useState({
     email: "",
     password: "",
+    nutri: false,
   });
+
+  const [nutriB, setNutri] = useState({
+    nutri: false,
+  });
+
   const [authenticated, setAuthenticated] = useState(false);
   const [decodedToken, setDecodedToken] = useState(null); // State para almacenar el token decodificado
   const tokenAccess = () => {
@@ -78,7 +84,7 @@ export default function Login() {
     window.open(url, "_blank");
   };
 
-  return (
+  return console.log(user), (
     <Container className={style.container}>
       {authenticated && decodedToken ? (
         <div>
@@ -145,6 +151,15 @@ export default function Login() {
                 INGRESA CON GOOGLE
               </Button>
             </div>
+
+            
+      <Form.Check // prettier-ignore
+        type="switch"
+        id="custom-switch"
+              label="Eres nutricionista?"
+              onChange={() => changeHandler("nutri", !user.nutri)}
+              />
+              
           </Form>
         </Col>
       </Row>

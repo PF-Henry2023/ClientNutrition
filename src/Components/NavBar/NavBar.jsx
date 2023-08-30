@@ -94,9 +94,11 @@ function NavBar() {
   };
 
   useEffect(() => {
-    if (tokenAccess()[0]?.name) setUser({ ...tokenAccess()[0] });
+    if (!user) {
+      if (tokenAccess()[0]?.name) setUser({ ...tokenAccess()[0] });
+    }
     if (logOut === false) navigate("/");
-  }, []);
+  }, [user]);
 
   function drawNavbar() {
     return tokenAccess()[0] ? drawLoggedInNavbar() : drawDefaultNavbar();
