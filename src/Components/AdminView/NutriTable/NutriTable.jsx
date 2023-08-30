@@ -89,7 +89,7 @@ function NutriTable() {
           <th key={1}>Nombre</th>
           <th key={2}>Apellidos</th>
           <th key={3}>Fecha de contratación</th>
-          <th key={4}>Numero de citas</th>
+          <th key={4}>Número de citas</th>
           <th key={4}>Bloquear</th>
           <th key={4}>Desbloquear</th>
         </tr>
