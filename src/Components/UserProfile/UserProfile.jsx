@@ -26,7 +26,9 @@ export default function UserProfile(){
                 <Card.Body>
                     <Card.Title>Primera cita</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">04 de agosto de 2023 </Card.Subtitle>
-                    <Button variant="primary" size="sm">+ Ver notas</Button>
+                    <Button className={style.cardButton} variant="primary" size="sm">+ Notas</Button>
+                    <Button className={style.cardButton} variant="primary" size="sm">+ Plan alimentario</Button>
+                    <Button className={style.cardButton} variant="primary" size="sm">+ Plan de entrenamiento</Button>
                 </Card.Body>
             </Card> 
        

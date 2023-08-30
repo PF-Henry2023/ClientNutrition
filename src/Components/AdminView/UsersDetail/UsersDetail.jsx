@@ -101,7 +101,7 @@ export default function UsersDetail() {
         <th key={1}>Nombre Paciente</th>
         <th key={2}>Apellidos</th>
         <th key={3}>Email</th>
-            <th key={4}>Numero de telefono</th>
+            <th key={4}>Número de teléfono</th>
             <th key={5}>Review</th>
       </tr>
     </thead>
