@@ -4,27 +4,50 @@ const numberRegex = /^[1-9]\d{9}$/;
 const wordRegex = /^[A-Za-z\s]+$/;
 const dateRegex = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][0-9]|3[01])$/;
 
-export function Validate(input) {
+function validate(input) {
     const errors = {};
     
-  if (!wordRegex.test(input.name) && input.name.length > 0) errors.name1 = true;
+  if ( input.name && (!wordRegex.test(input.name) || input.name.length < 2)) {
+    errors.name = true;
+  } 
 
-  if (!wordRegex.test(input.lastName) && input.lastName.length > 0)
-    errors.lastName1 = true;
+  if (input.lastName && (!wordRegex.test(input.lastName) || input.lastName.length <2)) {
+    errors.lastName = true;
+  }
 
-  if (!numberRegex.test(input.phone) && input.phone.length > 0)
-    errors.phone1 = true;
+  if (input.email && (!emailRegex.test(input.email))) {
+    errors.email = true;
+  }
+    
+  if (input.phone && (!numberRegex.test(input.phone) || input.phone.length != 10)) {
+    errors.phone = true;
+  }
+  
+  if (input.birthDate && (!dateRegex.test(input.birthDate))) {
+    errors.birthDate = true;
+  }
+    
+  if (input.password && (!passwordRegex.test(input.password))) {
+    errors.password = true;
+  }
 
-  if (!emailRegex.test(input.email) && input.email.length > 0)
-    errors.email1 = true;
-
-  if (!dateRegex.test(input.birthDate) && input.birthDate.length > 0)
-    errors.birthDate1 = true;
-
-  if (!passwordRegex.test(input.password) && input.password.length > 0)
-    errors.password1 = true;
+  if (input.address && (input.address.length < 5)) {
+    errors.address = true;
+  }
 
   return errors;
+}
+
+function isButtonDisabled(errors, input) {
+ return Object.values(errors).some(value => value === true) || 
+ !input.name || !input.lastName ||!input.phone || !input.email || !input.birthDate || !input.password ||
+  !input.address || !input.gender;
+}
+
+
+export {
+   validate, 
+   isButtonDisabled
 }
 
 
