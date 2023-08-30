@@ -120,7 +120,7 @@ export default function Login() {
                 }}
               />
               <Form.Control.Feedback type="invalid">
-                Contraseña debe contener 6 caracteres o mas, una mayuscula y un
+                La contraseña debe contener 6 caracteres o más, una mayúscula y un
                 caracter especial.
               </Form.Control.Feedback>
             </Form.Group>

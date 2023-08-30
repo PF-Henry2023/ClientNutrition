@@ -29,23 +29,15 @@ const NutriData = () => {
         </Form.Group>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Apellido(s):</Form.Label>
-          <Form.Control type="text" placeholder="Ingresa tu nombre..." />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Legajo:</Form.Label>
-          <Form.Control type="text" placeholder="Ingresa tu nombre..." />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="name">
-          <Form.Label>Especialidad:</Form.Label>
-          <Form.Control type="text" placeholder="Ingresa tu nombre..." />
+          <Form.Control type="text" placeholder="Ingresa tu apellido..." />
         </Form.Group>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Contraseña:</Form.Label>
-          <Form.Control type="text" placeholder="Ingresa tu nombre..." />
+          <Form.Control type="text" placeholder="Ingresa tu contraseña..." />
         </Form.Group>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Repetir Contraseña:</Form.Label>
-          <Form.Control type="text" placeholder="Ingresa tu nombre..." />
+          <Form.Control type="text" placeholder="Repetir contraseña..." />
         </Form.Group>
         <Button className="my-2" variant="primary" type="submit">
           Actualizar
