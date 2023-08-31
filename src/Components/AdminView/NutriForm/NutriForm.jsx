@@ -13,6 +13,8 @@ import style from './NutriForm.module.css'
 const NutriForm = () => {
     const [nutriInfo, setInfo] = useState([])
     const [errors, setErrors] = useState(validate(nutriInfo))
+    const [formSchedules, setFormSchedules] = useState({ 1: [], 2: [], 3: [], 4: [], 5: [] });
+
 
     const navigate = useNavigate()
     
@@ -32,26 +34,33 @@ const NutriForm = () => {
         );
       };
 
+
+
       const submitHandler = async (event) => {
         event.preventDefault();
-            try {
-              
-              const response = await axios.post(
-                "http://localhost:3001/nutritionists/create",
-                combinedData
-              );
-                
+        try {
+          const combinedData = {
+            ...nutriInfo,
+            diasDeTrabajo: { ...formSchedules },
+        };
+            console.log(combinedData);
 
-              const data = response.data;
-              console.log(data);
-              alert("Nutritionist successfully created");
-              console.log(data); // Aquí debería mostrar el token
-    
-              navigate('/adminprofile')
-            } catch (error) {
-              console.log(error.message);
-            }
-      };
+            
+            const response = await axios.post(
+              "http://localhost:3001/nutritionists/create",
+              combinedData
+              );
+              
+            const data = response.data;
+            console.log(data);
+            alert("Nutritionist successfully created");
+            console.log(data);
+
+            navigate('/adminprofile');
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
 
     return (
         <Container className={style.container}>
@@ -141,7 +150,7 @@ const NutriForm = () => {
                   <div>Formato correcto</div>
                 </Form.Control.Feedback>
               </Form.Group>
-              <NutriSchedule />
+              <NutriSchedule formSchedules={formSchedules} setFormSchedules={setFormSchedules}/>
               <Button className="my-2" variant="primary" type="submit"  disabled={isButtonDisabled(errors, nutriInfo)}>
               Enviar
               </Button>

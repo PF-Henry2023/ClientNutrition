@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import Select from "react-select";
 import "./NutriSchedule.css"; // Import your CSS file for styling
 
-const NutriSchedule = () => {
-  const [schedules, setSchedules] = useState({
-    1: [],
-    2: [],
-    3: [],
-    4: [],
-    5: [],
-  });
+const NutriSchedule = ({ formSchedules, setFormSchedules }) => {
 
   const daysOptions = [
     { value: "1", label: "Monday" },
@@ -29,13 +22,12 @@ const NutriSchedule = () => {
   });
 
   const handleHoursChange = (day, selectedHours) => {
-    setSchedules((prevSchedules) => ({
+    setFormSchedules((prevSchedules) => ({
       ...prevSchedules,
       [day]: selectedHours,
     }));
   };
 
-  console.log(schedules);
 
   return (
     <div className="schedule-container">
@@ -49,7 +41,7 @@ const NutriSchedule = () => {
             className="hours-select"
             options={hoursOptions}
             isMulti
-            value={schedules[dayOption.value]}
+            value={formSchedules[dayOption.value]}
             onChange={(selectedHours) =>
               handleHoursChange(dayOption.value, selectedHours)
             }
