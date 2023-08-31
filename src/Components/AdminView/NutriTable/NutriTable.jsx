@@ -4,81 +4,10 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function NutriTable() {
-  const nutritionists = [
-    {
-      id: 1,
-      firstName: "Alice",
-      lastName: "Johnson",
-      numberOfAppointments: 10,
-      hireDate: "2022-01-15",
-    },
-    {
-      id: 2,
-      firstName: "Bob",
-      lastName: "Smith",
-      numberOfAppointments: 10,
-      hireDate: "2021-09-10",
-    },
-    {
-      id: 3,
-      firstName: "Charlie",
-      lastName: "Brown",
-      numberOfAppointments: 10,
-      hireDate: "2023-03-22",
-    },
-    {
-      id: 4,
-      firstName: "David",
-      lastName: "Lee",
-      numberOfAppointments: 10,
-      hireDate: "2020-11-05",
-    },
-    {
-      id: 5,
-      firstName: "Ella",
-      lastName: "Davis",
-      numberOfAppointments: 10,
-      hireDate: "2022-07-18",
-    },
-    {
-      id: 6,
-      firstName: "Frank",
-      lastName: "Miller",
-      numberOfAppointments: 10,
-      hireDate: "2021-04-30",
-    },
-    {
-      id: 7,
-      firstName: "Grace",
-      lastName: "Wilson",
-      numberOfAppointments: 10,
-      hireDate: "2023-01-08",
-    },
-    {
-      id: 8,
-      firstName: "Henry",
-      lastName: "Martinez",
-      numberOfAppointments: 10,
-      hireDate: "2020-06-25",
-    },
-    {
-      id: 9,
-      firstName: "Isabel",
-      lastName: "Taylor",
-      numberOfAppointments: 10,
-      hireDate: "2022-10-12",
-    },
-    {
-      id: 10,
-      firstName: "Jack",
-      lastName: "Anderson",
-      numberOfAppointments: 10,
-      hireDate: "2023-06-14",
-    },
-  ];
+
 
   const [nutri, setNutri] = useState(false);
-  const [render, setRender] = useState(true)
+
 
   useEffect(() => {
     if (!nutri)
@@ -135,7 +64,7 @@ function NutriTable() {
                 <button onClick={() => blockNutri(e.id)}>X</button>
               </td>
               <td>
-                <button onClick={() => restoreNutri()} >O</button>
+                <button onClick={() => restoreNutri(e.id)} >O</button>
               </td>
             </tr>
           );

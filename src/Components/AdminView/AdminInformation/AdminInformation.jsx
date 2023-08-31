@@ -8,9 +8,9 @@ import axios from "axios";
 
 export default function Create() {
   const [userInformation, setInfo] = useState({
-    name: "Mario",
-    lastName: "Reyes",
-    email: "7588818@gmail.com",
+    name: "",
+    lastName: "",
+    email: "",
     password: "",
     passwordConfirmed: "",
   });
@@ -20,7 +20,7 @@ export default function Create() {
   useEffect(() => {
 
     if (!db) {
-      fetch("http://localhost:3001/users/1")
+      fetch("http://localhost:3001/users/1") // Ver la posibilidad de una ruta especifica
       .then((response) => response.json())
       .then((data) => {
         setDB(data)
@@ -91,7 +91,7 @@ export default function Create() {
     }
   };
 
-  return console.log(db), (
+  return console.log(errors), (
     <Container className={style.container}>
       <h2 className="mb-4">Modifica tu información de perfil:</h2>
 

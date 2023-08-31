@@ -21,7 +21,7 @@ const navigate = useNavigate();
 
   useEffect(() => {
 
-if(tokenAccess()[0].role !== 'nutritionist' || tokenAccess()[1] !== true) navigate('/')
+if(!tokenAccess()[0].isActive === true || tokenAccess()[1] !== true) navigate('/')
   })
   return (
     <Container className="main">
