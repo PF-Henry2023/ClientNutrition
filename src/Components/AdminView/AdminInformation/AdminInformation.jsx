@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import style from "./AdminInformation.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -12,24 +12,32 @@ export default function Create() {
     lastName: "Reyes",
     email: "7588818@gmail.com",
     password: "",
-    passwordConfirmed: ""
+    passwordConfirmed: "",
   });
 
-  let [db, setDB] = useState({
-    name: "Mario",
-    lastName: "Reyes",
-    email: "7588818@gmail.com",
-    password: "Tumama6814@",
-    passwordConfirmed: ""
-  })
+  let [db, setDB] = useState();
+
+  useEffect(() => {
+
+    if (!db) {
+      fetch("http://localhost:3001/users/1")
+      .then((response) => response.json())
+      .then((data) => {
+        setDB(data)
+        const { name, lastName, email, id } = data;
+        setInfo({...userInformation, name, lastName, email, id})
+      });
+    }
+    
+    
+    
+  }, [db]);
 
   const [errors, setErrors] = useState({
     errors: "zero",
   });
 
-
   const changeHandler = (field, value) => {
-    
     setInfo({
       ...userInformation,
       [field]: value,
@@ -53,35 +61,37 @@ export default function Create() {
       !errors.errors
     ) {
       if (
-        userInformation.name.length > 0 && 
+        userInformation.name.length > 0 &&
         userInformation.lastName.length > 0 &&
         userInformation.email.length > 0
       ) {
-
-        if (db.lastName !== userInformation.lastName || 
-          db.name !== userInformation.name || 
+        if (
+          db.lastName !== userInformation.lastName ||
+          db.name !== userInformation.name ||
           db.email !== userInformation.email ||
-          userInformation.passwordConfirmed === userInformation.password && userInformation.password.length > 0 && userInformation.password !== db.password) {
-          setDB({ ...userInformation })
-          setInfo({...userInformation, password: "", passwordConfirmed: ""})
-          alert("La información fue actualizada de manera exitosa!")
-        } else {
-          alert("Verifica que los campos 'Nombre', 'Apellido' o 'Correo' no sean iguales al anterior.")
-        }
-        
-        
+          (userInformation.passwordConfirmed === userInformation.password &&
+            userInformation.password.length > 0 &&
+            userInformation.password !== db.password)
+        ) {
 
+          axios.put('http://localhost:3001/users/update', userInformation).catch((error) => {console.log(error)})
+          setInfo({ ...userInformation, password: "", passwordConfirmed: "" });
+          
+          alert("La información fue actualizada de manera exitosa!");
+        } else {
+          alert(
+            "Verifica que los campos 'Nombre', 'Apellido' o 'Correo' no sean iguales al anterior."
+          );
+        }
       } else {
         alert("Por favor, completa todos los campos.");
-        
       }
     } else {
       alert("Modifica un campo o completa la contraseña.");
-
     }
   };
 
-  return (
+  return console.log(db), (
     <Container className={style.container}>
       <h2 className="mb-4">Modifica tu información de perfil:</h2>
 
@@ -156,9 +166,9 @@ export default function Create() {
             onChange={(event) => {
               changeHandler("password", event.target.value);
             }}
-            isInvalid={errors.password1 && userInformation.password.length > 0}
+            isInvalid={errors.password1 && userInformation?.password.length > 0}
             isValid={
-              !errors.password1 && userInformation.password.length > 0 && true
+              !errors.password1 && userInformation?.password?.length > 0 && true
             }
           />
           <Form.Control.Feedback type="invalid">
@@ -176,14 +186,22 @@ export default function Create() {
             onChange={(event) => {
               changeHandler("passwordConfirmed", event.target.value);
             }}
-            isInvalid={errors.password1Confirmed && userInformation.passwordConfirmed.length > 0 || errors.passwordEqual && userInformation.passwordConfirmed.length > 0}
+            isInvalid={
+              (errors.password1Confirmed &&
+                userInformation?.passwordConfirmed.length > 0) ||
+              (errors.passwordEqual &&
+                userInformation?.passwordConfirmed.length > 0)
+            }
             isValid={
-              !errors.passwordEqual && userInformation.passwordConfirmed.length > 0 && true
+              !errors.passwordEqual &&
+              userInformation?.passwordConfirmed?.length > 0 &&
+              true
             }
           />
           <Form.Control.Feedback type="invalid">
-            {errors.password1Confirmed && 'Contraseña debe contener 6 caracteres o mas, una mayuscula y un caracter especial.'}
-            {errors.passwordEqual && 'Las contraseñas deben de ser iguales'}
+            {errors.password1Confirmed &&
+              "Contraseña debe contener 6 caracteres o mas, una mayuscula y un caracter especial."}
+            {errors.passwordEqual && "Las contraseñas deben de ser iguales"}
           </Form.Control.Feedback>
           <div className="valid-feedback">Formato correcto.</div>
         </Form.Group>
