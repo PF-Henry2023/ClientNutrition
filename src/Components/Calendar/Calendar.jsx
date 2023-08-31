@@ -5,54 +5,48 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "./Calendar.module.css";
-import { getAppointments } from "../../redux/actions/actions";
+
 import Example from "./Modal";
 
 const localizer = momentLocalizer(moment);
-const events = [
-  {
-    start: moment().toDate(),
-    end: moment().add(0.1, "days").toDate(),
-    title: "An event",
-  },
-];
+
 
 const Calendar = () => {
-  const dispatch = useDispatch();
-  const allappointments = useSelector((state) => state.appointments);
+
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
-  const [appointment, setAppointment] = useState([]);
+  const [view, setView] = useState('month')
 
-  useEffect(() => {
-    if (allappointments.length < 1) dispatch(getAppointments());
-  }, [dispatch, allappointments]);
-
-  console.log(allappointments);
-  // const appointments = allappointments.map((appointment) => {})
+  
 
   const handleSelectC = ({ start }) => {
-    /* const end = dayjs(start).add(1, 'hour').toDate();
-    const newEvent = {
-        title: 'New Event2',
-        start,
-        end,
-    };
-    setEvents([...events, newEvent]);
-    console.log({ start, end }); */
-
-    const isWeekend = (date) => {
-      const day = date.getDay();
-      return day === 0 || day === 6; // Sunday (0) and Saturday (6)
-    };
-    const isSelectable = (date) => !isWeekend(date);
-
-    if (fullscreen === true) {
-      setFullscreen(false);
-    }
-    if (isSelectable) {
-      setFullscreen(true);
-      setShow(true);
+    const day = moment(start).day();
+    const hour = moment(start).hour();
+    if(view === "day"){
+      for (const dayA of props.day) {
+        if(day === dayA){
+          return window.alert("Dia no disponible");
+        } else {
+          if (fullscreen === true) {
+            setFullscreen(false);
+          }
+          setFullscreen(true);
+          setShow(true);
+        }
+      }
+      for (const hourA of props.hour) {
+        if(hour > hourA[0] && hour < hourA[1]){
+          return window.alert("Hora no disponible");
+        } else {
+          if (fullscreen === true) {
+            setFullscreen(false);
+          }
+          setFullscreen(true);
+          setShow(true);
+        }
+      }
+    } else {
+      setView("day");
     }
   };
 
@@ -60,17 +54,47 @@ const Calendar = () => {
     setShow(false);
   };
 
+  const dayPropGetter = (date) => {
+    const dayStyle = {};
+    const dateA = moment(date).day();
+    const mapeo = props.day.map(e => {
+      if(dateA === e){
+        dayStyle.backgroundColor = "#E39C8E";
+      }
+    })
+    return {
+      style: dayStyle,
+    };
+  };
+
+
+  const slotPropGetter = (date) => {
+    const slotStyle = {};
+    for (const range of props.hour) {
+      if(moment(date).hour() > range[0] && moment(date).hour() < range[1]){
+        slotStyle.backgroundColor = "#E39C8E";
+      }
+    }
+    return {
+      style: slotStyle,
+    };
+  };
+
   return (
     <div>
       <div>
         <BigCalendar
           style={{ height: "500px", width: "700px", margin: "auto" }}
-          defaultView="month"
-          defaultDate={new Date()}
           localizer={localizer}
-          events={events}
-          selectable
+          views={["month", "week", "day"]}
+          defaultView={"month"}
+          onView={view}
           onSelectSlot={handleSelectC}
+          selectable
+          dayPropGetter={dayPropGetter}
+          slotPropGetter={slotPropGetter}
+          day={[0, 6]} hour={[[8,20], [0,3]]}
+
         />
         <Example
           show={show}

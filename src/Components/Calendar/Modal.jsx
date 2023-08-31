@@ -2,7 +2,6 @@ import { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import { TimePicker } from "react-ios-time-picker";
 
 const Example = (props) => {
   const [selectedTimezone, setSelectedTimezone] = useState("");
@@ -47,20 +46,20 @@ const Example = (props) => {
               <Form.Label>Descripcion:</Form.Label>
               <Form.Control as="textarea" />
             </Form.Group>
-            <Form.Group>
+            {/* <Form.Group>
               <Form.Label>Inicio:</Form.Label>
               <TimePicker
                 onChange={handleTimeChangeStart}
                 value={selectedTimeStart}
               />
-            </Form.Group>
-            <Form.Group>
+            </Form.Group> */}
+            {/* <Form.Group>
               <Form.Label>Fin:</Form.Label>
               <TimePicker
                 onChange={handleTimeChangeEnd}
                 value={selectedTimeEnd}
               />
-            </Form.Group>
+            </Form.Group> */}
           </Form>
         </Modal.Body>
       </Modal>

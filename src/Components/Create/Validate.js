@@ -40,8 +40,7 @@ function validate(input) {
 
 function isButtonDisabled(errors, input) {
  return Object.values(errors).some(value => value === true) || 
- !input.name || !input.lastName ||!input.phone || !input.email || !input.birthDate || !input.password ||
-  !input.address || !input.gender;
+ !input.name || !input.lastName || !input.email ||  !input.password 
 }
 
 
