@@ -99,11 +99,7 @@ function NavBar() {
   }, []);
 
   function drawNavbar() {
-<<<<<<< HEAD
     return tokenAccess()[0]? drawLoggedInNavbar() : drawDefaultNavbar()
-=======
-    return tokenAccess()[0] ? drawLoggedInNavbar() : drawDefaultNavbar();
->>>>>>> fb4f5db7db8bc8ddf46bb3c640575af337f79e55
   }
 
   function drawDefaultNavbar() {

@@ -12,6 +12,8 @@
   "dependencies": {
     "@cloudinary/react": "^1.11.2",
     "@cloudinary/url-gen": "^1.11.2",
+    "@stripe/react-stripe-js": "^2.1.2",
+    "@stripe/stripe-js": "^2.1.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.3.1",
     "jwt-decode": "^3.1.2",
