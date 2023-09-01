@@ -12,7 +12,6 @@ const localizer = momentLocalizer(moment);
 
 
 const Calendar = () => {
-<<<<<<< HEAD
 
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
@@ -55,34 +54,34 @@ const Calendar = () => {
     setShow(false);
   };
 
-  const dayPropGetter = (date) => {
-    const dayStyle = {};
-    const dateA = moment(date).day();
-    const mapeo = props.day.map(e => {
-      if(dateA === e){
-        dayStyle.backgroundColor = "#E39C8E";
-      }
-    })
-    return {
-      style: dayStyle,
-    };
-  };
+  // const dayPropGetter = (date) => {
+  //   const dayStyle = {};
+  //   const dateA = moment(date).day();
+  //   const mapeo = props.day.map(e => {
+  //     if(dateA === e){
+  //       dayStyle.backgroundColor = "#E39C8E";
+  //     }
+  //   })
+  //   return {
+  //     style: dayStyle,
+  //   };
+  // };
 
 
-  const slotPropGetter = (date) => {
-    const slotStyle = {};
-    for (const range of props.hour) {
-      if(moment(date).hour() > range[0] && moment(date).hour() < range[1]){
-        slotStyle.backgroundColor = "#E39C8E";
-      }
-    }
-    return {
-      style: slotStyle,
-    };
+  // const slotPropGetter = (date) => {
+  //   const slotStyle = {};
+  //   for (const range of props.hour) {
+  //     if(moment(date).hour() > range[0] && moment(date).hour() < range[1]){
+  //       slotStyle.backgroundColor = "#E39C8E";
+  //     }
+  //   }
+  //   return {
+  //     style: slotStyle,
+  //   };
+  // }
 
   const openNewWindow = () => {
     window.open(`http://www.stripe.com`, "_blank", "width=770, height=700");
-
   };
 
   return (
@@ -96,9 +95,9 @@ const Calendar = () => {
           onView={view}
           onSelectSlot={handleSelectC}
           selectable
-          dayPropGetter={dayPropGetter}
-          slotPropGetter={slotPropGetter}
-          day={[0, 6]} hour={[[8,20], [0,3]]}
+          // dayPropGetter={dayPropGetter}
+          // slotPropGetter={slotPropGetter}
+          // day={[0, 6]} hour={[[8,20], [0,3]]}
 
         />
         <Example
@@ -112,4 +111,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default Calendar
