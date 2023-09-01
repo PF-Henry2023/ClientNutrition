@@ -16,6 +16,8 @@ import NutriDetail from "./Components/AdminView/NutriDetail/NutriDetail";
 import UsersDetail from "./Components/AdminView/UsersDetail/UsersDetail";
 import TermsAndConditions from "./Components/TermsAndConditions/TermsAndConditions";
 import NutriForm from "./Components/AdminView/NutriForm/NutriForm";
+import Success from "./Components/Payment/Success";
+import Cancel from "./Components/Payment/Cancel";
 // import { Cloudinary } from "@cloudinary/url-gen";
 
 const URL = "http://localhost:5173/";
@@ -55,6 +57,8 @@ function App() {
           path="/termsandconditions"
           element={<TermsAndConditions />}
         ></Route>
+        <Route path="/success" element={<Success />}></Route>
+        <Route path="/cancel" element={<Cancel />}></Route>
       </Routes>
     </div>
   );

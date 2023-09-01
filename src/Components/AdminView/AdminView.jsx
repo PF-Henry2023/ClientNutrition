@@ -22,7 +22,7 @@ export default function AdminView() {
     if (tokenAccess()[0]?.role !== "admin" || tokenAccess()[1] !== true) navigate('/')
   }, [tokenAccess()[1]])
 
-  return console.log(tokenAccess()), (
+  return (
     <Container className="main">
       <Row>
         <Col xs={10} md={12}>
@@ -49,7 +49,7 @@ export default function AdminView() {
                 <Container className="nutriListMain">
                   Mis Nutricionistas
                   <NutriTable />
-                  <Button className="my-2" >Borrar Nutricionista</Button>
+                  {/* <Button className="my-2" >Borrar Nutricionista</Button> */}
                 </Container>
               </Container>
             </Tab>
