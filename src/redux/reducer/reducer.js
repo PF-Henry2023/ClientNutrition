@@ -3,6 +3,7 @@ const initialState = {
   nutritionists: [],
   allNutritionists: [],
   quotes: [],
+  appointments: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -42,7 +43,7 @@ const rootReducer = (state = initialState, action) => {
     case "GET_APPOINTMENTS":
       return {
         ...state,
-        users: action.payload,
+        appointments: action.payload,
       };
 
     default:

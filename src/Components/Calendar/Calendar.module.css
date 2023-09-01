@@ -1,8 +1,40 @@
-.Calendar {
-  display: block;
-  justify-content: center;
+/* Cambiar el color de fondo de los eventos */
+.rbc-event {
+  background-color: #535bf2;
+  border: none;
 }
-.Agendar {
-  width: 800px;
-  margin-bottom: 25px;
+
+/* Cambiar el color de fondo del encabezado del día */
+/* .rbc-day-bg {
+    background-color: #f0f0f0;
+  } */
+
+/* Cambiar el color del texto del título del evento */
+.rbc-event-label {
+  color: #333;
+}
+
+/* Cambiar el color del borde de los eventos */
+.rbc-event-content {
+  border-color: #ffcc00;
+}
+
+/* Cambiar el color de fondo del encabezado de la semana */
+.rbc-week-header {
+  background-color: #ddd;
+  border: none;
+}
+
+.rbc-event:hover {
+  background-color: #ddd;
+}
+
+.rbc-today {
+  background-color: #9fa1a8;
+}
+
+/* Cambiar el color de fondo de la celda del día */
+.rbc-day-bg:hover {
+  background-color: #737fc7;
+  cursor: pointer;
 }

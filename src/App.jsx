@@ -15,6 +15,7 @@ import AdminView from "./Components/AdminView/AdminView";
 import NutriDetail from "./Components/AdminView/NutriDetail/NutriDetail";
 import UsersDetail from "./Components/AdminView/UsersDetail/UsersDetail";
 import TermsAndConditions from "./Components/TermsAndConditions/TermsAndConditions";
+import NutriForm from "./Components/AdminView/NutriForm/NutriForm";
 import Success from "./Components/Payment/Success";
 import Cancel from "./Components/Payment/Cancel";
 // import { Cloudinary } from "@cloudinary/url-gen";
@@ -38,6 +39,7 @@ function App() {
         <Route path="/appointments" element={<UserProfile />}></Route>
         <Route path="/signup" element={<Create />}></Route>
         <Route path="/adminprofile" element={<AdminView />}></Route>
+        <Route path="/adminprofile/nutriform" element={<NutriForm />}></Route>
         <Route
           path="/adminprofile/detail/:id"
           element={<NutriDetail />}
