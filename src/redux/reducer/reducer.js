@@ -33,9 +33,11 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case "GET_USERS":
+
+    const filtered = action.payload.filter((e) => e.role === "user" )
       return {
         ...state,
-        users: action.payload,
+        users: filtered,
       };
     case "GET_APPOINTMENTS":
       return {
