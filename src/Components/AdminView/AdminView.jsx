@@ -10,6 +10,7 @@ import UserTable from './UserTable/UserTable'
 import NutriTable from "./NutriTable/NutriTable";
 import Button from "react-bootstrap/Button";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function AdminView() {
   const tokenAccess = () => {
@@ -21,7 +22,7 @@ export default function AdminView() {
     if (tokenAccess()[0]?.role !== "admin" || tokenAccess()[1] !== true) navigate('/')
   }, [tokenAccess()[1]])
 
-  return console.log(tokenAccess()), (
+  return (
     <Container className="main">
       <Row>
         <Col xs={10} md={12}>
@@ -39,14 +40,16 @@ export default function AdminView() {
 
             <Tab eventKey="home" title="Nutricionistas">
               <Container className="nutriMain">
+                <Link to='/adminprofile/nutriform'>
                 <Button className="my-2" variant="primary" type="button">
                   Crear nuevo Nutricionista
                 </Button>
+                </Link>
 
                 <Container className="nutriListMain">
                   Mis Nutricionistas
                   <NutriTable />
-                  <Button className="my-2" >Borrar Nutricionista</Button>
+                  {/* <Button className="my-2" >Borrar Nutricionista</Button> */}
                 </Container>
               </Container>
             </Tab>

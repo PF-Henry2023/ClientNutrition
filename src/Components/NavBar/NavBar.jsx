@@ -94,12 +94,14 @@ function NavBar() {
   };
 
   useEffect(() => {
-    if (tokenAccess()[0]?.name) setUser({ ...tokenAccess()[0] });
+    if (!user) {
+      if (tokenAccess()[0]?.name) setUser({ ...tokenAccess()[0] });
+    }
     if (logOut === false) navigate("/");
-  }, []);
+  }, [user]);
 
   function drawNavbar() {
-    return tokenAccess()[0] ? drawLoggedInNavbar() : drawDefaultNavbar();
+    return tokenAccess()[0]? drawLoggedInNavbar() : drawDefaultNavbar()
   }
 
   function drawDefaultNavbar() {
@@ -139,7 +141,7 @@ function NavBar() {
           <>
             <Image
               className={styles.profilePicture}
-              src={user?.image || null}
+              src={'https://media.licdn.com/dms/image/D5603AQEkrI0-HoK7YA/profile-displayphoto-shrink_800_800/0/1673683617881?e=1698883200&v=beta&t=vDU2J8_dR_oHRvUMp90RH0p90ettL95_PsmHDITv9O0' || null}
             />
             {tokenAccess()[0].name}
           </>
@@ -165,7 +167,7 @@ function NavBar() {
   }
 
   return (
-    console.log(tokenAccess()[0]),
+    console.log(tokenAccess()[1]),
     (
       <Navbar fixed="top" className="bg-body-tertiary">
         <Container>

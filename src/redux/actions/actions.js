@@ -1,6 +1,7 @@
 import axios from "axios";
 
 export const GET_USERS = "GET_USERS";
+export const GET_APPOINTMENTS = "GET_APPOINTMENTS";
 
 export function getNutritionists() {
   return async function (dispatch) {
@@ -75,7 +76,9 @@ export function getUsersId(id) {
 
 export const getAppointments = () => {
   return async function (dispatch) {
-    const response = await axios(`${url}/users`);
+    const response = await axios.get(
+      "http://localhost:3001/calendarGoogle/allEvents/calendar"
+    );
     return dispatch({
       type: "GET_APPOINTMENTS",
       payload: response.data,

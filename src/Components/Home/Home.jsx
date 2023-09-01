@@ -2,11 +2,12 @@ import styles from "./Home.module.css"
 import HomeDescripion from "../HomeDescription/HomeDescription";
 import Carousel from "../Carousel/Carousel";
 import Breadcrumb from 'react-bootstrap/Breadcrumb';
+import StripePayment from "../Payment/Payment";
 
 export default function Home() {
     return (
         <div className={styles.text}> 
-
+            <StripePayment/>
             <HomeDescripion title="" description="ZUCCA ofrece asesoramiento nutricional personalizado a través de sesiones a distancia con profesionales de nutrición altamente calificados. Nuestro enfoque se centra en la salud, la vitalidad y el bienestar general.
 "/>
             <hr />
