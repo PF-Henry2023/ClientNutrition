@@ -11,7 +11,6 @@ import { red } from "@cloudinary/url-gen/actions/adjust";
 
 const localizer = dayjsLocalizer(dayjs);
 
-
 const Calendar = (props) => {
 
   const [show, setShow] = useState(false);
