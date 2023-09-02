@@ -12,7 +12,6 @@ const localizer = momentLocalizer(moment);
 
 
 const Calendar = () => {
-<<<<<<< HEAD
 
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
@@ -79,10 +78,10 @@ const Calendar = () => {
     return {
       style: slotStyle,
     };
-=======
+
+  }
   const openNewWindow = () => {
     window.open(`http://www.stripe.com`, "_blank", "width=770, height=700");
->>>>>>> 135910538b69126208a75f84dfb685379e3b2f2f
   };
 
   return (
@@ -112,4 +111,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default Calendar
