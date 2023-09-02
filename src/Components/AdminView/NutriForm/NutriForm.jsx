@@ -35,13 +35,36 @@ const NutriForm = () => {
       };
 
 
+      function cleanObject(obj) {
+        for (const key in obj) {
+          if (obj[key].length === 0) {
+            delete obj[key];
+          }
+        }
+        return obj;
+      }
+
+
 
       const submitHandler = async (event) => {
         event.preventDefault();
         try {
+
+          let formSchedulesFormmated = {};
+
+      for (const keyD in formSchedules) {
+        const day = formSchedules[keyD];
+        formSchedulesFormmated[keyD] = [];
+        for (const keyS in day) {
+          formSchedulesFormmated[keyD].push(Number(day[keyS].value));
+        }
+      }
+
+      const cleanedFormSchedules = cleanObject(formSchedulesFormmated);
+
           const combinedData = {
             ...nutriInfo,
-            diasDeTrabajo: { ...formSchedules },
+            diasDeTrabajo: { ...cleanedFormSchedules },
         };
             console.log(combinedData);
 
@@ -61,6 +84,8 @@ const NutriForm = () => {
             console.log(error.message);
         }
     };
+
+    
 
     return (
         <Container className={style.container}>

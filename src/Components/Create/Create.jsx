@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import style from "./Create.module.css";
 import Form from "react-bootstrap/Form";
@@ -7,16 +7,20 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { validate, isButtonDisabled } from "./Validate";
-import axios from "axios";
 import GoogleLogin from "react-google-login";
+import { useDispatch, useSelector } from "react-redux";
+import { signup } from "./../../redux/actions/actions"
+import { coordinator } from "../../utils/UserUtils";
 
 export default function Create() {
 
-  const [userInformation, setInfo] = useState({});
   const navigate = useNavigate();
-  const [errors, setErrors] = useState(validate(userInformation)); 
+  const dispatch = useDispatch()
 
-  let user = 0;
+  const user = useSelector((state) => state.user)
+
+  const [userInformation, setInfo] = useState({});
+  const [errors, setErrors] = useState(validate(userInformation)); 
 
   const changeHandler = (field, value) => {
     setInfo({
@@ -32,60 +36,57 @@ export default function Create() {
     );
   };
   
-
-  const submitHandler = async (event) => {
+  const handleSignup = async (event) => {
     event.preventDefault();
-        try {
-          console.log(userInformation);
-          const response = await axios.post(
-            "http://localhost:3001/users/signup",
-            userInformation
-          );
-
-          const data = response.data;
-          console.log(data);
-          alert("User successfully created");
-          console.log(data); // Aquí debería mostrar el token
-
-          navigate('/login')
-        } catch (error) {
-          console.log(error.message);
-        }
+    dispatch(signup(userInformation, handleSignupError))
   };
 
-  const onSuccessLogin = async (response) => {
+  function handleSignupError(error) {
+    alert("Error al crear el usuario.");
+  }
+
+  useEffect(() => {
+    if (user == null) {
+      return
+    }
+
+    navigate(coordinator().profile)
+  }, [user])
+
+  /*const onSuccessLogin = async (response) => {
     const { tokenId } = response;
     const { data } = await axios.post(
       "http://localhost:3001/users/signup/oauth2.0",
       { tokenId: tokenId }
     );
     setUserId(response.profileObj.email);
-    /* localStorage.setItem('token', JSON.stringify(token))
+    localStorage.setItem('token', JSON.stringify(token))
         const tokenReducer = token
         dispatch(setToken(tokenReducer))
         dispatch(userLoggedIn(true))
-        navigate('/home') */
+        navigate('/home') 
     console.log(data);
   };
 
   const onFailureLogin = (response) => {
     console.log(response);
   };
+  */
 
   return (
     <Container className={style.container}>
       <Row className="justify-content-md-center">
         <Col xs={12} md={12}>
           <h2 className="mb-4">Completa tu perfil</h2>
-          <GoogleLogin
+          {/* <GoogleLogin
             clientId="659206981480-dpv28b5to1u20p6oncccfrl2pkgmei5b.apps.googleusercontent.com"
             buttonText="Iniciar sesión con Google"
             onSuccess={onSuccessLogin}
             onFailure={onFailureLogin}
             cookiePolicy={"single_host_origin"}
             scope="https://www.googleapis.com/auth/calendar"
-          />
-          <Form onSubmit={submitHandler}>
+          /> */}
+          <Form onSubmit={handleSignup}>
 
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Nombre(s):</Form.Label>
@@ -100,9 +101,6 @@ export default function Create() {
               />
               <Form.Control.Feedback type="invalid">
                 <div>El nombre debe tener al menos dos letras y no puede incluir números.</div>
-              </Form.Control.Feedback>
-              <Form.Control.Feedback type="valid">
-                <div>Se ve perfecto!</div>
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -136,9 +134,6 @@ export default function Create() {
               <Form.Control.Feedback type="invalid">
                 Verifica el formato del e-mail.
               </Form.Control.Feedback>
-              <Form.Control.Feedback type="valid">
-                <div>Correo correcto</div>
-              </Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="password">
@@ -155,9 +150,6 @@ export default function Create() {
               <Form.Control.Feedback type="invalid">
                 La contraseña debe contener 6 caracteres o más, una mayúscula y un
                 caracter especial.
-              </Form.Control.Feedback>
-              <Form.Control.Feedback type="valid">
-                <div>Formato correcto</div>
               </Form.Control.Feedback>
             </Form.Group>
 

@@ -18,12 +18,19 @@ import TermsAndConditions from "./Components/TermsAndConditions/TermsAndConditio
 import NutriForm from "./Components/AdminView/NutriForm/NutriForm";
 import Success from "./Components/Payment/Success";
 import Cancel from "./Components/Payment/Cancel";
-import Cloudinary from "./Components/Cloudinary/Cloudinary";
 
 const URL = "http://localhost:5173/";
 axios.defaults.baseURL = URL;
 
 function App() {
+
+  const horariosTrabajo = {
+    1: [[3, 7], [4,8]],          
+    2: [[8, 12], [14, 18]], 
+    3: [[10, 15]],         
+    4: [[8, 12], [13, 16]], 
+    5: [[9, 14]],                   
+  };
 
   return (
     <div className="app">
@@ -31,9 +38,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/appointments" element={<UserProfile />}></Route>
+        <Route path="/appointments" element={
+          <Protected roles={["user"]}>
+            <UserProfile />
+          </Protected>
+        } />
         <Route path="/signup" element={<Create />}></Route>
-        <Route path="/adminprofile" element={<AdminView />}></Route>
+        <Route path="/adminprofile" element={
+          <Protected roles={["admin"]}>
+            <AdminView />
+          </Protected>
+        } />
         <Route path="/adminprofile/nutriform" element={<NutriForm />}></Route>
         <Route
           path="/adminprofile/detail/:id"
@@ -43,7 +58,7 @@ function App() {
           path="/adminprofile/detail/users/:id"
           element={<UsersDetail />}
         ></Route>
-        <Route path="/appointments/new" element={<Calendar />}></Route>
+        <Route path="/appointments/new" element={<Calendar horarios={horariosTrabajo}/>}></Route>
         <Route
           path="/nutritionistprofile"
           element={<NutritionistProfile />}

@@ -1,35 +1,28 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
 import style from "./Login.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import jwtDecode from "jwt-decode";
-import axios from "axios";
+import { login } from './../../redux/actions/actions'
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from "react-router";
+import { coordinator } from "../../utils/UserUtils";
 
 export default function Login() {
-  const [user, setUser] = useState({
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const user = useSelector((state) => state.user)
+
+  const [credentials, setCredentials] = useState({
     email: "",
     password: "",
-    nutri: false,
+    isNutritionist: false,
   });
 
-  const [nutriB, setNutri] = useState({
-    nutri: false,
-  });
-
-  const [authenticated, setAuthenticated] = useState(false);
-  const [decodedToken, setDecodedToken] = useState(null); // State para almacenar el token decodificado
-  const tokenAccess = () => {
-    return [
-      JSON.parse(window.localStorage.getItem("token")),
-      JSON.parse(window.localStorage.getItem("access")),
-    ];
-  };
-  const navigate = useNavigate();
-
+  /*
   const [url, setUrl] = useState("");
 
   useEffect(() => {
@@ -40,82 +33,51 @@ export default function Login() {
       setUrl(data.url);
     };
     urlRed();
-  }, []);
+  }, []);*/
+
+  useEffect(() => {
+    if (user == null) {
+      return
+    }
+    navigate(coordinator().profile)
+  }, [user])
 
   const changeHandler = (field, value) => {
-    setUser({
-      ...user,
+    setCredentials({
+      ...credentials,
       [field]: value,
     });
   };
 
-  const userLogin = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    try {
-      const response =
-        user.nutri === true
-          ? await axios.post("http://localhost:3001/nutritionists/login", user) //colocar ruta de logueo nutricionista.
-          : await axios.post("http://localhost:3001/users/login", user);
-      const data = response.data;
+    dispatch(login(credentials, handleLoginError))
+  }
 
-      // Verificar el token aquí
-      const token = data.token;
-      const decoded = jwtDecode(token); // Decodificar el token
-      setDecodedToken(decoded); // Guardar el token decodificado en el estado
-      window.localStorage.setItem("token", JSON.stringify(decoded));
-      window.localStorage.setItem("access", JSON.stringify(true));
+  function handleLoginError(error) {
+    alert("Error al iniciar sesión. Por favor, verifica tus credenciales.");
+  }
 
-      setAuthenticated(true);
-      console.log(tokenAccess());
-      alert("Inicio de sesión exitoso");
-      console.log(data); // Aquí debería mostrar el token
-
-      if (tokenAccess()[0].role === "admin") navigate("/adminprofile");
-      else if (tokenAccess()[0].role === "user") navigate("/appointments");
-      else navigate("/nutritionistprofile");
-    } catch (error) {
-      console.log(error.message);
-      alert("Error al iniciar sesión. Por favor, verifica tus credenciales.");
-      setDecodedToken(null); // Limpiar el token decodificado en caso de inicio de sesión fallido
-    }
-  };
-
-  const googleLogin = () => {
+  /*const googleLogin = () => {
     window.open(url, "_blank");
-  };
+  };*/
 
   return (
-    console.log(user),
-    (
       <Container className={style.container}>
-        {authenticated && decodedToken ? (
-          <div>
-            <h3>Token Decodificado:</h3>
-            <p>ID: {decodedToken.id}</p>
-            <p>Nombre: {decodedToken.name}</p>
-            <p>Apellido: {decodedToken.lastName}</p>
-            <p>Fecha de Nacimiento: {decodedToken.birthDate}</p>
-            {/* Mostrar otras propiedades del token según sea necesario */}
-          </div>
-        ) : null}
-
         <Row className="justify-content-md-center">
           <Col xs={12} md={12}>
-            <h2 className="mb-4">Ingresa usuario y contraseña</h2>
+            <h2 className="mb-4">Ingresa correo electrónico y contraseña</h2>
             <Form>
               <Form.Group className="mb-3" controlId="user">
-                <Form.Label>Usuario</Form.Label>
+                <Form.Label>Correo electrónico</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Ingresa tu usuario"
+                  placeholder="Ingresa tu correo electrónico"
                   onChange={(event) => {
                     changeHandler("email", event.target.value);
                   }}
                 />
                 <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-                {/* <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text> */}
                 <div className="valid-feedback">Looks good!</div>
               </Form.Group>
 
@@ -138,12 +100,12 @@ export default function Login() {
                   className="my-2"
                   variant="primary"
                   type="submit"
-                  onClick={userLogin}
+                  onClick={handleLogin}
                 >
                   INGRESAR
                 </Button>
               </div>
-              <div className="d-flex justify-content-end">
+              {/* <div className="d-flex justify-content-end">
                 <Button
                   className="my-2"
                   variant="primary"
@@ -153,19 +115,16 @@ export default function Login() {
                   INGRESA CON GOOGLE
                 </Button>
               </div>
-
+                */ }
               <Form.Check // prettier-ignore
                 type="switch"
                 id="custom-switch"
                 label="Eres nutricionista?"
-                onChange={() => changeHandler("nutri", !user.nutri)}
+                onChange={() => changeHandler("isNutritionist", !credentials.isNutritionist)}
               />
             </Form>
           </Col>
         </Row>
       </Container>
-    )
   );
 }
-
-/* const decoded = jwt.verify(token, secretKey, { algorithms: ['RS256'] }) */

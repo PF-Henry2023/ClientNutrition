@@ -6,8 +6,8 @@
 
 /* Cambiar el color de fondo del encabezado del día */
 /* .rbc-day-bg {
-    background-color: #f0f0f0;
-  } */
+  background-color: #f0f0f0;
+} */
 
 /* Cambiar el color del texto del título del evento */
 .rbc-event-label {
@@ -30,11 +30,41 @@
 }
 
 .rbc-today {
-  background-color: #9fa1a8;
+  background-color: #9FA1A8;
 }
 
-/* Cambiar el color de fondo de la celda del día */
-.rbc-day-bg:hover {
+.rbc-row-content {
+  margin: 0;
+  height: inherit;
+}
+
+.rbc-date-cell {
+  text-align: center;
+}
+
+.rbc-date-cell {
+  transition: background-color 0.5s ease;
+}
+
+.rbc-date-cell:hover {
   background-color: #737fc7;
-  cursor: pointer;
+}
+
+.rbc-row-content .rbc-row{
+  margin: 0;
+  height: inherit;
+}
+
+.rbc-button-link {
+  width: 100%;
+  text-align: center;
+  position: relative;
+  font-size: 14px;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

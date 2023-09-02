@@ -1,54 +1,49 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector, connect } from "react-redux";
-import { Calendar as BigCalendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
+import { Calendar as BigCalendar, dayjsLocalizer } from "react-big-calendar";
+import dayjs from "dayjs";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import "./Calendar.module.css";
+import "./custom-calendar.css";
 
 import Example from "./Modal";
+import { red } from "@cloudinary/url-gen/actions/adjust";
 
-const localizer = momentLocalizer(moment);
+const localizer = dayjsLocalizer(dayjs);
 
-
-const Calendar = () => {
+const Calendar = (props) => {
 
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
-  const [view, setView] = useState('month')
-
-  
+  const [view, setView] = useState("month"); 
 
   const handleSelectC = ({ start }) => {
-    const day = moment(start).day();
-    const hour = moment(start).hour();
-    if(view === "day"){
-      for (const dayA of props.day) {
-        if(day === dayA){
-          return window.alert("Dia no disponible");
-        } else {
-          if (fullscreen === true) {
-            setFullscreen(false);
-          }
-          setFullscreen(true);
-          setShow(true);
+    const day = dayjs(start).day();
+    const hour = dayjs(start).hour();
+    let isHourAvailable = false;
+
+    if(day === 0 || day === 6){
+      return window.alert("Dia no disponible")
+    }
+  
+    if (props.horarios[day]) {
+      for (const [horaInicio, horaFin] of props.horarios[day]) {
+        if (hour >= horaInicio && hour < horaFin) {
+          isHourAvailable = true; 
+          break;
         }
       }
-      for (const hourA of props.hour) {
-        if(hour > hourA[0] && hour < hourA[1]){
-          return window.alert("Hora no disponible");
-        } else {
-          if (fullscreen === true) {
-            setFullscreen(false);
-          }
-          setFullscreen(true);
-          setShow(true);
-        }
-      }
+    }
+  
+    if (isHourAvailable) {
+      setFullscreen(true);
+      setShow(true);
     } else {
-      setView("day");
+      window.alert("Hora no disponible");
     }
   };
+
+  
 
   const closedButton = () => {
     setShow(false);
@@ -56,49 +51,49 @@ const Calendar = () => {
 
   const dayPropGetter = (date) => {
     const dayStyle = {};
-    const dateA = moment(date).day();
-    const mapeo = props.day.map(e => {
-      if(dateA === e){
-        dayStyle.backgroundColor = "#E39C8E";
-      }
-    })
-    return {
-      style: dayStyle,
-    };
-  };
+    const dayWeek = dayjs(date).day();
+    if(dayWeek === 0 || dayWeek === 6){
+      dayStyle.backgroundColor = "#E39C8E";
+    }
 
+    return {
+      style: dayStyle
+    }
+  };
 
   const slotPropGetter = (date) => {
     const slotStyle = {};
-    for (const range of props.hour) {
-      if(moment(date).hour() > range[0] && moment(date).hour() < range[1]){
-        slotStyle.backgroundColor = "#E39C8E";
+    const diaSemana = dayjs(date).day();
+
+    if (props.horarios[diaSemana]) {
+      for (const [horaInicio, horaFin] of props.horarios[diaSemana]) {
+        if (dayjs(date).hour() >= horaInicio && dayjs(date).hour() < horaFin) {
+          slotStyle.backgroundColor = "#B5E38E"; 
+          break; 
+        }
       }
     }
+
     return {
       style: slotStyle,
     };
-
-  }
-  const openNewWindow = () => {
-    window.open(`http://www.stripe.com`, "_blank", "width=770, height=700");
   };
 
   return (
     <div>
-      <div>
+      <div className="container">
         <BigCalendar
-          style={{ height: "500px", width: "700px", margin: "auto" }}
           localizer={localizer}
-          views={["month", "week", "day"]}
-          defaultView={"month"}
-          onView={view}
-          onSelectSlot={handleSelectC}
           selectable
+          startAccessor="start"
+          endAccessor="end"
+          style={{ height: 700, width: 800 }}
+          views={["month", "week", "day"]} 
+          view={view} 
+          onView={setView} 
+          onSelectSlot={handleSelectC}
           dayPropGetter={dayPropGetter}
           slotPropGetter={slotPropGetter}
-          day={[0, 6]} hour={[[8,20], [0,3]]}
-
         />
         <Example
           show={show}
