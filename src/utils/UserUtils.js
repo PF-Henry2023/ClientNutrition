@@ -57,6 +57,5 @@ export {
     handleUserLogout,
     isUserLoggedIn,
     getLoggedInUser,
-    getUserRole,
     coordinator
 }
