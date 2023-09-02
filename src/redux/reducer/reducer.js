@@ -1,9 +1,12 @@
+import { getLoggedInUser } from './../../utils/UserUtils'
+
 const initialState = {
   users: [],
   nutritionists: [],
   allNutritionists: [],
   quotes: [],
   appointments: [],
+  user: getLoggedInUser()
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -45,7 +48,17 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         appointments: action.payload,
       };
-
+    case "LOGIN":
+      return {
+        ...state,
+        user: action.payload
+      }
+    case "LOGOUT": {
+      return {
+        ...state,
+        user: null
+      }
+    }
     default:
       return { ...state };
   }

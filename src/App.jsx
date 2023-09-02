@@ -18,6 +18,7 @@ import TermsAndConditions from "./Components/TermsAndConditions/TermsAndConditio
 import NutriForm from "./Components/AdminView/NutriForm/NutriForm";
 import Success from "./Components/Payment/Success";
 import Cancel from "./Components/Payment/Cancel";
+import Protected from "./Components/Protected/Protected"
 // import { Cloudinary } from "@cloudinary/url-gen";
 
 const URL = "http://localhost:5173/";
@@ -44,9 +45,17 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}></Route>
         <Route path="/login" element={<Login />}></Route>
-        <Route path="/appointments" element={<UserProfile />}></Route>
+        <Route path="/appointments" element={
+          <Protected roles={["user"]}>
+            <UserProfile />
+          </Protected>
+        } />
         <Route path="/signup" element={<Create />}></Route>
-        <Route path="/adminprofile" element={<AdminView />}></Route>
+        <Route path="/adminprofile" element={
+          <Protected roles={["admin"]}>
+            <AdminView />
+          </Protected>
+        } />
         <Route path="/adminprofile/nutriform" element={<NutriForm />}></Route>
         <Route
           path="/adminprofile/detail/:id"

@@ -1,7 +1,10 @@
 import axios from "axios";
+import { handleUserLogin, getLoggedInUser, getUserRole, handleUserLogout } from './../../utils/UserUtils'
 
 export const GET_USERS = "GET_USERS";
 export const GET_APPOINTMENTS = "GET_APPOINTMENTS";
+export const LOGIN = "LOGIN"
+export const LOGOUT = "LOGOUT"
 
 export function getNutritionists() {
   return async function (dispatch) {
@@ -85,3 +88,26 @@ export const getAppointments = () => {
     });
   };
 };
+
+export const login = (credentials) => {
+  return async function(dispatch) {
+    const response =
+    credentials.isNutritionist === true
+      ? await axios.post("http://localhost:3001/nutritionists/login", credentials) //colocar ruta de logueo nutricionista.
+      : await axios.post("http://localhost:3001/users/login", credentials);
+
+    handleUserLogin(response.data.token)
+
+    return dispatch({
+      type: "LOGIN",
+      payload: getLoggedInUser()
+    })
+  }
+}
+
+export const logout = () => {
+  handleUserLogout()
+  return {
+    type: "LOGOUT"
+  }
+}

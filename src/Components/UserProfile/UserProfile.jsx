@@ -1,29 +1,10 @@
 import style from "./UserProfile.module.css"
-import Calendar from "../Calendar/Calendar";
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
-import { Button, Alert, Card, Container, Row, Col } from "react-bootstrap";
-
+import { Button, Alert, Card, Row, Col } from "react-bootstrap";
 
 export default function UserProfile(){ 
-    const tokenAccess = () => {
-        return [
-          JSON.parse(window.localStorage.getItem("token")),
-          JSON.parse(window.localStorage.getItem("access")),
-        ];
-      };
-
-    const navigate = useNavigate();  
-
-      useEffect(() => {
-
-    if(tokenAccess()[0].role !== 'user' || tokenAccess()[1] !== true) navigate('/')
-      })
-
-    
     return (
-    
             <Row >
                 <Col>
        
@@ -49,7 +30,4 @@ export default function UserProfile(){
        
         </Col>
         </Row>
-    
-        
-        
     )}
