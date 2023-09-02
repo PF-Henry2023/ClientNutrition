@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import "./style.css";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
@@ -9,19 +8,9 @@ import AdminInformation from "./AdminInformation/AdminInformation";
 import UserTable from './UserTable/UserTable'
 import NutriTable from "./NutriTable/NutriTable";
 import Button from "react-bootstrap/Button";
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 export default function AdminView() {
-  const tokenAccess = () => {
-    return [JSON.parse(window.localStorage.getItem('token')), JSON.parse(window.localStorage.getItem('access'))]
-  }
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (tokenAccess()[0]?.role !== "admin" || tokenAccess()[1] !== true) navigate('/')
-  }, [tokenAccess()[1]])
-
   return (
     <Container className="main">
       <Row>
