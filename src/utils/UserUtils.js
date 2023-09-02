@@ -34,10 +34,29 @@ function getUserRole() {
     return user.role
 }
 
+function coordinator() {
+    const role = getUserRole()
+
+    if (role == "admin") {
+        return {
+            profile: "/adminprofile"
+        }
+    } else if (role == "user") {
+        return {
+            profile: "/appointments"
+        }
+    } else { // we asume nutritionist
+        return {
+            profile: "/nutritionistprofile"
+        }
+    }
+}
+
 export {
     handleUserLogin,
     handleUserLogout,
     isUserLoggedIn,
     getLoggedInUser,
-    getUserRole
+    getUserRole,
+    coordinator
 }

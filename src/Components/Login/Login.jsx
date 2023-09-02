@@ -5,10 +5,10 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import axios from "axios";
 import { login } from './../../redux/actions/actions'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router";
+import { coordinator } from "../../utils/UserUtils";
 
 export default function Login() {
   const dispatch = useDispatch()
@@ -39,14 +39,7 @@ export default function Login() {
     if (user == null) {
       return
     }
-
-    if (user.role === "admin") {
-        navigate("/adminprofile")
-    } else if (user.role == "user") {
-        navigate("/appointments")
-    } else {
-        navigate("/nutritionistprofile")
-    }
+    navigate(coordinator().profile)
   }, [user])
 
   const changeHandler = (field, value) => {
@@ -56,14 +49,18 @@ export default function Login() {
     });
   };
 
-  const userLogin = async (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
-    dispatch(login(credentials))
+    dispatch(login(credentials, handleLoginError))
   }
 
-  const googleLogin = () => {
+  function handleLoginError(error) {
+    alert("Error al iniciar sesión. Por favor, verifica tus credenciales.");
+  }
+
+  /*const googleLogin = () => {
     window.open(url, "_blank");
-  };
+  };*/
 
   return (
       <Container className={style.container}>
@@ -81,9 +78,6 @@ export default function Login() {
                   }}
                 />
                 <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-                {/* <Form.Text className="text-muted">
-            We'll never share your email with anyone else.
-          </Form.Text> */}
                 <div className="valid-feedback">Looks good!</div>
               </Form.Group>
 
@@ -106,12 +100,12 @@ export default function Login() {
                   className="my-2"
                   variant="primary"
                   type="submit"
-                  onClick={userLogin}
+                  onClick={handleLogin}
                 >
                   INGRESAR
                 </Button>
               </div>
-              <div className="d-flex justify-content-end">
+              {/* <div className="d-flex justify-content-end">
                 <Button
                   className="my-2"
                   variant="primary"
@@ -121,12 +115,12 @@ export default function Login() {
                   INGRESA CON GOOGLE
                 </Button>
               </div>
-
+                */ }
               <Form.Check // prettier-ignore
                 type="switch"
                 id="custom-switch"
                 label="Eres nutricionista?"
-                onChange={() => changeHandler("nutri", !credentials.isNutritionist)}
+                onChange={() => changeHandler("isNutritionist", !credentials.isNutritionist)}
               />
             </Form>
           </Col>
