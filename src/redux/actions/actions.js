@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const GET_USERS = "GET_USERS";
 export const GET_APPOINTMENTS = "GET_APPOINTMENTS";
+export const GET_SCHEDULES = "GET_SCHEDULES";
 
 export function getNutritionists() {
   return async function (dispatch) {
@@ -85,3 +86,15 @@ export const getAppointments = () => {
     });
   };
 };
+
+export const getSchedules = () => {
+  return async function (dispatch) {
+    const response = await axios.get(
+      "http://localhost:3001/nutritionists/horariosCombinados"
+    );
+    return dispatch({
+      type: "GET_SCHEDULES",
+      payload: response.data,
+    })
+  }
+}

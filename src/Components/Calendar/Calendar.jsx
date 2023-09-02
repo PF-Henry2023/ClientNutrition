@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector, connect } from "react-redux";
 import { Calendar as BigCalendar, dayjsLocalizer } from "react-big-calendar";
 import dayjs from "dayjs";
+import {getSchedules} from "../../redux/actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "./custom-calendar.css";
@@ -17,6 +18,13 @@ const Calendar = (props) => {
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
   const [view, setView] = useState("month"); 
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(getSchedules());
+  },[])
+  
+  const schedules = useSelector(e => e.schedules);
 
   const handleSelectC = ({ start }) => {
     const day = dayjs(start).day();
@@ -27,8 +35,8 @@ const Calendar = (props) => {
       return window.alert("Dia no disponible")
     }
   
-    if (props.horarios[day]) {
-      for (const [horaInicio, horaFin] of props.horarios[day]) {
+    if (schedules[day]) {
+      for (const [horaInicio, horaFin] of schedules[day]) {
         if (hour >= horaInicio && hour < horaFin) {
           isHourAvailable = true; 
           break;
@@ -66,8 +74,8 @@ const Calendar = (props) => {
     const slotStyle = {};
     const diaSemana = dayjs(date).day();
 
-    if (props.horarios[diaSemana]) {
-      for (const [horaInicio, horaFin] of props.horarios[diaSemana]) {
+    if (schedules[diaSemana]) {
+      for (const [horaInicio, horaFin] of schedules[diaSemana]) {
         if (dayjs(date).hour() >= horaInicio && dayjs(date).hour() < horaFin) {
           slotStyle.backgroundColor = "#B5E38E"; 
           break; 

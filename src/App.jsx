@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./zucca-theme.css";
@@ -29,14 +29,9 @@ function App() {
   //     cloudName: "dhmsbud0o",
   //   },
   // });
+  
 
-  const horariosTrabajo = {
-    1: [[3, 7], [4,8]],          
-    2: [[8, 12], [14, 18]], 
-    3: [[10, 15]],         
-    4: [[8, 12], [13, 16]], 
-    5: [[9, 14]],                   
-  };
+  
 
   return (
     <div className="app">
@@ -56,7 +51,7 @@ function App() {
           path="/adminprofile/detail/users/:id"
           element={<UsersDetail />}
         ></Route>
-        <Route path="/appointments/new" element={<Calendar horarios={horariosTrabajo}/>}></Route>
+        <Route path="/appointments/new" element={<Calendar/>}></Route>
         <Route
           path="/nutritionistprofile"
           element={<NutritionistProfile />}

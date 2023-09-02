@@ -8,7 +8,8 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { validate, isButtonDisabled } from "../../Create/Validate";
-import style from './NutriForm.module.css'
+import formatoCalendar from "./NutriSchedule/dateFormater"
+import style from './NutriForm.module.css';
 
 const NutriForm = () => {
     const [nutriInfo, setInfo] = useState([])
@@ -58,10 +59,11 @@ const NutriForm = () => {
         for (const keyS in day) {
           formSchedulesFormmated[keyD].push(Number(day[keyS].value));
         }
+        formSchedulesFormmated[keyD] = formatoCalendar(formSchedulesFormmated[keyD]);
       }
 
-      const cleanedFormSchedules = cleanObject(formSchedulesFormmated);
 
+      let cleanedFormSchedules = cleanObject(formSchedulesFormmated);
           const combinedData = {
             ...nutriInfo,
             diasDeTrabajo: { ...cleanedFormSchedules },
