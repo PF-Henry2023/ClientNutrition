@@ -1,7 +1,10 @@
 import axios from "axios";
+import { handleUserLogin, getLoggedInUser, handleUserLogout } from './../../utils/UserUtils'
 
 export const GET_USERS = "GET_USERS";
 export const GET_APPOINTMENTS = "GET_APPOINTMENTS";
+export const LOGIN = "LOGIN"
+export const LOGOUT = "LOGOUT"
 export const GET_SCHEDULES = "GET_SCHEDULES";
 
 export function getNutritionists() {
@@ -96,5 +99,64 @@ export const getSchedules = () => {
       type: "GET_SCHEDULES",
       payload: response.data,
     })
+  }
+}
+
+export const getSchedules = () => {
+  return async function (dispatch) {
+    const response = await axios.get(
+      "http://localhost:3001/nutritionists/horariosCombinados"
+    );
+    return dispatch({
+      type: "GET_SCHEDULES",
+      payload: response.data,
+    })
+  }
+}
+
+export const login = (credentials, errorHandler) => {
+  return async function(dispatch) {
+    try {
+      const response =
+      credentials.isNutritionist === true
+        ? await axios.post("http://localhost:3001/nutritionists/login", credentials) //colocar ruta de logueo nutricionista.
+        : await axios.post("http://localhost:3001/users/login", credentials);
+  
+      handleUserLogin(response.data.token)
+  
+      return dispatch({
+        type: "LOGIN",
+        payload: getLoggedInUser()
+      })
+    } catch(error) {
+      errorHandler(error)
+    }
+  }
+}
+
+export const logout = () => {
+  handleUserLogout()
+  return {
+    type: "LOGOUT"
+  }
+}
+
+export const signup = (userInformation, errorHandler) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/users/signup",
+        userInformation
+      );
+  
+      handleUserLogin(response.data.token)
+  
+      return dispatch({
+        type: "LOGIN",
+        payload: getLoggedInUser()
+      })
+    } catch(error) {
+      errorHandler(error)
+    }
   }
 }
