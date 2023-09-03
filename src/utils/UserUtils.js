@@ -4,6 +4,7 @@ function handleUserLogin(token) {
     const decoded = jwtDecode(token);
 
     const user = {
+        id: decoded.id,
         name: decoded.name,
         image: decoded.image,
         role: decoded.role
@@ -11,6 +12,7 @@ function handleUserLogin(token) {
 
     window.localStorage.setItem("token", token);
     window.localStorage.setItem("user", JSON.stringify(user));
+    window.localStorage.setItem("id", user.id);
 }
 
 function handleUserLogout() {

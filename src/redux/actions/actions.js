@@ -5,6 +5,7 @@ export const GET_USERS = "GET_USERS";
 export const GET_APPOINTMENTS = "GET_APPOINTMENTS";
 export const LOGIN = "LOGIN"
 export const LOGOUT = "LOGOUT"
+export const GET_SCHEDULES = "GET_SCHEDULES";
 
 export function getNutritionists() {
   return async function (dispatch) {
@@ -77,17 +78,41 @@ export function getUsersId(id) {
   };
 }
 
-export const getAppointments = () => {
+export const getAppointments = (id) => {
   return async function (dispatch) {
     const response = await axios.get(
-      "http://localhost:3001/calendarGoogle/allEvents/calendar"
+      `http://localhost:3001/users/${id}`
     );
     return dispatch({
       type: "GET_APPOINTMENTS",
-      payload: response.data,
+      payload: response.data.Events,
     });
   };
 };
+
+export const getSchedules = () => {
+  return async function (dispatch) {
+    const response = await axios.get(
+      "http://localhost:3001/nutritionists/horariosCombinados"
+    );
+    return dispatch({
+      type: "GET_SCHEDULES",
+      payload: response.data,
+    })
+  }
+}
+
+export const getNutritionistSchedule = (id) => {
+  return async function (dispatch) {
+    const response = await axios.get(
+      `http://localhost:3001/nutritionists/searchBy?id=${id}`
+    );
+    return dispatch({
+      type: "GET_NUTRICIONIST_SCHEDULES",
+      payload: response.data.diasDeTrabajo,
+    })
+  }
+}
 
 export const login = (credentials, errorHandler) => {
   return async function(dispatch) {
@@ -135,3 +160,4 @@ export const signup = (userInformation, errorHandler) => {
     }
   }
 }
+
