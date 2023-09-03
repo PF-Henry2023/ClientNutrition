@@ -62,6 +62,7 @@ export default function Login() {
     window.open(url, "_blank");
   };*/
 
+
   return (
       <Container className={style.container}>
         <Row className="justify-content-md-center">

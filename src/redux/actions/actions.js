@@ -78,14 +78,14 @@ export function getUsersId(id) {
   };
 }
 
-export const getAppointments = () => {
+export const getAppointments = (id) => {
   return async function (dispatch) {
     const response = await axios.get(
-      "http://localhost:3001/calendarGoogle/allEvents/calendar"
+      `http://localhost:3001/users/${id}`
     );
     return dispatch({
       type: "GET_APPOINTMENTS",
-      payload: response.data,
+      payload: response.data.Events,
     });
   };
 };
@@ -102,14 +102,14 @@ export const getSchedules = () => {
   }
 }
 
-export const getSchedules = () => {
+export const getNutritionistSchedule = (id) => {
   return async function (dispatch) {
     const response = await axios.get(
-      "http://localhost:3001/nutritionists/horariosCombinados"
+      `http://localhost:3001/nutritionists/searchBy?id=${id}`
     );
     return dispatch({
-      type: "GET_SCHEDULES",
-      payload: response.data,
+      type: "GET_NUTRICIONIST_SCHEDULES",
+      payload: response.data.diasDeTrabajo,
     })
   }
 }
@@ -160,3 +160,4 @@ export const signup = (userInformation, errorHandler) => {
     }
   }
 }
+

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector, connect } from "react-redux";
 import { Calendar as BigCalendar, dayjsLocalizer } from "react-big-calendar";
 import dayjs from "dayjs";
-import {getSchedules} from "../../redux/actions/actions";
+import {getSchedules, getNutritionistSchedule} from "../../redux/actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "./custom-calendar.css";
@@ -20,11 +20,19 @@ const Calendar = (props) => {
   const [view, setView] = useState("month"); 
   const dispatch = useDispatch();
   
-  useEffect(() => {
-    dispatch(getSchedules());
-  },[])
-  
+  const appointments = useSelector(e => e.appointments);
+
   const schedules = useSelector(e => e.schedules);
+
+  useEffect(() => {
+    if(!appointments){
+      dispatch(getSchedules())
+    } else {
+      const id = window.localStorage.getItem("idNutri");
+      dispatch(getNutritionistSchedule(id))
+    }
+  },[]);
+  
 
   const handleSelectC = ({ start }) => {
     const day = dayjs(start).day();
@@ -88,6 +96,8 @@ const Calendar = (props) => {
     };
   };
 
+
+
   return (
     <div>
       <div className="container">
@@ -110,7 +120,6 @@ const Calendar = (props) => {
           closedButton={closedButton}
         />
       </div>
-      <button onClick={() => openNewWindow()}>Pagar con Stripe</button>
     </div>
   );
 };
