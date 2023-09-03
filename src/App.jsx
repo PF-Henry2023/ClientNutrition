@@ -18,6 +18,8 @@ import TermsAndConditions from "./Components/TermsAndConditions/TermsAndConditio
 import NutriForm from "./Components/AdminView/NutriForm/NutriForm";
 import Success from "./Components/Payment/Success";
 import Cancel from "./Components/Payment/Cancel";
+import Protected from "../src/Components/Protected/Protected";
+import Cloudinary from "../src/Components/Cloudinary/Cloudinary";
 
 const URL = "http://localhost:5173/";
 axios.defaults.baseURL = URL;
