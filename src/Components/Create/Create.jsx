@@ -80,7 +80,7 @@ export default function Create() {
           <h2 className="mb-4">Completa tu perfil</h2>
           {/* <GoogleLogin
             clientId="659206981480-dpv28b5to1u20p6oncccfrl2pkgmei5b.apps.googleusercontent.com"
-            buttonText="Iniciar sesión con Google"
+            buttonText="Registrarse con Google"
             onSuccess={onSuccessLogin}
             onFailure={onFailureLogin}
             cookiePolicy={"single_host_origin"}

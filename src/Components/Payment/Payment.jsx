@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 const keyPublicStripe = "pk_test_51NiNMSL13IBKWmcBnqVCCI0Cc5913gnkwN8OVf2SWTDKiykqi1Ehb0i2bdTrMVTM5ZUpQLhCGgTWR81bvdxhU42w001HRMbgd9"
 const stripePromise = loadStripe(keyPublicStripe);
 
-const StripePayment = () => {
+const StripePayment = (props) => {
     const handleClick = async () => {
         const stripe = await stripePromise;
 
@@ -25,7 +25,7 @@ const StripePayment = () => {
     };
 
     return (
-        <button onClick={handleClick}>
+        <button onClick={props.handleClick}>
             Pagar con Stripe
         </button>
     );

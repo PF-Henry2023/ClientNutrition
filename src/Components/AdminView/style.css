@@ -37,12 +37,16 @@
 }
 
 .nutricionistasList {
-  width: 1000px;
+  width: 100vh;
   min-height: 500px;
   position: relative;
   right: 10px;
   background-color: rgba(0, 0, 0, 0.138);
   border-radius: 10px;
+}
+
+.table-responsive {
+  width: inherit;
 }
 
 
