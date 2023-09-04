@@ -6,6 +6,9 @@ export const GET_APPOINTMENTS = "GET_APPOINTMENTS";
 export const LOGIN = "LOGIN"
 export const LOGOUT = "LOGOUT"
 export const GET_SCHEDULES = "GET_SCHEDULES";
+export const POST_APPOINTMENT = "POST_APPOINTMENT"
+export const SAVE_INFO_EVENT = 'SAVE_INFO_EVENT'
+export const RETURN_INFO_EVENT = 'RETURN_INFO_EVENT'
 
 export function getNutritionists() {
   return async function (dispatch) {
@@ -59,7 +62,6 @@ export const addUser = (dataAct) => {
 export function getUsers() {
   return async function (dispatch) {
     var json = await axios.get("http://localhost:3001/users/allUsers");
-
     return dispatch({
       type: "GET_USERS",
       payload: json.data,
@@ -161,3 +163,21 @@ export const signup = (userInformation, errorHandler) => {
   }
 }
 
+export const postAppointment = (dataAppointment) => {
+  return async function (dispatch) {
+    return axios.post(`http://localhost:3001/events`, dataAppointment).then((res) => {
+      dispatch({ 
+        type: "POST_USER", 
+        payload: res.data 
+      })
+    })
+  }
+}
+
+export const saveInfoEvent = (info) => {
+  console.log('entre a la funcion');
+    return({
+      type: 'SAVE_INFO_EVENT',
+      payload: info}
+    )
+}
