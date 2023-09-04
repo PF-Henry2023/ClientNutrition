@@ -1,6 +1,7 @@
 export default function TermsAndConditions() {
     return (
         <div>
+            <h2>Términos y condiciones</h2>
            <h6>1. Aceptación de Términos:</h6>
             Al acceder y utilizar el sitio web de ZUCCA ("el Sitio"), aceptas cumplir y estar sujeto a estos Términos y Condiciones de Uso. Si no estás de acuerdo con estos términos, te recomendamos que no utilices el sitio.
 
@@ -31,9 +32,10 @@ export default function TermsAndConditions() {
             <h6>10. Contacto:</h6>
             Si tienes preguntas o inquietudes sobre estos Términos y Condiciones, contáctanos a través de la información proporcionada en la sección de contacto del sitio.
                     <hr />
-            <h6>Política de privacidad</h6>
+            <h3>Política de privacidad</h3>
+            
             En ZUCCA, nos comprometemos a proteger tu privacidad y tus datos personales. Esta Política de Privacidad describe cómo recopilamos, utilizamos, almacenamos y protegemos la información que proporcionas a través de nuestro sitio web. Al utilizar nuestro sitio, aceptas los términos de esta Política de Privacidad.
-
+            <br />
             <h6>1. Información Recopilada:</h6>
             Recolectamos información que nos proporcionas voluntariamente al utilizar nuestro sitio y al participar en nuestras sesiones de asesoramiento nutricional. Esto puede incluir tu nombre, dirección de correo electrónico, información de contacto y detalles relacionados con tu salud y objetivos.
 

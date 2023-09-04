@@ -7,7 +7,8 @@ const initialState = {
   quotes: [],
   appointments: [],
   user: getLoggedInUser(),
-  schedules: {}
+  schedules: {},
+  infoEvent : {}
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -38,8 +39,7 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case "GET_USERS":
-
-    const filtered = action.payload.filter((e) => e.role === "user" )
+      const filtered = action.payload.filter((e) => e.role === "user" )
       return {
         ...state,
         users: filtered,
@@ -70,6 +70,16 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         schedules: action.payload,
       }
+    case "POST_APPOINTMENT":
+      return {
+        ...state,
+        appointments: action.payload
+      };
+      case 'SAVE_INFO_EVENT':
+        return {
+          ...state,
+          infoEvent: action.payload
+        };
 
     default:
       return { ...state };

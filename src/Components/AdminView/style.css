@@ -2,6 +2,7 @@
   width: 1000px;
   height: 700px;
   font-weight: bold;
+  align-items: start;
 }
 
 .main .nav-link {

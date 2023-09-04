@@ -2,7 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
-import logo from "../../assets/logo.png";
+import ZuccaLogoNav from "../../assets/ZuccaLogoNav.png";
 import { Button, Image } from "react-bootstrap";
 import styles from "./NavBar.module.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -34,8 +34,9 @@ function NavBar() {
       navbar.push(
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="#home">Cómo trabajamos?</Nav.Link>
-            <Nav.Link href="#link">Testimonios</Nav.Link>
+          <Nav.Link href="#home">¿Por qué Zucca?</Nav.Link>
+            <Nav.Link href="#link">Quienes nos eligen</Nav.Link>
+            <Nav.Link href="#home">¿Cómo trabajamos?</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       );
@@ -90,10 +91,10 @@ function NavBar() {
   }
 
   return (
-      <Navbar fixed="top" className="bg-body-tertiary">
+      <Navbar fixed="top" bg="white" variant="light">
         <Container>
           <Navbar.Brand href="/">
-            <Image className={styles.logo} src={logo} />
+            <Image className={styles.logo} src={ZuccaLogoNav} />
           </Navbar.Brand>
           {drawNavbar()}
         </Container>
