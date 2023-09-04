@@ -1,17 +1,26 @@
 .text {
     align-items: center;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    text-align: right;
+    text-align: center;
     }
 .title {
     font-size: 60px;
     align-items: center;
     text-align: center;
 }
-.container {
-    height: 90vh; /* Establece la altura del div al 100% de la altura de la viewport */
-    width: 100%;
-    margin: 0px;
-    background-color: rgb(255, 255, 255);
-    padding: 2em;
-    }
+.cardContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh; 
+        width: 100%;
+        padding: 1em;
+        margin: 0px;
+        background-color: rgb(255, 255, 255);
+        margin-right: 30px; /* Agrega margen derecho entre las tarjetas */
+        margin-left: 30px; 
+      }
+.cardContainer > div {
+        margin: 0 5em; /* Agrega espacio horizontal entre las tarjetas */
+      }
+      
