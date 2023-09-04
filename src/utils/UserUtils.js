@@ -2,12 +2,12 @@ import jwtDecode from "jwt-decode";
 
 function handleUserLogin(token) {
     const decoded = jwtDecode(token);
-
+    
     const user = {
         id: decoded.id,
         name: decoded.name,
         image: decoded.image,
-        role: decoded.role
+        role: decoded.role ? decoded.role : "nutritionist"
     }
 
     window.localStorage.setItem("token", token);
