@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from 'react-bootstrap/InputGroup';
 import styles from "./Cloudinary.module.css";
 import cloudinaryConfig from './CloudinaryCredentials';
+import Container from 'react-bootstrap/Container';
 
 const Cloudinary = () => {
 
