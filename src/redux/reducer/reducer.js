@@ -14,8 +14,6 @@ const initialState = {
 const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case "GET_NUTRITIONISTS":
-      console.log(action.payload.nutritionists); // Puedes colocar los console.log aquí
-      console.log(action.payload.nutritionists);
       return {
         ...state,
         allNutritionists: action.payload,
