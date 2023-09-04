@@ -1,5 +1,6 @@
 import styles from "./Cards.module.css";
 import Card from 'react-bootstrap/Card';
+import iconProfile from "./iconProfile.png";
 
 export default function Cards() {
     return (
@@ -27,6 +28,7 @@ export default function Cards() {
 
                 <Card className="h-100" style={{ width: '18rem', backgroundColor: "#fd7e14" }}>
                     <Card.Body>
+                    <img className={styles.profilePicture} src="./iconProfile.png" alt="Imagen de perfil" />
                         <Card.Title>Dra. Lucia G.</Card.Title>
                         <Card.Text>
                             "ZUCCA ha revolucionado mi enfoque como profesional. Facilita la comunicación y me permite concentrarme en guiar a mis pacientes hacia sus objetivos. En el tiempo que llevo en la plataforma estoy sorprendida por la facilidad que plantea este sistema integral para llevar a mis pacientes a sus metas. Claramente es una nueva forma de encarar la nutrición de la que me enorgullece ser parte"

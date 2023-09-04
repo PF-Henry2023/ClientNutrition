@@ -23,4 +23,10 @@
 .cardContainer > div {
         margin: 0 5em; /* Agrega espacio horizontal entre las tarjetas */
       }
+.profilePicture {
+        height: 35px;
+        width: 35px;
+        margin-right: 10px;
+        border-radius: 13px;
+    }
       
