@@ -7,25 +7,6 @@ const keyPublicStripe = "pk_test_51NiNMSL13IBKWmcBnqVCCI0Cc5913gnkwN8OVf2SWTDKiy
 const stripePromise = loadStripe(keyPublicStripe);
 
 const Example = (props) => {
-  const [selectedTimezone, setSelectedTimezone] = useState("");
-  const [selectedTimeStart, setSelectedTimeStart] = useState("10:00");
-  const [selectedTimeEnd, setSelectedTimeEnd] = useState("10:00");
-
-  const handleTimezoneChange = (newTimezone) => {
-    console.log(newTimezone.value);
-    setSelectedTimezone(newTimezone.value);
-  };
-
-  const handleTimeChangeStart = (newTime) => {
-    console.log(newTime);
-    setSelectedTimeStart(newTime);
-  };
-
-  const handleTimeChangeEnd = (newTime) => {
-    console.log(newTime);
-    setSelectedTimeEnd(selectedTimeEnd);
-  };
-
 
   const handleClick = async (e) => {
     e.preventDefault();

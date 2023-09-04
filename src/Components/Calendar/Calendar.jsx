@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector, connect } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { Calendar as BigCalendar, dayjsLocalizer } from "react-big-calendar";
 import dayjs from "dayjs";
 import {getSchedules, getNutritionistSchedule} from "../../redux/actions/actions";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "./custom-calendar.css";
-
+import { saveInfoEvent } from "../../redux/actions/actions";
 import Example from "./Modal";
 import { red } from "@cloudinary/url-gen/actions/adjust";
 
@@ -16,26 +16,33 @@ const Calendar = (props) => {
 
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
-  const [view, setView] = useState("month"); 
+  const [view, setView] = useState("month");
   const dispatch = useDispatch();
-  
-  const appointments = useSelector(e => e.appointments);
 
+  const appointments = useSelector(e => e.appointments);
   const schedules = useSelector(e => e.schedules);
 
   useEffect(() => {
-    if(!appointments){
+    if(!appointments.length){
       dispatch(getSchedules())
     } else {
       const id = window.localStorage.getItem("idNutri");
       dispatch(getNutritionistSchedule(id))
     }
   },[]);
-  
 
   const handleSelectC = ({ start }) => {
-    const day = dayjs(start).day();
+    const day = dayjs(start).day()
+    const date = dayjs(start).date()
     const hour = dayjs(start).hour();
+    const month = dayjs(start).month();
+    const year = dayjs(start).year()
+    
+    const info = {hour,date,month,year}
+    window.localStorage.setItem('infoEvent', JSON.stringify(info));
+    const infoAppointment = JSON.parse(localStorage.getItem("infoEvent"));
+    console.log(infoAppointment);
+
     let isHourAvailable = false;
 
     if(day === 0 || day === 6){
@@ -58,8 +65,6 @@ const Calendar = (props) => {
       window.alert("Hora no disponible");
     }
   };
-
-  
 
   const closedButton = () => {
     setShow(false);
@@ -106,7 +111,7 @@ const Calendar = (props) => {
           startAccessor="start"
           endAccessor="end"
           style={{ height: 700, width: 800 }}
-          views={["month", "week", "day"]} 
+          views={["month", "day"]} 
           view={view} 
           onView={setView} 
           onSelectSlot={handleSelectC}

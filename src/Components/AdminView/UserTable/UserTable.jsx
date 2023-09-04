@@ -1,32 +1,33 @@
 import Table from "react-bootstrap/Table";
 import style from "./UserTable.module.css";
 import { useState, useEffect } from "react";
+import { useDispatch, useSelector} from "react-redux";
+import { getUsers } from "../../../redux/actions/actions";
 
 function UserTable() {
-  const [users, setUsers] = useState(false);  
+
+  const dispatch = useDispatch();
+  const users = useSelector(state => state.users);
   
   useEffect(() => {
-    
-      if (!users)
-        fetch("http://localhost:3001/users/allusers")
-          .then((response) => response.json())
-          .then((data) => { if (data[0]) setUsers(data);});
-      
-    
-  },[users])
+    if (users.length < 1) dispatch(getUsers());
+  }, [dispatch, users]);
+
+  console.log(users);
+
 
   const openNewWindow = (id) => {
     window.open(`http://localhost:5173/adminprofile/detail/users/${id}`, "_blank", "width=770, height=700");
   };
 
-
+  
 
 
   return (
     <Table striped bordered hover responsive className="shadow-sm text-center">
       <thead>
         <tr>
-          <th>#</th>
+          <th>ID</th>
 
           <th key={1}>Nombre</th>
           <th key={2}>Apellidos</th>
