@@ -27,7 +27,7 @@ export default function NutriDetail() {
         <th key={1}>Nombre Nutricionista</th>
         <th key={2}>Apellidos</th>
         <th key={3}>Email</th>
-        <th key={4}>Numero de citas</th>
+        <th key={4}>Número de citas</th>
       </tr>
     </thead>
     <tbody>

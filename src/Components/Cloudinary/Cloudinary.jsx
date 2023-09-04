@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Container, FormGroup, Input } from 'reactstrap';
+import Form from "react-bootstrap/Form";
+import InputGroup from 'react-bootstrap/InputGroup';
 import styles from "./Cloudinary.module.css";
 import cloudinaryConfig from './CloudinaryCredentials';
 
@@ -40,12 +41,12 @@ const Cloudinary = () => {
         <div>
             <Container className={styles.container}>
                 <h1>Subiendo Archivos</h1>
-                <FormGroup>
-                    <Input
+                <Form.Group>
+                    <InputGroup
                         type='file'
                         placeholder='Ningún archivo seleccionado'
                         onChange={handleUploadFile}
-                    ></Input>   
+                    ></InputGroup>   
                     {loading ? (
                         <h3>Cargando Archivos...</h3>
                         ) : ( uploadSuccess ? (
@@ -54,7 +55,7 @@ const Cloudinary = () => {
                                 <p>{file ? file : ""}</p>
                             )
                     )}          
-                </FormGroup>
+                </Form.Group>
             </Container>
         </div>
      );
