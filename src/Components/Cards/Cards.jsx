@@ -3,7 +3,7 @@ import Card from 'react-bootstrap/Card';
 
 export default function Cards() {
     return (
-        <div className={styles.divConAlturaViewport}>
+        <div className={styles.container}>
         <div className={styles.text}>
             <div className={styles.title}>QUIENES NOS ELIGEN</div>
 

@@ -8,7 +8,7 @@
     align-items: center;
     text-align: center;
 }
-.divConAlturaViewport {
+.container {
     height: 90vh; /* Establece la altura del div al 100% de la altura de la viewport */
     width: 100%;
     margin: 0px;
