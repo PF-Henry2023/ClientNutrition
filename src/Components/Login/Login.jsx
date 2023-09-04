@@ -9,6 +9,8 @@ import { login } from './../../redux/actions/actions'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router";
 import { coordinator } from "../../utils/UserUtils";
+import GoogleLogin from "./GoogleLogin/GoogleLogin";
+const clientId = "659206981480-kto0rcmeb3puh10fht8626diq6176m1q.apps.googleusercontent.com";
 
 export default function Login() {
   const dispatch = useDispatch()
@@ -22,6 +24,9 @@ export default function Login() {
     isNutritionist: false,
   });
 
+  const [ userCredentialsOauth, setUserCredentialsOauth ] = useState({
+    isNutritionist: false,
+  })
   /*
   const [url, setUrl] = useState("");
 
@@ -47,6 +52,9 @@ export default function Login() {
       ...credentials,
       [field]: value,
     });
+    setUserCredentialsOauth({
+      [field]: value,
+    })
   };
 
   const handleLogin = async (event) => {
@@ -97,6 +105,7 @@ export default function Login() {
                 </Form.Control.Feedback>
               </Form.Group>
               <div className="d-flex justify-content-end">
+                <GoogleLogin clientId={ clientId } isNutritionist={userCredentialsOauth}/>
                 <Button
                   className="my-2"
                   variant="primary"

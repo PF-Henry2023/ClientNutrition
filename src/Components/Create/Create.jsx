@@ -7,20 +7,21 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { validate, isButtonDisabled } from "./Validate";
-import GoogleLogin from "react-google-login";
 import { useDispatch, useSelector } from "react-redux";
-import { signup } from "./../../redux/actions/actions"
+import { signup } from "./../../redux/actions/actions";
 import { coordinator } from "../../utils/UserUtils";
+import { gapi } from "gapi-script";
+import GoogleSingUp from "./GoogleSingUp/GoogleSingUp";
 
 export default function Create() {
-
   const navigate = useNavigate();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user)
+  const user = useSelector((state) => state.user);
 
   const [userInformation, setInfo] = useState({});
-  const [errors, setErrors] = useState(validate(userInformation)); 
+  const [errors, setErrors] = useState(validate(userInformation));
+  const clientId = "659206981480-kto0rcmeb3puh10fht8626diq6176m1q.apps.googleusercontent.com";
 
   const changeHandler = (field, value) => {
     setInfo({
@@ -35,10 +36,10 @@ export default function Create() {
       })
     );
   };
-  
+
   const handleSignup = async (event) => {
     event.preventDefault();
-    dispatch(signup(userInformation, handleSignupError))
+    dispatch(signup(userInformation, handleSignupError));
   };
 
   function handleSignupError(error) {
@@ -47,11 +48,17 @@ export default function Create() {
 
   useEffect(() => {
     if (user == null) {
-      return
+      return;
     }
 
-    navigate(coordinator().profile)
-  }, [user])
+    navigate(coordinator().profile);
+  }, [user]);
+
+  useEffect(() => {
+    gapi.load("client:auth2", () => {
+      gapi.auth2.init({clientId: clientId})
+    })
+  },[])
 
   /*const onSuccessLogin = async (response) => {
     const { tokenId } = response;
@@ -73,6 +80,7 @@ export default function Create() {
   };
   */
 
+
   return (
     <Container className={style.container}>
       <Row className="justify-content-md-center">
@@ -86,8 +94,8 @@ export default function Create() {
             cookiePolicy={"single_host_origin"}
             scope="https://www.googleapis.com/auth/calendar"
           /> */}
+          <GoogleSingUp clientId={clientId}/>
           <Form onSubmit={handleSignup}>
-
             <Form.Group className="mb-3" controlId="name">
               <Form.Label>Nombre(s):</Form.Label>
               <Form.Control
@@ -100,7 +108,10 @@ export default function Create() {
                 isValid={userInformation.name && !errors.name}
               />
               <Form.Control.Feedback type="invalid">
-                <div>El nombre debe tener al menos dos letras y no puede incluir números.</div>
+                <div>
+                  El nombre debe tener al menos dos letras y no puede incluir
+                  números.
+                </div>
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -116,7 +127,10 @@ export default function Create() {
                 isValid={userInformation.lastName && !errors.lastName}
               />
               <Form.Control.Feedback type="invalid">
-                <div>El apellido debe tener al menos dos letras y no puede incluir números.</div>
+                <div>
+                  El apellido debe tener al menos dos letras y no puede incluir
+                  números.
+                </div>
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -148,8 +162,8 @@ export default function Create() {
                 isValid={userInformation.password && !errors.password}
               />
               <Form.Control.Feedback type="invalid">
-                La contraseña debe contener 6 caracteres o más, una mayúscula y un
-                caracter especial.
+                La contraseña debe contener 6 caracteres o más, una mayúscula y
+                un caracter especial.
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -179,7 +193,7 @@ export default function Create() {
                 }}
                 isInvalid={errors.phone}
                 isValid={userInformation.phone && !errors.phone}
-  />
+              />
               <Form.Control.Feedback type="invalid">
                 <div>El teléfono debe tener 10 dígitos</div>
               </Form.Control.Feedback>
@@ -197,7 +211,7 @@ export default function Create() {
                 isValid={!errors.address && userInformation.address}
               />
               <Form.Control.Feedback type="invalid">
-               <div>Ingrese un domicilio válido</div>
+                <div>Ingrese un domicilio válido</div>
               </Form.Control.Feedback>
             </Form.Group>
 
@@ -217,7 +231,12 @@ export default function Create() {
               </Form.Select>
             </Form.Group>
 
-            <Button className="my-2" variant="primary" type="submit" disabled={isButtonDisabled(errors, userInformation)}>
+            <Button
+              className="my-2"
+              variant="primary"
+              type="submit"
+              disabled={isButtonDisabled(errors, userInformation)}
+            >
               Enviar
             </Button>
           </Form>

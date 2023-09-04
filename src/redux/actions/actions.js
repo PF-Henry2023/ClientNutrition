@@ -134,6 +134,26 @@ export const login = (credentials, errorHandler) => {
   }
 }
 
+export const loginOauth = (userCredentials, errorHandler) => {
+  return async function(dispatch) {
+    try {
+      const response = 
+      userCredentials.isNutritionist === true
+        ? await axios.post("http://localhost:3001/nutritionists/login/oauth2.0", { tokenId: userCredentials.tokenId})
+        : await axios.post("http://localhost:3001/users/login/oauth2.0", { tokenId: userCredentials.tokenId});
+
+        handleUserLogin(response.data.token)
+
+        return dispatch({
+          type: "LOGIN",
+          payload: getLoggedInUser()
+        })
+    } catch (error) {
+      errorHandler(error)
+    }
+  }
+}
+
 export const logout = () => {
   handleUserLogout()
   return {
@@ -156,6 +176,25 @@ export const signup = (userInformation, errorHandler) => {
         payload: getLoggedInUser()
       })
     } catch(error) {
+      errorHandler(error)
+    }
+  }
+}
+export const signupOauth2 = (userGoogleToken, errorHandler) => {
+  return async function(dispatch) {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/users/signup/oauth2.0",
+        { tokenId: userGoogleToken}
+      )
+        
+      handleUserLogin(response.data.message);
+
+        return dispatch({
+          type: "LOGIN",
+          payload: getLoggedInUser()
+        })
+    } catch (error) {
       errorHandler(error)
     }
   }
