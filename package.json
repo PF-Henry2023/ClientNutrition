@@ -17,6 +17,8 @@
     "axios": "^1.4.0",
     "bootstrap": "^5.3.1",
     "dayjs": "^1.11.9",
+    "gapi": "^0.0.3",
+    "gapi-script": "^1.2.0",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
     "react-big-calendar": "^1.8.2",
