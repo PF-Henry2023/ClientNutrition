@@ -79,7 +79,6 @@ export default function Login() {
                   }}
                 />
                 <Form.Control.Feedback type="invalid"></Form.Control.Feedback>
-                <div className="valid-feedback">Looks good!</div>
               </Form.Group>
 
               <Form.Group className="mb-3" controlId="password">
