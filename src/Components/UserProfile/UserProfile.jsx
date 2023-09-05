@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button, Alert, Card, Row, Col } from "react-bootstrap";
 import { useEffect } from "react";
 import { getAppointments } from "../../redux/actions/actions";
+import DownloadCloudinary from "../Cloudinary/Download"
 
 export default function UserProfile(){ 
 
@@ -41,9 +42,7 @@ export default function UserProfile(){
                 <Card.Body>
                     <Card.Title>Primera cita</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">04 de agosto de 2023 </Card.Subtitle>
-                    <Button className={style.cardButton} variant="primary" size="sm">+ Notas</Button>
-                    <Button className={style.cardButton} variant="primary" size="sm">+ Plan alimentario</Button>
-                    <Button className={style.cardButton} variant="primary" size="sm">+ Plan de entrenamiento</Button>
+                    <DownloadCloudinary></DownloadCloudinary>
                 </Card.Body>
             </Card> 
         </Col>
