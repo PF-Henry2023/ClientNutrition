@@ -9,10 +9,15 @@ import "./custom-calendar.css";
 import { saveInfoEvent } from "../../redux/actions/actions";
 import Example from "./Modal";
 import { red } from "@cloudinary/url-gen/actions/adjust";
+import { start } from "@cloudinary/url-gen/qualifiers/textAlignment";
 
 const localizer = dayjsLocalizer(dayjs);
 
 const Calendar = (props) => {
+
+  const customSlots = {
+    '2023-08-14': [13, 14], 
+  };
 
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
@@ -32,37 +37,54 @@ const Calendar = (props) => {
   },[]);
 
   const handleSelectC = ({ start }) => {
-    const day = dayjs(start).day()
-    const date = dayjs(start).date()
+    const day = dayjs(start).day();
+    const date = dayjs(start).date();
     const hour = dayjs(start).hour();
     const month = dayjs(start).month();
-    const year = dayjs(start).year()
-    
-    const info = {hour,date,month,year}
+    const year = dayjs(start).year();
+  
+    // Horarios ocupados
+    const currentSlot = dayjs(date);
+    const currentDate = currentSlot.format('YYYY-MM-DD');
+    const hourSlot = currentSlot.hour();
+  
+    const info = { hour, date, month, year };
     window.localStorage.setItem('infoEvent', JSON.stringify(info));
-    const infoAppointment = JSON.parse(localStorage.getItem("infoEvent"));
+    const infoAppointment = JSON.parse(localStorage.getItem('infoEvent'));
     console.log(infoAppointment);
-
+  
     let isHourAvailable = false;
-
-    if(day === 0 || day === 6){
-      return window.alert("Dia no disponible")
+    let isCustomSlotAvailable = true; // Agregamos una bandera para los custom slots
+  
+    if (day === 0 || day === 6) {
+      return window.alert('Día no disponible');
     }
   
+    
     if (schedules[day]) {
       for (const [horaInicio, horaFin] of schedules[day]) {
         if (hour >= horaInicio && hour < horaFin) {
-          isHourAvailable = true; 
+          isHourAvailable = true;
           break;
-        }
+        } 
       }
     }
-  
-    if (isHourAvailable) {
+    
+    if (customSlots[currentDate] && customSlots[currentDate].includes(hourSlot) ) {
+      isCustomSlotAvailable = false; // Cambiamos la bandera si el horario está ocupado en customSlots
+    }
+    
+    console.log(isCustomSlotAvailable);
+    
+    if (isHourAvailable && isCustomSlotAvailable) {
       setFullscreen(true);
       setShow(true);
     } else {
-      window.alert("Hora no disponible");
+      if (!isHourAvailable) {
+        window.alert('Hora no disponible');
+      } else if (!isCustomSlotAvailable) {
+        window.alert('Horario ocupado');
+      }
     }
   };
 
@@ -84,7 +106,15 @@ const Calendar = (props) => {
 
   const slotPropGetter = (date) => {
     const slotStyle = {};
+    const currentSlot = dayjs(date);
+    const currentDate = dayjs(currentSlot).format('YYYY-MM-DD');
+    const hour = currentSlot.hour();
     const diaSemana = dayjs(date).day();
+
+    if(customSlots[currentDate] && customSlots[currentDate].includes(hour)){
+      slotStyle.backgroundColor = "#9F7ECB";
+    }
+
 
     if (schedules[diaSemana]) {
       for (const [horaInicio, horaFin] of schedules[diaSemana]) {
@@ -111,7 +141,7 @@ const Calendar = (props) => {
           startAccessor="start"
           endAccessor="end"
           style={{ height: 700, width: 800 }}
-          views={["month", "day"]} 
+          views={["month", "week", "day"]} 
           view={view} 
           onView={setView} 
           onSelectSlot={handleSelectC}
