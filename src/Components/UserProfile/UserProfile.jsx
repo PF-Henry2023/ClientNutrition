@@ -20,6 +20,7 @@ export default function UserProfile(){
         window.localStorage.setItem("idNutri", nutriId);
     }
 
+    console.log(appointments);
 
     return (
             <Row >

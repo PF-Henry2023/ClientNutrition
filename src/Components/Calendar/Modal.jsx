@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -7,6 +7,24 @@ const keyPublicStripe = "pk_test_51NiNMSL13IBKWmcBnqVCCI0Cc5913gnkwN8OVf2SWTDKiy
 const stripePromise = loadStripe(keyPublicStripe);
 
 const Example = (props) => {
+
+
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    const savedDescription = localStorage.getItem("description");
+    if (savedDescription) {
+      setDescription(savedDescription);
+    }
+
+    return () => {
+      localStorage.removeItem("description");
+    };
+
+  }, []);
+
+
+  const infoAppointment = JSON.parse(localStorage.getItem("infoEvent"));
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -27,7 +45,13 @@ const Example = (props) => {
     if(result.error) {
         console.error(result.error.message);
     }
-};
+  };
+
+  useEffect(() => {
+    localStorage.setItem("description", JSON.stringify(description));
+    
+  }, [description]);
+
 
 
   return (
@@ -45,30 +69,23 @@ const Example = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Form>
-            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-              <Form.Label>Nombre:</Form.Label>
-              <Form.Control type="text" autoFocus />
+            <Form.Group>
+              <Form.Label>Informacion de la Cita</Form.Label>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Hora: {infoAppointment.hour}</Form.Label>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Dia: 0{infoAppointment.date}</Form.Label>
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Mes: 0{infoAppointment.month}</Form.Label>
             </Form.Group>
             <Form.Group>
               <Form.Label>Descripcion:</Form.Label>
-              <Form.Control as="textarea" />
+              <Form.Control as="textarea" value={description} onChange={(e) => setDescription(e.target.value)}/>
             </Form.Group>
-            {/* <Form.Group>
-              <Form.Label>Inicio:</Form.Label>
-              <TimePicker
-                onChange={handleTimeChangeStart}
-                value={selectedTimeStart}
-              />
-            </Form.Group> */}
-            {/* <Form.Group>
-              <Form.Label>Fin:</Form.Label>
-              <TimePicker
-                onChange={handleTimeChangeEnd}
-                value={selectedTimeEnd}
-              />
-            </Form.Group> */}
-            {/* <Button variant="outline-success" onClick={() => openNewWindow()}>Reservar cita</Button> */}
-            <Button variant="outline-primary" onClick={handleClick}>Reservar cita</Button>
+            <Button style={{marginTop: 10}}variant="outline-primary" onClick={handleClick}>Reservar cita</Button>
           </Form>
         </Modal.Body>
       </Modal>
