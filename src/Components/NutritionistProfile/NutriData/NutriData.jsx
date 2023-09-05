@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { getDetail } from "../../../redux/actions/actions";
+import Cloudinary from "../../Cloudinary/Cloudinary";
 
 const NutriData = () => {
   const dispatch = useDispatch();
@@ -20,8 +21,8 @@ const NutriData = () => {
     <Container className={style.container}>
       <h2 className="mb-4">Modificar mi perfil:</h2>
       <label>Actualizar foto de perfil:</label>
-      <input type="file" name="avatar" accept="image/png, image/jpeg" />
-
+      <Cloudinary></Cloudinary>
+      
       <Form>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Nombre(s):</Form.Label>
