@@ -22,6 +22,12 @@ const Calendar = (props) => {
   const appointments = useSelector(e => e.appointments);
   const schedules = useSelector(e => e.schedules);
 
+  window.localStorage.setItem('appointmentslocal', JSON.stringify(appointments));
+  const appointmentslocal =  JSON.parse(localStorage.getItem("appointmentslocal"));
+  console.log(appointmentslocal);
+
+  
+
   useEffect(() => {
     if(!appointments.length){
       dispatch(getSchedules())
@@ -38,10 +44,9 @@ const Calendar = (props) => {
     const month = dayjs(start).month();
     const year = dayjs(start).year()
     
-    const info = {hour,date,month,year}
+    const info = {hour,date,month,year,day}
+    console.log(info);
     window.localStorage.setItem('infoEvent', JSON.stringify(info));
-    const infoAppointment = JSON.parse(localStorage.getItem("infoEvent"));
-    console.log(infoAppointment);
 
     let isHourAvailable = false;
 
@@ -122,6 +127,7 @@ const Calendar = (props) => {
           show={show}
           fullscreen={fullscreen}
           closedButton={closedButton}
+          
         />
       </div>
     </div>
