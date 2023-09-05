@@ -29,8 +29,9 @@ const Success = () => {
 
     return (
         <div className={styles.container}>
-            <h1>PAGO REALIZADO CORRECTAMENTE</h1>
-            <h3>GRACIAS POR TÚ COMPRA</h3>
+            <h1>EL PAGO SE HA REALIZADO CORRECTAMENTE</h1>
+            <h3>MUCHAS GRACIAS!</h3>
+            <hr />
             <Link to="/">
                 <button>Home</button>
             </Link>
@@ -41,3 +42,5 @@ const Success = () => {
 };
 
 export default Success;
+
+

@@ -67,7 +67,7 @@ function NavBar() {
               className={styles.profilePicture}
               src={defaultUserIcon}
             />
-            {user.name}
+            Hola, {user.name}!
           </>
         }
       >
@@ -80,7 +80,7 @@ function NavBar() {
               : "/nutritionistprofile"
           }
         >
-          Perfil
+          Mi Perfil
         </NavDropdown.Item>
         <NavDropdown.Divider />
         <NavDropdown.Item onClick={() => handleLogout()}>

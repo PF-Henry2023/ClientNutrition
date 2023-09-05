@@ -1,6 +1,8 @@
 import styles from "./Cards.module.css";
 import Card from 'react-bootstrap/Card';
 import iconProfile from "./iconProfile.png";
+import { Link } from "react-router-dom";
+
 
 export default function Cards() {
     return (
