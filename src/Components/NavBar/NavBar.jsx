@@ -77,7 +77,7 @@ function NavBar() {
               ? "/adminprofile"
               : user.role === "user"
               ? "/appointments"
-              : "/nutriprofile"
+              : "/nutritionistprofile"
           }
         >
           Perfil

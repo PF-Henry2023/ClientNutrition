@@ -4,17 +4,17 @@ import style from "./NutriData.module.css";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
-import { getUsers } from "../../../redux/actions/actions";
+import { getDetail } from "../../../redux/actions/actions";
 
 const NutriData = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
 
   useEffect(() => {
-    if (users.length < 1) dispatch(getUsers());
+    if (users.length < 1) dispatch(getDetail());
   }, [dispatch, users]);
 
-  console.log(users[1]);
+  console.log(users[0]);
 
   return (
     <Container className={style.container}>
