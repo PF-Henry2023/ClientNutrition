@@ -54,10 +54,12 @@ function App() {
           element={<UsersDetail />}
         ></Route>
         <Route path="/appointments/new" element={<Calendar/>}></Route>
-        <Route
-          path="/nutritionistprofile"
-          element={<NutritionistProfile />}
-        ></Route>
+        
+        <Route path="/nutritionistprofile" element={
+          <Protected roles={["nutritionist"]}>
+            <NutritionistProfile />
+          </Protected>
+        }/>
         <Route
           path="/termsandconditions"
           element={<TermsAndConditions />}

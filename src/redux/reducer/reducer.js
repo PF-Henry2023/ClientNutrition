@@ -19,6 +19,7 @@ const rootReducer = (state = initialState, action) => {
         allNutritionists: action.payload,
         nutritionists: action.payload,
       };
+  
 
     case "GET_NUTRITIONISTS_NAME":
       return {
