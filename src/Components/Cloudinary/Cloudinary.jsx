@@ -6,8 +6,8 @@ import cloudinaryConfig from './CloudinaryCredentials';
 
 const Cloudinary = () => {
 
-    const [file, setFile] = useState("");//estado que se usa para almacenar la url del archivo subido a cloudinary
-    const [loading, setloading] = useState(false);// se utiliza para controlar si se está cargando un archivo o no.
+    const [file, setFile] = useState("");//estado que se usa para almacenar la url del archivo subido a cloudinar
+    const [loading, setloading] = useState(false);// se utiliza para controlar si se está cargando un archivo o no
     const [uploadSuccess, setUploadSuccess] = useState(false);//estado para indicar la carga exitosa
     
     const handleUploadFile = async (event) => {// se ejecuta cuando se selecciona un archivo en el campo de entrada.
