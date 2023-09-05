@@ -1,0 +1,12 @@
+.text {
+font-size: 60px;
+background-color: rgb(229, 231, 233);
+font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+.divConAlturaViewport {
+    height: 90vh; /* Establece la altura del div al 100% de la altura de la viewport */
+    width: 100%;
+    margin: 0px;
+    background-color: rgb(255, 255, 255);
+    padding: 2em;
+    }
