@@ -4,14 +4,19 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../../redux/actions/actions";
 import Cloudinary from "../../Cloudinary/Cloudinary";
+import { userNutriInfo } from "../../../redux/actions/actions";
+import { filterUniqueUserIds } from "../../../utils/UserUtils";
 
 function ClientsTable() {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
-
+  const users = useSelector((state) => state.usersInfo);
+  const nutriEvents = useSelector(e => e.nutriEvents); 
+  const usersId = filterUniqueUserIds(nutriEvents);
   useEffect(() => {
-    if (users.length < 1) dispatch(getUsers());
-  }, [dispatch, users]);
+    for (const user of usersId) {
+      dispatch(userNutriInfo(user))
+    }
+  }, []);
 
   // console.log(users);
 
