@@ -6,6 +6,7 @@ function handleUserLogin(token) {
     const user = {
         id: decoded.id,
         name: decoded.name,
+        lastName: decoded.lastName,
         image: decoded.image,
         role: decoded.role ? decoded.role : "nutritionist"
     }

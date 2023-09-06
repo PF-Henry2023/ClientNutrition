@@ -13,7 +13,7 @@ function ClientsTable() {
     if (users.length < 1) dispatch(getUsers());
   }, [dispatch, users]);
 
-  console.log(users);
+  // console.log(users);
 
   return (
     <Table striped bordered hover responsive className="shadow-sm text-center">
@@ -34,7 +34,7 @@ function ClientsTable() {
               <td>{user.lastName}</td>
               <td>{user.birthDate}</td>
               <td>{user.email}</td>
-              <Cloudinary></Cloudinary>
+              <Cloudinary name={user.name} lastName={user.lastName}></Cloudinary>
             </tr>
           );
         })}

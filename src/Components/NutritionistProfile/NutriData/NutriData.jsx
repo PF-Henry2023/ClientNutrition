@@ -15,7 +15,7 @@ const NutriData = () => {
     if (users.length < 1) dispatch(getDetail());
   }, [dispatch, users]);
 
-  console.log(users[0]);
+  // console.log(users[0]);
 
   return (
     <Container className={style.container}>

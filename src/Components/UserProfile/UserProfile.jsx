@@ -8,6 +8,10 @@ import { getAppointments } from "../../redux/actions/actions";
 import DownloadCloudinary from "../Cloudinary/Download"
 
 export default function UserProfile(){ 
+    
+    const user = JSON.parse(window.localStorage.getItem("user"))
+    console.log(user.name);
+    
 
     const dispatch = useDispatch();
     const appointments = useSelector(e => e.appointments);
@@ -42,7 +46,7 @@ export default function UserProfile(){
                 <Card.Body>
                     <Card.Title>Primera cita</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">04 de agosto de 2023 </Card.Subtitle>
-                    <DownloadCloudinary></DownloadCloudinary>
+                    <DownloadCloudinary name={user.name} lastName={user.lastName}></DownloadCloudinary>
                 </Card.Body>
             </Card> 
         </Col>
