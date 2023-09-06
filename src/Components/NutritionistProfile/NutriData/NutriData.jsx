@@ -68,5 +68,6 @@ const NutriData = () => {
     </Container>
   );
 };
+}
 
 export default NutriData;

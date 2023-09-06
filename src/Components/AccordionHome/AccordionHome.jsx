@@ -3,7 +3,7 @@ import Accordion from 'react-bootstrap/Accordion';
 
 export default function AccordionHome() {
   return (
-    <div className={style.divConAlturaViewport}>
+    <div className={style.divConAlturaViewport} id="como-trabajamos">
     <div className={style.text}> Cómo trabajamos? </div>
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
