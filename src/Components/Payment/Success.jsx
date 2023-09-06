@@ -3,27 +3,58 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./Success.module.css";
 import { useEffect } from "react";
 import { postAppointment } from "../../redux/actions/actions";
+import axios from "axios";
 const Success = () => {
 
     const dispatch = useDispatch();
     const infoAppointment = JSON.parse(localStorage.getItem("infoEvent"));
-    console.log(infoAppointment);
 
-    const formattedMonth = infoAppointment.month.toString().padStart(2, '0');
-    const formattedDate = infoAppointment.date.toString().padStart(2, '0');
+    const description = JSON.parse(localStorage.getItem("description"));
+
+    const NutriId = JSON.parse(localStorage.getItem("nutriId"));
+
+    const UserId = JSON.parse(localStorage.getItem("id"))
+
+    const appointments =  JSON.parse(localStorage.getItem("appointmentslocal"));
+    console.log('appointments', appointments);
+    
+    const formattedMonth = infoAppointment.month
+    const formattedDate = infoAppointment.date
 
     const formattedDateStr = `${formattedMonth}-${formattedDate}-${infoAppointment.year}`;
-    const formattedHour = `${infoAppointment.hour.toString().padStart(2, '0')}:00:00`;
-
-    console.log(formattedDateStr, formattedHour);
+    const formattedHour = infoAppointment.hour
 
     const infoPost = {
         date:formattedDateStr,
-        hour:formattedHour
+        hour:formattedHour,
+        purpose: description,
+        UserId: UserId,
+        NutritionistId: NutriId
     }
 
+    const infoPost2 = {
+        day: infoAppointment.day,
+        hour: infoAppointment.hour,
+    }
+
+    
+
     useEffect(() => {
-          dispatch(postAppointment(infoPost))
+        if(appointments.length){
+            console.log('entre al primero');
+            dispatch(postAppointment(infoPost))
+        } else {
+            console.log('entre al else');
+            console.log(infoPost2);
+            async function post (){
+            const response =  await axios.post(`http://localhost:3001/nutritionists/myDoctor`, infoPost2)
+            
+            console.log( response.data.id);
+            window.localStorage.setItem('nutriId', response.data.id)
+        }
+            post()
+            dispatch(postAppointment(infoPost))
+        }
       },[]);
 
 

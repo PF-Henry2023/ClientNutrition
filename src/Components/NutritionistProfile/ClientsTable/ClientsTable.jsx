@@ -3,6 +3,7 @@ import style from "./ClientsTable.module.css";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers } from "../../../redux/actions/actions";
+import Cloudinary from "../../Cloudinary/Cloudinary";
 
 function ClientsTable() {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ function ClientsTable() {
               <td>{user.lastName}</td>
               <td>{user.birthDate}</td>
               <td>{user.email}</td>
-              <input type="file" name="avatar" accept="image/png, image/jpeg" />
+              <Cloudinary></Cloudinary>
             </tr>
           );
         })}
