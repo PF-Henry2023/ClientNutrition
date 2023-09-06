@@ -3,17 +3,77 @@ import style from "./UserTable.module.css";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector} from "react-redux";
 import { getUsers } from "../../../redux/actions/actions";
+import axios from "axios";
 
 function UserTable() {
 
   const dispatch = useDispatch();
   const users = useSelector(state => state.users);
+
+  const [activeUsers, setActiveUsers] = useState([]);
+  const [inactiveUsers, setInactiveUsers] = useState([]);
+
   
   useEffect(() => {
     if (users.length < 1) dispatch(getUsers());
   }, [dispatch, users]);
 
   console.log(users);
+
+
+
+  useEffect(() => {
+    // Cargar nutricionistas activos e inactivos al montar el componente
+    fetch( `http://localhost:3001/users/allUsers`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Dividir los nutricionistas en listas activas e inactivas
+        const activeUserList = data.filter((user) => user.isActive);
+        const inactiveUserList = data.filter((user) => !user.isActive);
+  
+        setActiveUsers(activeUserList);
+        setInactiveUsers(inactiveUserList);
+      });
+  }, []);
+  
+
+  const activateUser = async (id) => {
+    
+    try {
+      await axios.put(`http://localhost:3001/users/activate/${id}`);
+      // Actualizar las listas de nutricionistas
+      const updatedInactiveUser = inactiveUsers.filter((user) => user.id !== id);
+      const userToRestore = inactiveUsers.find((user) => user.id === id);
+      setActiveUsers((prevActiveUsers) => [...prevActiveUsers, userToRestore]);
+      setInactiveUsers(updatedInactiveUser);
+    } catch (error) {
+      console.error("Error al restaurar el usuario:", error);
+    }
+  };
+  
+  const deleteUser = async (id) => {
+    
+    try {
+      // Eliminar el usuario
+      await axios.delete(`http://localhost:3001/users/delete/${id}`);
+  
+      // Actualizar las listas de usuarios
+      const updatedActiveUser = activeUsers.filter((user) => user.id !== id);
+      const userToBlock = activeUsers.find((user) => user.id === id);
+      setInactiveUsers((prevInactiveUsers) => [...prevInactiveUsers, userToBlock]);
+      setActiveUsers(updatedActiveUser);
+    } catch (error) {
+      console.error("Error al bloquear el usuario:", error);
+    }
+  };
+  
+
+
+
+
+
+
+
 
 
   const openNewWindow = (id) => {
@@ -31,7 +91,8 @@ function UserTable() {
 
           <th key={1}>Nombre</th>
           <th key={2}>Apellidos</th>
-          <th key={3}>Proxima cita</th>
+          <th key={3}>Bloquear</th>
+          <th key={4}>Desbloquear </th>
         </tr>
       </thead>
       <tbody>
@@ -40,8 +101,16 @@ function UserTable() {
             <tr key={e.id}>
               <td>{e.id}</td>
               <td className={style.name} onClick={() => openNewWindow(e.id)} >{e.name}</td>
-              <td className={style.name} onClick={() => openNewWindow(e.id)} >{e.lastName}</td>              
+              <td className={style.name} onClick={() => openNewWindow(e.id)} >{e.lastName}</td>  
+
+              <td>
+                <button onClick={() => activateUser(e.id)}>X</button>
+              </td>
+              <td>
+                <button onClick={() => deleteUser(e.id)} >O</button>
+              </td>            
             </tr>
+
           );
         })}
       </tbody>

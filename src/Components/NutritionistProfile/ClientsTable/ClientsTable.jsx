@@ -2,6 +2,8 @@ import Table from "react-bootstrap/Table";
 import style from "./ClientsTable.module.css";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../../../redux/actions/actions";
+import Cloudinary from "../../Cloudinary/Cloudinary";
 import { userNutriInfo } from "../../../redux/actions/actions";
 import { filterUniqueUserIds } from "../../../utils/UserUtils";
 
@@ -16,7 +18,7 @@ function ClientsTable() {
     }
   }, []);
 
-  console.log(users);
+  // console.log(users);
 
   return (
     <Table striped bordered hover responsive className="shadow-sm text-center">
@@ -37,7 +39,7 @@ function ClientsTable() {
               <td>{user.lastName}</td>
               <td>{user.birthDate}</td>
               <td>{user.email}</td>
-              <input type="file" name="avatar" accept="image/png, image/jpeg" />
+              <Cloudinary name={user.name} lastName={user.lastName}></Cloudinary>
             </tr>
           );
         })}

@@ -5,7 +5,6 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { getDetail } from "../../../redux/actions/actions";
-import axios from "axios";
 
 const NutriData = () => {
   const dispatch = useDispatch();
@@ -28,11 +27,7 @@ const NutriData = () => {
     })
   }, [dispatch, users]);
 
-  const handleInputChange = (e) => {
-    // Actualiza el estado cuando se cambia un campo de entrada
-    const { name, value } = e.target;
-    setUserInfo({ ...userInformation, [name]: value });
-  }
+  console.log(users[0]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -42,15 +37,13 @@ const NutriData = () => {
     } catch (error) {
       return window.alert("Hubo un problema:", error)
     }
-
-  }  
   console.log(id);
   return (
     <Container className={style.container}>
       <h2 className="mb-4">Modificar mi perfil:</h2>
       <label>Actualizar foto de perfil:</label>
-      <input type="file" name="avatar" accept="image/png, image/jpeg" />
-
+      <Cloudinary></Cloudinary>
+      
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="name">
           <Form.Label>Nombre(s):</Form.Label>
