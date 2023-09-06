@@ -6,7 +6,7 @@ export default function AccordionHome() {
     <div className={style.divConAlturaViewport} id="como-trabajamos">
     <div className={style.text}> Cómo trabajamos? </div>
     <Accordion defaultActiveKey="0">
-      <Accordion.Item eventKey="0">
+      <Accordion.Item eventKey="0" >
         <Accordion.Header>Idioma</Accordion.Header>
         <Accordion.Body>
         Ofrecemos nuestros servicios en español, para que puedas comunicarte y entender completamente todo el proceso.
