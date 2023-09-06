@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Container, FormGroup, Input } from "reactstrap";
 import styles from "./Cloudinary.module.css";
 import cloudinaryConfig from './CloudinaryCredentials';
+import axios from "axios";
 
 const Cloudinary = ({name, lastName}) => {
     
@@ -15,15 +16,31 @@ const Cloudinary = ({name, lastName}) => {
         let selectedFile = event.target.files[0];//se obtiene la lista de archivos seleccionados por el usuario
         const data = new FormData();//Se crea un objeto FormData para construir los datos que se enviarán a Cloudinary.
         console.log(selectedFile);
-        let fileNew = await selectedFile
-        console.log(fileNew);
-        fileNew.name = `${name} ${lastName}.${fileNew.name.split(".")[1]}`
+        // selectedFile.name = "minombre"      
+        let renameFile = new File([selectedFile], `${name} ${lastName}.${selectedFile.name.split(".")[1]}`, {
+            type: selectedFile.type,
+            lastModified: selectedFile.lastModified
+        })
+        const apiUrl = `https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloudName}/delete_by_token`;
+        const data1 = {
+            public_id: `${name} ${lastName}.${selectedFile.name.split(".")[1]}`,
+            api_key: '448615133128355',
+            api_secret: 'qIXSDIUW6mGPzp3GuL0FKSyLy44',
+        }
+        axios
+        .delete(apiUrl, { data1 })
+        .then((response) => {
+            console.log('Recurso eliminado con éxito:', response.data);
+            // Aquí puedes realizar otras acciones después de eliminar el recurso.
+        })
+        .catch((error) => {
+            console.error('Error al eliminar el recurso:', error);
+        });
 
-        data.append("file", selectedFile);
+        data.append("file", renameFile);
         data.append("upload_preset", "filesZucca");//filesZucca es el nombre de la carpeta que se creo en cloudinary
-        data.append("public_id", selectedFile.name);//para especificar el nombre del archivo en Cloudinary
+        data.append("public_id", renameFile.name);//para especificar el nombre del archivo en Cloudinary
         setloading(true);//Cuando se está cargando un archivo, loading se establece en true,
-        
         
         try {
             const response = await fetch(
