@@ -31,7 +31,7 @@ export default function Create() {
     
     
     
-  }, [db]);
+  }, [db, userInformation]);
 
   const [errors, setErrors] = useState({
     errors: "zero",

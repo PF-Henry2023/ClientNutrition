@@ -1,31 +1,62 @@
+import  { useState, useEffect } from "react";
+import axios from "axios";
 import Table from "react-bootstrap/Table";
 import style from "./NutriTable.module.css";
-import { useState, useEffect } from "react";
-import axios from "axios";
+
 
 function NutriTable() {
-
-
-  const [nutri, setNutri] = useState(false);
-
-
+  const [activeNutri, setActiveNutri] = useState([]);
+  const [inactiveNutri, setInactiveNutri] = useState([]);
+  
   useEffect(() => {
-    if (!nutri)
-      fetch("http://localhost:3001/nutritionists/list?isActive=true")
-        .then((response) => response.json())
-        .then((data) => { if (data[0]) setNutri(data);});
-    
-  }, [nutri]);
+    // Cargar nutricionistas activos e inactivos al montar el componente
+    fetch( `http://localhost:3001/nutritionists/list`)
+      .then((response) => response.json())
+      .then((data) => {
+        // Dividir los nutricionistas en listas activas e inactivas
+        const activeNutriList = data.filter((nutricionista) => nutricionista.isActive);
+        const inactiveNutriList = data.filter((nutricionista) => !nutricionista.isActive);
+  
+        setActiveNutri(activeNutriList);
+        setInactiveNutri(inactiveNutriList);
+      });
+  }, []);
+  
 
-  const blockNutri = (id) => {
-    axios.delete(`http://localhost:3001/nutritionists/delete/${id}`)
-    setNutri((prev) => false);
-  }
-
-  const restoreNutri = (id) => {
-    axios.put(`http://localhost:3001/nutritionists/delete/${id}`)
-    setNutri((prev) => false);
-  }
+  const blockNutri = async (id) => {
+    try {
+      // Eliminar el nutricionista
+      await axios.delete(`http://localhost:3001/nutritionists/delete/${id}`);
+  
+      // Esperar a que ambas operaciones asincrónicas se completen antes de actualizar las listas
+      await Promise.all([
+        // Actualizar la lista de nutricionistas activos
+        setActiveNutri((prevActiveNutri) =>
+          prevActiveNutri.filter((nutricionista) => nutricionista.id !== id)
+        ),
+        // Actualizar la lista de nutricionistas inactivos
+        setInactiveNutri((prevInactiveNutri) =>
+          prevInactiveNutri.concat(activeNutri.find((nutricionista) => nutricionista.id === id))
+        ),
+      ]);
+    } catch (error) {
+      console.error("Error al bloquear el nutricionista:", error);
+    }
+  };
+  
+  
+  const restoreNutri = async (id) => {
+    try {
+      await axios.put(`http://localhost:3001/nutritionists/restore/${id}`);
+      // Actualizar las listas de nutricionistas
+      const updatedInactiveNutri = inactiveNutri.filter((nutricionista) => nutricionista.id !== id);
+      const nutricionistaToRestore = inactiveNutri.find((nutricionista) => nutricionista.id === id);
+      setActiveNutri([...activeNutri, nutricionistaToRestore]);
+      setInactiveNutri(updatedInactiveNutri);
+    } catch (error) {
+      console.error("Error al restaurar el nutricionista:", error);
+    }
+  };
 
   const openNewWindow = (id) => {
     window.open(
@@ -35,13 +66,12 @@ function NutriTable() {
     );
   };
 
-  return console.log(nutri),(
+  return (
     <Table striped bordered hover responsive className="shadow-sm text-center">
       <thead>
         <tr>
           <th>#</th>
-
-          <th key={1}>Nombre</th>
+          < th key={1}>Nombre</th>
           <th key={2}>Apellidos</th>
           <th key={4}>Número de citas</th>
           <th key={5}>Bloquear</th>
@@ -49,26 +79,31 @@ function NutriTable() {
         </tr>
       </thead>
       <tbody>
-        {nutri !== false && nutri.map((e) => {
-          return (
-            <tr key={e.id}>
-              <td>{e.id}</td>
-              <td className={style.name} onClick={() => openNewWindow(e.id)}>
-                {e.name}
-              </td>
-              <td className={style.name} onClick={() => openNewWindow(e.id)}>
-                {e.lastName}
-              </td>
-              <td>{e.numberOfAppointments}</td>
-              <td>
-                <button onClick={() => blockNutri(e.id)}>X</button>
-              </td>
-              <td>
-                <button onClick={() => restoreNutri(e.id)} >O</button>
-              </td>
-            </tr>
-          );
-        })}
+        {(activeNutri.length > 0 || inactiveNutri.length > 0) &&
+          [...activeNutri, ...inactiveNutri].map((nutricionista) => {
+            return (
+              <tr key={nutricionista.id}>
+                <td>{nutricionista.id}</td>
+                <td className={style.name} onClick={() => openNewWindow(nutricionista.id)}>
+                  {nutricionista.name}
+                </td>
+                <td className={style.name} onClick={() => openNewWindow(nutricionista.id)}>
+                  {nutricionista.lastName}
+                </td>
+                <td>{nutricionista.numberOfAppointments}</td>
+                <td>
+                  {activeNutri.includes(nutricionista) && (
+                    < button onClick={() => blockNutri(nutricionista.id)}>X</button>
+                  )}
+                </td>
+                <td>
+                  {inactiveNutri.includes(nutricionista) && (
+                    <button onClick={() => restoreNutri(nutricionista.id)}>O</button>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
       </tbody>
     </Table>
   );

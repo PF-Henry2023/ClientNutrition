@@ -26,7 +26,7 @@ export default function WhyComponent() {
                 </div>
                 </div>
   );
-};
+}
 
 
 {/* <div className={style.container}>
