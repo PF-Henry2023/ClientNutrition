@@ -8,7 +8,10 @@ const initialState = {
   appointments: [],
   user: getLoggedInUser(),
   schedules: {},
-  infoEvent : {}
+  infoEvent : {},
+  nutriInfo: {},
+  nutriEvents: [],
+  usersInfo: [],
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -19,8 +22,6 @@ const rootReducer = (state = initialState, action) => {
         allNutritionists: action.payload,
         nutritionists: action.payload,
       };
-  
-
     case "GET_NUTRITIONISTS_NAME":
       return {
         ...state,
@@ -71,6 +72,14 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         schedules: action.payload,
       }
+    case "GET_NUTRICIONIST_NAME":
+      return {
+        ...state,
+        nutriInfo: {
+          name: action.payload.name,
+          lastName: action.payload.lastName
+        }
+      }
     case "POST_APPOINTMENT":
       return {
         ...state,
@@ -81,7 +90,16 @@ const rootReducer = (state = initialState, action) => {
           ...state,
           infoEvent: action.payload
         };
-
+    case "ALL_EVENTS":
+      return {
+        ...state,
+        nutriEvents: action.payload
+      }
+    case "USER_INFO":
+      return {
+        ...state,
+        usersInfo: [...state.usersInfo, action.payload]
+      }
     default:
       return { ...state };
   }

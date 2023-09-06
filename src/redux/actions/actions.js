@@ -116,6 +116,18 @@ export const getNutritionistSchedule = (id) => {
   }
 }
 
+export const getNutritionist = (id) => {
+  return async function (dispatch) {
+    const response = await axios.get(
+      `http://localhost:3001/nutritionists/searchBy?id=${id}`
+    );
+    return dispatch({
+      type: "GET_NUTRICIONIST_NAME",
+      payload: response.data,
+    })
+  }
+}
+
 export const login = (credentials, errorHandler) => {
   return async function(dispatch) {
     try {
@@ -219,4 +231,33 @@ export const saveInfoEvent = (info) => {
       type: 'SAVE_INFO_EVENT',
       payload: info}
     )
+}
+
+export const allEvents = (id) => {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get("http://localhost:3001/events");
+      const filter = data.filter(e => e.NutritionistId == id);
+      return dispatch({
+        type: "ALL_EVENTS",
+        payload: filter
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const userNutriInfo = (id) => {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.get(`http://localhost:3001/users/${id}`);
+      return dispatch({
+        type: "USER_INFO",
+        payload: data
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
 }

@@ -13,14 +13,17 @@ export default function Create() {
     email: "",
     password: "",
     passwordConfirmed: "",
-  });
+  }); 
 
   let [db, setDB] = useState();
 
-  useEffect(() => {
+  const token = window.localStorage.getItem("token");
+  console.log(token);
 
+  useEffect(() => {
+    const id = window.localStorage.getItem("id")
     if (!db) {
-      fetch("http://localhost:3001/users/1") // Ver la posibilidad de una ruta especifica
+      fetch(`http://localhost:3001/users/${id}`) // Ver la posibilidad de una ruta especifica
       .then((response) => response.json())
       .then((data) => {
         setDB(data)
@@ -28,8 +31,6 @@ export default function Create() {
         setInfo({...userInformation, name, lastName, email, id})
       });
     }
-    
-    
     
   }, [db]);
 
@@ -49,6 +50,12 @@ export default function Create() {
         [field]: value,
       })
     );
+  };
+
+  const requestOptions = {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
   };
 
   const submitHandler = async (event) => {
@@ -74,7 +81,7 @@ export default function Create() {
             userInformation.password !== db.password)
         ) {
 
-          axios.put('http://localhost:3001/users/update', userInformation).catch((error) => {console.log(error)})
+          axios.put('http://localhost:3001/users/update', { name: userInformation.name, lastName: userInformation.lastName, email: userInformation.email, password: userInformation.password  }, requestOptions).catch((error) => {console.log(error)})
           setInfo({ ...userInformation, password: "", passwordConfirmed: "" });
           
           alert("La información fue actualizada de manera exitosa!");

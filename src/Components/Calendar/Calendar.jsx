@@ -13,11 +13,18 @@ import { start } from "@cloudinary/url-gen/qualifiers/textAlignment";
 
 const localizer = dayjsLocalizer(dayjs);
 
-const Calendar = (props) => {
+const Calendar = () => {
 
   const customSlots = {
-    '2023-08-14': [13, 14], 
+    '2023-08-16': [14], 
   };
+  /* const customSlots = [
+    {
+      date:"2023-09-06",
+      hour:13
+    }
+
+  ] */
 
   const [show, setShow] = useState(false);
   const [fullscreen, setFullscreen] = useState(true);
@@ -26,6 +33,12 @@ const Calendar = (props) => {
 
   const appointments = useSelector(e => e.appointments);
   const schedules = useSelector(e => e.schedules);
+
+  window.localStorage.setItem('appointmentslocal', JSON.stringify(appointments));
+  const appointmentslocal =  JSON.parse(localStorage.getItem("appointmentslocal"));
+  console.log(appointmentslocal);
+
+  
 
   useEffect(() => {
     if(!appointments.length){
@@ -42,24 +55,31 @@ const Calendar = (props) => {
     const hour = dayjs(start).hour();
     const month = dayjs(start).month();
     const year = dayjs(start).year();
-  
+
     // Horarios ocupados
-    const currentSlot = dayjs(date);
-    const currentDate = currentSlot.format('YYYY-MM-DD');
-    const hourSlot = currentSlot.hour();
-  
-    const info = { hour, date, month, year };
+
+    const currentDate = dayjs(start).format('YYYY-MM-DD');
+
+    // Horarios pasados
+
+    const currentDateL = dayjs();
+    const selectedDate = dayjs(start);
+    
+    const info = { hour, date, month, year, day };
     window.localStorage.setItem('infoEvent', JSON.stringify(info));
     const infoAppointment = JSON.parse(localStorage.getItem('infoEvent'));
     console.log(infoAppointment);
   
     let isHourAvailable = false;
-    let isCustomSlotAvailable = true; // Agregamos una bandera para los custom slots
+    let isCustomSlotAvailable = true; 
   
     if (day === 0 || day === 6) {
       return window.alert('Día no disponible');
     }
   
+    if (selectedDate.isBefore(currentDateL, 'day')) {
+      return window.alert('Fecha pasada');
+    }
     
     if (schedules[day]) {
       for (const [horaInicio, horaFin] of schedules[day]) {
@@ -67,23 +87,21 @@ const Calendar = (props) => {
           isHourAvailable = true;
           break;
         } 
+        if (customSlots[currentDate] && customSlots[currentDate].includes(hour) ) {
+          isCustomSlotAvailable = false; 
+        }
       }
     }
-    
-    if (customSlots[currentDate] && customSlots[currentDate].includes(hourSlot) ) {
-      isCustomSlotAvailable = false; // Cambiamos la bandera si el horario está ocupado en customSlots
-    }
-    
-    console.log(isCustomSlotAvailable);
     
     if (isHourAvailable && isCustomSlotAvailable) {
       setFullscreen(true);
       setShow(true);
     } else {
       if (!isHourAvailable) {
-        window.alert('Hora no disponible');
-      } else if (!isCustomSlotAvailable) {
-        window.alert('Horario ocupado');
+        return window.alert('Hora no disponible');
+      } 
+      if (!isCustomSlotAvailable) {
+        return window.alert('Horario ocupado');
       }
     }
   };
@@ -93,15 +111,22 @@ const Calendar = (props) => {
   };
 
   const dayPropGetter = (date) => {
+    const dateToCompare = dayjs(date);
+    const dayWeek = dateToCompare.day(); 
     const dayStyle = {};
-    const dayWeek = dayjs(date).day();
-    if(dayWeek === 0 || dayWeek === 6){
+    const currentDate = dayjs();
+  
+    if (dateToCompare.isBefore(currentDate, 'day')) {
+      dayStyle.backgroundColor = "#C6C4C4";
+    }
+  
+    if (dayWeek === 0 || dayWeek === 6) {
       dayStyle.backgroundColor = "#E39C8E";
     }
-
+  
     return {
       style: dayStyle
-    }
+    };
   };
 
   const slotPropGetter = (date) => {
@@ -111,16 +136,15 @@ const Calendar = (props) => {
     const hour = currentSlot.hour();
     const diaSemana = dayjs(date).day();
 
-    if(customSlots[currentDate] && customSlots[currentDate].includes(hour)){
-      slotStyle.backgroundColor = "#9F7ECB";
-    }
-
-
-    if (schedules[diaSemana]) {
+    if (schedules[diaSemana]){
       for (const [horaInicio, horaFin] of schedules[diaSemana]) {
         if (dayjs(date).hour() >= horaInicio && dayjs(date).hour() < horaFin) {
           slotStyle.backgroundColor = "#B5E38E"; 
           break; 
+        }
+        if(customSlots[currentDate] && customSlots[currentDate].includes(hour)){
+          slotStyle.backgroundColor = "#9F7ECB";
+          break;
         }
       }
     }
@@ -129,8 +153,6 @@ const Calendar = (props) => {
       style: slotStyle,
     };
   };
-
-
 
   return (
     <div>
@@ -152,6 +174,7 @@ const Calendar = (props) => {
           show={show}
           fullscreen={fullscreen}
           closedButton={closedButton}
+          
         />
       </div>
     </div>
