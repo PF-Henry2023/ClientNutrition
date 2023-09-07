@@ -47,8 +47,7 @@ const Success = () => {
             console.log('entre al else');
             console.log(infoPost2);
             async function post (){
-            const response =  await axios.post(`http://localhost:3001/nutritionists/myDoctor`, infoPost2)
-            
+            const response =  await axios.get(`http://localhost:3001/nutritionists/myDoctor`)
             console.log( response.data.id);
             window.localStorage.setItem('nutriId', response.data.id)
         }

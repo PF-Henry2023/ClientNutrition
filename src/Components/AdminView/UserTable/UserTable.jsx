@@ -60,7 +60,13 @@ function UserTable() {
       console.error("Error al restaurar el usuario:", error);
     }
   };
-
+  const token = window.localStorage.getItem("token");
+  const requestOptions = {
+    headers: {
+      Authorization: `Bearer ${token}`, // Encabezado de autorización con el token JWT
+      'Content-Type': 'application/json', // Puedes ajustar los encabezados según tus necesidades
+    },
+  };
   const deleteUser = async (id) => {
     try {
       // Eliminar el usuario
@@ -70,7 +76,7 @@ function UserTable() {
       console.log("user state", userState);
 
       if (userState) {
-        await axios.delete(`http://localhost:3001/users/delete/${id}`);
+        await axios.delete(`http://localhost:3001/users/delete/${id}`, requestOptions);
         // Actualizar las listas de usuarios
         const updatedActiveUser = activeUsers.filter((user) => user.id !== id);
         const userToBlock = activeUsers.find((user) => user.id === id);

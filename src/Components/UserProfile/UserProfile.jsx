@@ -15,6 +15,9 @@ export default function UserProfile() {
   const appointments =  JSON.parse(localStorage.getItem("appointmentslocal"));
   const dispatch = useDispatch();
   const nutriInfo = useSelector((e) => e.nutriInfo);
+
+  const user = JSON.parse(window.localStorage.getItem("user"));
+
   useEffect(() => {
     const userId = window.localStorage.getItem("id");
     console.log(userId);
