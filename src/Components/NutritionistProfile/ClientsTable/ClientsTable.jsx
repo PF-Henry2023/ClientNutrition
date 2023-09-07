@@ -32,7 +32,7 @@ function ClientsTable() {
               <td>{user.birthDate}</td>
               <td>{user.email}</td>
               <td>{user.id}</td>
-              {/* <Cloudinary name={user.name} lastName={user.lastName}></Cloudinary> */}
+              <Cloudinary name={user.name} lastName={user.lastName}></Cloudinary>
             </tr>
           );
         })}

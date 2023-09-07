@@ -41,18 +41,6 @@ export default function Login() {
   const [ userCredentialsOauth, setUserCredentialsOauth ] = useState({
     isNutritionist: false,
   })
-  /*
-  const [url, setUrl] = useState("");
-
-  useEffect(() => {
-    const urlRed = async () => {
-      const { data } = await axios.get(
-        "http://localhost:3001/calendarGoogle/auth"
-      );
-      setUrl(data.url);
-    };
-    urlRed();
-  }, []);*/
 
   useEffect(() => {
     if (user == null) {
