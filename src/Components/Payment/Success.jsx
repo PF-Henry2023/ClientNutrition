@@ -60,14 +60,18 @@ const Success = () => {
 
     return (
         <div className={styles.container}>
-            <h1>PAGO REALIZADO CORRECTAMENTE</h1>
-            <h3>GRACIAS POR TÚ COMPRA</h3>
-            <Link to="/">
-                <button>Home</button>
-            </Link>
+        <div className={styles.cardContainer}>
+            <Card className="h-100" style={{ width: '18rem', backgroundColor: 'lightgreen' }}>
+                <Card.Body>
+                    <Card.Title>EL PAGO SE HA REALIZADO CORRECTAMENTE</Card.Title>
+                    <Card.Text>MUCHAS GRACIAS!</Card.Text>
+                </Card.Body>
+                <Link to="/">
+                    <button>Volver</button>
+                    </Link>
+            </Card>
         </div>
-        
-        
+        </div>  
     );
 };
 
