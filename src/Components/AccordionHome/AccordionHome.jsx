@@ -1,12 +1,14 @@
 import style from "../AccordionHome/AccordionHome.module.css";
 import Accordion from 'react-bootstrap/Accordion';
+import ZUCCA from "../../assets/ZUCCA.png"
 
 export default function AccordionHome() {
+
   return (
-    <div className={style.divConAlturaViewport}>
+    <div className={style.divConAlturaViewport} id="como-trabajamos">
     <div className={style.text}> Cómo trabajamos? </div>
     <Accordion defaultActiveKey="0">
-      <Accordion.Item eventKey="0">
+      <Accordion.Item eventKey="0" >
         <Accordion.Header>Idioma</Accordion.Header>
         <Accordion.Body>
         Ofrecemos nuestros servicios en español, para que puedas comunicarte y entender completamente todo el proceso.
@@ -43,6 +45,7 @@ export default function AccordionHome() {
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
-    </div>
+    <img src={ZUCCA} alt="Zucca" className={style.centeredImage}/>
+       </div>
   );
 }

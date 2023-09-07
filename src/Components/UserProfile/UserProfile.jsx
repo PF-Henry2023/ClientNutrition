@@ -98,6 +98,7 @@ export default function UserProfile() {
                     <Card.Subtitle className="mb-2 text-muted">04 de agosto de 2023 </Card.Subtitle>
                     <DownloadCloudinary name={user.name} lastName={user.lastName}></DownloadCloudinary>
                 </Card.Body> */}
+        <DownloadCloudinary name={user.name} lastName={user.lastName}></DownloadCloudinary>
         </Card>
       </Col>
     </Row>
