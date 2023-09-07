@@ -1,4 +1,4 @@
-import { getLoggedInUser } from './../../utils/UserUtils'
+import { getLoggedInUser } from "./../../utils/UserUtils";
 
 const initialState = {
   users: [],
@@ -8,10 +8,11 @@ const initialState = {
   appointments: [],
   user: getLoggedInUser(),
   schedules: {},
-  infoEvent : {},
+  infoEvent: {},
   nutriInfo: {},
   nutriEvents: [],
   usersInfo: [],
+  admins: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -41,10 +42,12 @@ const rootReducer = (state = initialState, action) => {
       };
 
     case "GET_USERS":
-      const filtered = action.payload.filter((e) => e.role === "user" )
+      const filtered = action.payload.filter((e) => e.role === "user");
+      const filtered2 = action.payload.filter((e) => e.role === "admin");
       return {
         ...state,
         users: filtered,
+        admins: filtered2,
       };
     case "GET_APPOINTMENTS":
       return {
@@ -54,52 +57,52 @@ const rootReducer = (state = initialState, action) => {
     case "LOGIN":
       return {
         ...state,
-        user: action.payload
-      }
+        user: action.payload,
+      };
     case "LOGOUT": {
       return {
         ...state,
-        user: null
-      }
+        user: null,
+      };
     }
     case "GET_SCHEDULES":
       return {
         ...state,
-        schedules: action.payload
-      }
+        schedules: action.payload,
+      };
     case "GET_NUTRICIONIST_SCHEDULES":
       return {
         ...state,
         schedules: action.payload,
-      }
+      };
     case "GET_NUTRICIONIST_NAME":
       return {
         ...state,
         nutriInfo: {
           name: action.payload.name,
-          lastName: action.payload.lastName
-        }
-      }
+          lastName: action.payload.lastName,
+        },
+      };
     case "POST_APPOINTMENT":
       return {
         ...state,
-        appointments: action.payload
+        appointments: action.payload,
       };
-      case 'SAVE_INFO_EVENT':
-        return {
-          ...state,
-          infoEvent: action.payload
-        };
-    case "ALL_EVENTS":
+    case "SAVE_INFO_EVENT":
       return {
         ...state,
-        nutriEvents: action.payload
-      }
+        infoEvent: action.payload,
+      };
+    case "EVENTS_INFO":
+      return {
+        ...state,
+        nutriEvents: action.payload,
+      };
     case "USER_INFO":
       return {
         ...state,
-        usersInfo: [...state.usersInfo, action.payload]
-      }
+        usersInfo: [...state.usersInfo, action.payload],
+      };
     default:
       return { ...state };
   }

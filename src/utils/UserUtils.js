@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import jwtDecode from "jwt-decode";
 
 function handleUserLogin(token) {
@@ -72,6 +73,21 @@ function filterUniqueUserIds(data) {
   return uniqueUserIdsArray;
 }
 
+
+function filterEventsAfterCurrentDateTime(events) {
+  // Obtén la fecha y hora actual con dayjs
+  const currentDate = dayjs();
+
+  // Filtra los eventos que suceden después de la fecha y hora actual
+  const filteredEvents = events.filter((event) => {
+    const eventDateTime = dayjs(`${event.date} ${event.hour}:00`, { format: 'YYYY-MM-DD HH:mm:ss' });
+
+    return eventDateTime.isAfter(currentDate);
+  });
+
+  return filteredEvents;
+}
+
 export {
   handleUserLogin,
   handleUserLogout,
@@ -79,4 +95,5 @@ export {
   getLoggedInUser,
   coordinator,
   filterUniqueUserIds,
+  filterEventsAfterCurrentDateTime
 };

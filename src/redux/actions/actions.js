@@ -42,7 +42,7 @@ export function getNutritionistsName(name) {
 
 export function getDetail(id) {
   return async (dispatch) => {
-    var json = await axios.get("http://localhost:3001/nutritionists/" + id);
+    var json = await axios.get("http://localhost:3001/nutritionists/searchBy?id=" + id);
 
     return dispatch({
       type: "GET_DETAIL",
@@ -260,4 +260,11 @@ export const userNutriInfo = (id) => {
       console.log(error);
     }
   }
+}
+
+export const eventsNutri = (filter) => {
+  return ({
+    type: "EVENTS_INFO",
+    payload: filter
+  })
 }
