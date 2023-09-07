@@ -75,7 +75,7 @@ export function getUsersId(id) {
 
     dispatch({
       type: "GET_USERS_DETAIL",
-      payload: json.data,
+      payload: json.data.Events,
     });
   };
 }

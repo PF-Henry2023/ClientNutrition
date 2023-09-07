@@ -12,7 +12,8 @@ const initialState = {
   nutriInfo: {},
   nutriEvents: [],
   usersInfo: [],
-  admins: []
+  admins: [],
+  usersEvents: []
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -103,6 +104,11 @@ const rootReducer = (state = initialState, action) => {
         ...state,
         usersInfo: [...state.usersInfo, action.payload],
       };
+    case "GET_USERS_DETAIL":
+      return {
+        ...state,
+        usersEvents: action.payload
+      }
     default:
       return { ...state };
   }

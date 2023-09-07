@@ -88,6 +88,20 @@ function filterEventsAfterCurrentDateTime(events) {
   return filteredEvents;
 }
 
+const filterAppointmentsBeforeCurrentTime = (appointment) => {
+  const currentDateTime = dayjs(); // Get the current date and tim
+  const filteredAppointments = appointment.filter((appointment) => {
+    // Parse the appointment date and time using dayjs
+    const appointmentDateTime = dayjs(
+      `${appointment.date} ${appointment.hour}:00`
+      );
+      // Compare the appointment date and time to the current date and time
+    return appointmentDateTime.isSameOrBefore(currentDateTime);
+  });
+  
+  return filteredAppointments;
+};
+
 export {
   handleUserLogin,
   handleUserLogout,
@@ -95,5 +109,6 @@ export {
   getLoggedInUser,
   coordinator,
   filterUniqueUserIds,
-  filterEventsAfterCurrentDateTime
+  filterEventsAfterCurrentDateTime,
+  filterAppointmentsBeforeCurrentTime
 };

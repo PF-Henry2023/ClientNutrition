@@ -6,7 +6,7 @@ import Container from "react-bootstrap/Container";
 import { Validate } from "./Validate";
 import axios from "axios";
 
-export default function Create() {
+export default function   Create() {
   const [userInformation, setInfo] = useState({
     name: "",
     lastName: "",
@@ -103,9 +103,6 @@ export default function Create() {
   return console.log(errors), (
     <Container className={style.container}>
       <h2 className="mb-4">Modifica tu información de perfil:</h2>
-
-      <label>Actualiza tu foto de perfil:</label>
-      <input type="file" name="avatar" accept="image/png, image/jpeg" />
 
       <Form onSubmit={submitHandler}>
         <Form.Group className="mb-3" controlId="name">

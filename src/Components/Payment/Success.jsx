@@ -2,8 +2,9 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./Success.module.css";
 import { useEffect } from "react";
-import { postAppointment } from "../../redux/actions/actions";
+import { getAppointments, postAppointment } from "../../redux/actions/actions";
 import axios from "axios";
+import Card from 'react-bootstrap/Card';
 const Success = () => {
 
     const dispatch = useDispatch();
@@ -15,7 +16,8 @@ const Success = () => {
 
     const UserId = JSON.parse(localStorage.getItem("id"))
 
-    const appointments =  JSON.parse(localStorage.getItem("appointmentslocal"));
+    const appointments =  JSON.parse(localStorage.getItem("appointmentslocal"))
+
     console.log('appointments', appointments);
     
     const formattedMonth = infoAppointment.month
