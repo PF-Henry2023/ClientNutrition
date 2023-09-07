@@ -4,61 +4,35 @@ import NavBar from "../NavBar/NavBar";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Alert, Card, Row, Col } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { getAppointments, getNutritionist } from "../../redux/actions/actions";
+import { getAppointments, getNutritionist, getUsersId } from "../../redux/actions/actions";
 import DownloadCloudinary from "../Cloudinary/Download"
 import dayjs from "dayjs";
+import Proximas from "./ProximasCitas";
+import CitasPasadas from "./CitasPasadas";
 
 export default function UserProfile() {
-  const [apoFuture, setApoFuture] = useState([]);
-  const [apoBefore, setApoBefore] = useState([]);
   //const appointments = useSelector((e) => e.appointments);
-  const appointments =  JSON.parse(localStorage.getItem("appointmentslocal"));
+  
   const dispatch = useDispatch();
-  const nutriInfo = useSelector((e) => e.nutriInfo);
-
   const user = JSON.parse(window.localStorage.getItem("user"));
+  const appointments =  JSON.parse(localStorage.getItem("appointmentslocal"));
 
   useEffect(() => {
-    const userId = window.localStorage.getItem("id");
-    console.log(userId);
-    dispatch(getAppointments(userId));
+    const id = window.localStorage.getItem("id");
+    console.log("este es el id", id);
+    if(appointments.length < 1){
+      dispatch(getAppointments(id))
+    }
+    console.log("todos los eventos",appointments);
+  },[appointments])
+ 
+
+  useEffect(() => {
     const nutriId = window.localStorage.getItem("nutriId");
     if (nutriId) {
       dispatch(getNutritionist(nutriId));
     }
-    const filterAppointmentsBeforeCurrentTime = (appointment) => {
-      const currentDateTime = dayjs(); // Get the current date and tim
-      const filteredAppointments = appointments.filter((appointment) => {
-        // Parse the appointment date and time using dayjs
-        const appointmentDateTime = dayjs(
-          `${appointment.date} ${appointment.hour}:00`
-          );
-          // Compare the appointment date and time to the current date and time
-        return appointmentDateTime.isSameOrBefore(currentDateTime);
-      });
-      
-      return filteredAppointments;
-    };
-    
-    const filterAppointmentsInFuture = (appointment) => {
-      const currentDateTime = dayjs(); // Get the current date and time
-      const filteredAppointments = appointments.filter((appointment) => {
-        // Parse the appointment date and time using dayjs
-        const appointmentDateTime = dayjs(
-          `${appointment.date} ${appointment.hour}:00`
-          );
-          // Compare the appointment date and time to the current date and time
-          return appointmentDateTime.isAfter(currentDateTime);
-        });
-        
-        return filteredAppointments;
-      };
-      const apoF = filterAppointmentsInFuture(appointments);
-      const apoB = filterAppointmentsBeforeCurrentTime(appointments);
-      setApoFuture([...apoF]);
-      setApoBefore([...apoB]);
     }, []);
-    console.log("citas", appointments);
   return (
     <Row>
       <Col>
@@ -70,32 +44,10 @@ export default function UserProfile() {
         <br />
         <br />
         <h2>Próximas</h2>
-        {appointments.length === 0 && appointments.length === 0 ? (
-          <Alert key="secondary" variant="secondary">
-            No hay citas agendadas
-          </Alert>
-        ) : (
-          apoFuture && apoFuture.map((e) => (
-            <Alert>
-              Descripcion: {e.purpose} Fecha: {e.date} Hora: {e.hour}{" "}
-              Nutricionista: {nutriInfo.name} {nutriInfo.lastName}
-            </Alert>
-          ))
-        )}
+        <Proximas />
         <h2>Pasadas</h2>
         <Card>
-          {appointments.length === 0 && appointments.length === 0 ? (
-            <Alert key="secondary" variant="secondary">
-              Todavia no agendaste citas
-            </Alert>
-          ) : (
-            apoBefore && apoBefore?.map((e) => (
-              <Alert>
-                Descripcion: {e.purpose} Fecha: {e.date} Nutricionista:{" "}
-                {nutriInfo.name} {nutriInfo.lastName}
-              </Alert>
-            ))
-          )}
+          <CitasPasadas />
           {/* <Card.Body>
                     <Card.Title>Primera cita</Card.Title>
                     <Card.Subtitle className="mb-2 text-muted">04 de agosto de 2023 </Card.Subtitle>
