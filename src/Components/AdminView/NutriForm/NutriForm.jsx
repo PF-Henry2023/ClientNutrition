@@ -72,7 +72,7 @@ const NutriForm = () => {
 
             
             const response = await axios.post(
-              "http://localhost:3001/nutritionists/create",
+              "/nutritionists/create",
               combinedData
               );
               

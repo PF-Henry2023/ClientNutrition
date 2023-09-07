@@ -10,7 +10,7 @@ function NutriTable() {
   
   useEffect(() => {
     // Cargar nutricionistas activos e inactivos al montar el componente
-    fetch( `http://localhost:3001/nutritionists/list`)
+    fetch( `/nutritionists/list`)
       .then((response) => response.json())
       .then((data) => {
         // Dividir los nutricionistas en listas activas e inactivas
@@ -26,7 +26,7 @@ function NutriTable() {
   const blockNutri = async (id) => {
     try {
       // Eliminar el nutricionista
-      await axios.delete(`http://localhost:3001/nutritionists/delete/${id}`);
+      await axios.delete(`/nutritionists/delete/${id}`);
   
       // Esperar a que ambas operaciones asincrónicas se completen antes de actualizar las listas
       await Promise.all([
@@ -47,7 +47,7 @@ function NutriTable() {
   
   const restoreNutri = async (id) => {
     try {
-      await axios.put(`http://localhost:3001/nutritionists/restore/${id}`);
+      await axios.put(`/nutritionists/restore/${id}`);
       // Actualizar las listas de nutricionistas
       const updatedInactiveNutri = inactiveNutri.filter((nutricionista) => nutricionista.id !== id);
       const nutricionistaToRestore = inactiveNutri.find((nutricionista) => nutricionista.id === id);

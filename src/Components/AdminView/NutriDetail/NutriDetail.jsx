@@ -12,7 +12,7 @@ export default function NutriDetail() {
     
   useEffect(() => {
     if (!nutritionist)
-      fetch(`http://localhost:3001/nutritionists/searchBy?id=${id}`)
+      fetch(`/nutritionists/searchBy?id=${id}`)
         .then((response) => response.json())
         .then((data) => { if (data.name) setNutri(data);});
     

@@ -12,7 +12,7 @@ export const RETURN_INFO_EVENT = 'RETURN_INFO_EVENT'
 
 export function getNutritionists() {
   return async function (dispatch) {
-    var json = await axios.get("http://localhost:3001");
+    var json = await axios.get("/");
 
     return dispatch({
       type: "GET_NUTRITIONISTS",
@@ -25,7 +25,7 @@ export function getNutritionistsName(name) {
   return async function (dispatch) {
     try {
       var json = await axios.get(
-        "http://localhost:3001/nutritionists?name=" + name
+        "/nutritionists?name=" + name
       );
 
       console.log(json.data);
@@ -42,7 +42,7 @@ export function getNutritionistsName(name) {
 
 export function getDetail(id) {
   return async (dispatch) => {
-    var json = await axios.get("http://localhost:3001/nutritionists/searchBy?id=" + id);
+    var json = await axios.get("/nutritionists/searchBy?id=" + id);
 
     return dispatch({
       type: "GET_DETAIL",
@@ -53,7 +53,7 @@ export function getDetail(id) {
 
 export const addUser = (dataAct) => {
   return async function (dispatch) {
-    return axios.post(`http://localhost:3001/user`, dataAct).then((res) => {
+    return axios.post(`/user`, dataAct).then((res) => {
       dispatch({ type: "POST_USER", payload: res.data });
     });
   };
@@ -61,7 +61,7 @@ export const addUser = (dataAct) => {
 
 export function getUsers() {
   return async function (dispatch) {
-    var json = await axios.get("http://localhost:3001/users/allUsers");
+    var json = await axios.get("/users/allUsers");
     return dispatch({
       type: "GET_USERS",
       payload: json.data,
@@ -71,7 +71,7 @@ export function getUsers() {
 
 export function getUsersId(id) {
   return async function (dispatch) {
-    var json = await axios.get("http://localhost:3001/users/" + id);
+    var json = await axios.get("/users/" + id);
 
     dispatch({
       type: "GET_USERS_DETAIL",
@@ -83,7 +83,7 @@ export function getUsersId(id) {
 export const getAppointments = (id) => {
   return async function (dispatch) {
     const response = await axios.get(
-      `http://localhost:3001/users/${id}`
+      `/users/${id}`
     );
     return dispatch({
       type: "GET_APPOINTMENTS",
@@ -95,7 +95,7 @@ export const getAppointments = (id) => {
 export const getSchedules = () => {
   return async function (dispatch) {
     const response = await axios.get(
-      "http://localhost:3001/nutritionists/horariosCombinados"
+      "/nutritionists/horariosCombinados"
     );
     return dispatch({
       type: "GET_SCHEDULES",
@@ -107,7 +107,7 @@ export const getSchedules = () => {
 export const getNutritionistSchedule = (id) => {
   return async function (dispatch) {
     const response = await axios.get(
-      `http://localhost:3001/nutritionists/searchBy?id=${id}`
+      `/nutritionists/searchBy?id=${id}`
     );
     return dispatch({
       type: "GET_NUTRICIONIST_SCHEDULES",
@@ -119,7 +119,7 @@ export const getNutritionistSchedule = (id) => {
 export const getNutritionist = (id) => {
   return async function (dispatch) {
     const response = await axios.get(
-      `http://localhost:3001/nutritionists/searchBy?id=${id}`
+      `/nutritionists/searchBy?id=${id}`
     );
     return dispatch({
       type: "GET_NUTRICIONIST_NAME",
@@ -133,8 +133,8 @@ export const login = (credentials, errorHandler) => {
     try {
       const response =
       credentials.isNutritionist === true
-        ? await axios.post("http://localhost:3001/nutritionists/login", credentials) //colocar ruta de logueo nutricionista.
-        : await axios.post("http://localhost:3001/users/login", credentials);
+        ? await axios.post("/nutritionists/login", credentials) //colocar ruta de logueo nutricionista.
+        : await axios.post("/users/login", credentials);
   
       handleUserLogin(response.data.token)
   
@@ -153,8 +153,8 @@ export const loginOauth = (userCredentials, errorHandler) => {
     try {
       const response = 
       userCredentials.isNutritionist === true
-        ? await axios.post("http://localhost:3001/nutritionists/login/oauth2.0", { tokenId: userCredentials.tokenId})
-        : await axios.post("http://localhost:3001/users/login/oauth2.0", { tokenId: userCredentials.tokenId});
+        ? await axios.post("/nutritionists/login/oauth2.0", { tokenId: userCredentials.tokenId})
+        : await axios.post("/users/login/oauth2.0", { tokenId: userCredentials.tokenId});
 
         handleUserLogin(response.data.token)
 
@@ -179,7 +179,7 @@ export const signup = (userInformation, errorHandler) => {
   return async function(dispatch) {
     try {
       const response = await axios.post(
-        "http://localhost:3001/users/signup",
+        "/users/signup",
         userInformation
       );
   
@@ -198,7 +198,7 @@ export const signupOauth2 = (userGoogleToken, errorHandler) => {
   return async function(dispatch) {
     try {
       const response = await axios.post(
-        "http://localhost:3001/users/signup/oauth2.0",
+        "/users/signup/oauth2.0",
         { tokenId: userGoogleToken}
       )
         
@@ -216,7 +216,7 @@ export const signupOauth2 = (userGoogleToken, errorHandler) => {
 
 export const postAppointment = (dataAppointment) => {
   return async function (dispatch) {
-    return axios.post(`http://localhost:3001/events`, dataAppointment).then((res) => {
+    return axios.post(`/events`, dataAppointment).then((res) => {
       dispatch({ 
         type: "POST_USER", 
         payload: res.data 
@@ -236,7 +236,7 @@ export const saveInfoEvent = (info) => {
 export const allEvents = (id) => {
   return async function (dispatch) {
     try {
-      const { data } = await axios.get("http://localhost:3001/events");
+      const { data } = await axios.get("/events");
       const filter = data.filter(e => e.NutritionistId == id);
       return dispatch({
         type: "ALL_EVENTS",
@@ -251,7 +251,7 @@ export const allEvents = (id) => {
 export const userNutriInfo = (id) => {
   return async function (dispatch) {
     try {
-      const { data } = await axios.get(`http://localhost:3001/users/${id}`);
+      const { data } = await axios.get(`/users/${id}`);
       return dispatch({
         type: "USER_INFO",
         payload: data

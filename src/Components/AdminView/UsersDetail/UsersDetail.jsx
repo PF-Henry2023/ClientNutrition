@@ -13,7 +13,7 @@ export default function UsersDetail() {
 
   useEffect(() => {
     if (!users)
-      fetch(`http://localhost:3001/users/${id}`)
+      fetch(`/users/${id}`)
         .then((response) => response.json())
         .then((data) => { if (data.name) setUsers(data);});
     

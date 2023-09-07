@@ -21,7 +21,7 @@ const NutriData = () => {
   })
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/nutritionists/searchBy?id=${id}`)
+    axios.get(`/nutritionists/searchBy?id=${id}`)
     .then(({ data }) => {
       const { name, lastName, email, id } = data;
       setUserInfo({...userInformation, name, lastName, email})
@@ -39,7 +39,7 @@ const NutriData = () => {
   const submitHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put(`http://localhost:3001/nutritionists/update/${id}`, {name: userInformation.name, lastName: userInformation.lastName, email: userInformation.email, password: userInformation.password});
+      const { data } = await axios.put(`/nutritionists/update/${id}`, {name: userInformation.name, lastName: userInformation.lastName, email: userInformation.email, password: userInformation.password});
       return window.alert("Actualizado con exito")
     } catch (error) {
       return window.alert("Hubo un problema:", error)

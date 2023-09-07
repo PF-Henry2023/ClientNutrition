@@ -23,7 +23,7 @@ export default function   Create() {
   useEffect(() => {
     const id = window.localStorage.getItem("id")
     if (!db) {
-      fetch(`http://localhost:3001/users/${id}`) // Ver la posibilidad de una ruta especifica
+      fetch(`/users/${id}`) // Ver la posibilidad de una ruta especifica
       .then((response) => response.json())
       .then((data) => {
         setDB(data)
@@ -83,7 +83,7 @@ export default function   Create() {
             userInformation.password !== db.password)
         ) {
 
-          axios.put('http://localhost:3001/users/update', { name: userInformation.name, lastName: userInformation.lastName, email: userInformation.email, password: userInformation.password  }, requestOptions).catch((error) => {console.log(error)})
+          axios.put('/users/update', { name: userInformation.name, lastName: userInformation.lastName, email: userInformation.email, password: userInformation.password  }, requestOptions).catch((error) => {console.log(error)})
           setInfo({ ...userInformation, password: "", passwordConfirmed: "" });
           
           alert("La información fue actualizada de manera exitosa!");
