@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import style from "./NutriData.module.css";
 import Form from "react-bootstrap/Form";
+import axios from "axios";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { getDetail } from "../../../redux/actions/actions";
+import Cloudinary from "../../Cloudinary/Cloudinary";
 
 const NutriData = () => {
   const dispatch = useDispatch();
@@ -19,15 +21,20 @@ const NutriData = () => {
   })
 
   useEffect(() => {
-    if (users.length < 1) dispatch(getDetail());
     axios.get(`http://localhost:3001/nutritionists/searchBy?id=${id}`)
     .then(({ data }) => {
       const { name, lastName, email, id } = data;
       setUserInfo({...userInformation, name, lastName, email})
     })
+    
   }, [dispatch, users]);
 
   console.log(users[0]);
+  const handleInputChange = (e) => {
+    // Actualiza el estado cuando se cambia un campo de entrada
+    const { name, value } = e.target;
+    setUserInfo({ ...userInformation, [name]: value });
+  }
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -37,6 +44,8 @@ const NutriData = () => {
     } catch (error) {
       return window.alert("Hubo un problema:", error)
     }
+  }
+
   console.log(id);
   return (
     <Container className={style.container}>

@@ -11,11 +11,13 @@ import dayjs from "dayjs";
 export default function UserProfile() {
   const [apoFuture, setApoFuture] = useState([]);
   const [apoBefore, setApoBefore] = useState([]);
+  //const appointments = useSelector((e) => e.appointments);
+  const appointments =  JSON.parse(localStorage.getItem("appointmentslocal"));
   const dispatch = useDispatch();
-  const appointments = useSelector((e) => e.appointments);
   const nutriInfo = useSelector((e) => e.nutriInfo);
   useEffect(() => {
     const userId = window.localStorage.getItem("id");
+    console.log(userId);
     dispatch(getAppointments(userId));
     const nutriId = window.localStorage.getItem("nutriId");
     if (nutriId) {
@@ -27,36 +29,33 @@ export default function UserProfile() {
         // Parse the appointment date and time using dayjs
         const appointmentDateTime = dayjs(
           `${appointment.date} ${appointment.hour}:00`
-        );
-        // Compare the appointment date and time to the current date and time
-        return appointmentDateTime.isBefore(currentDateTime);
+          );
+          // Compare the appointment date and time to the current date and time
+        return appointmentDateTime.isSameOrBefore(currentDateTime);
       });
-
+      
       return filteredAppointments;
     };
-
+    
     const filterAppointmentsInFuture = (appointment) => {
       const currentDateTime = dayjs(); // Get the current date and time
       const filteredAppointments = appointments.filter((appointment) => {
         // Parse the appointment date and time using dayjs
         const appointmentDateTime = dayjs(
           `${appointment.date} ${appointment.hour}:00`
-        );
-        // Compare the appointment date and time to the current date and time
-        return appointmentDateTime.isAfter(currentDateTime);
-      });
-
-      return filteredAppointments;
-    };
-    const apoF = filterAppointmentsInFuture(appointments);
-    const apoB = filterAppointmentsBeforeCurrentTime(appointments);
-    setApoFuture([...apoF]);
-    setApoBefore([...apoB]);
-  }, []);
-
-  console.log(apoFuture);
-  console.log(apoBefore);
-
+          );
+          // Compare the appointment date and time to the current date and time
+          return appointmentDateTime.isAfter(currentDateTime);
+        });
+        
+        return filteredAppointments;
+      };
+      const apoF = filterAppointmentsInFuture(appointments);
+      const apoB = filterAppointmentsBeforeCurrentTime(appointments);
+      setApoFuture([...apoF]);
+      setApoBefore([...apoB]);
+    }, []);
+    console.log("citas", appointments);
   return (
     <Row>
       <Col>
@@ -68,12 +67,12 @@ export default function UserProfile() {
         <br />
         <br />
         <h2>Próximas</h2>
-        {appointments.length === 0 ? (
+        {appointments.length === 0 && appointments.length === 0 ? (
           <Alert key="secondary" variant="secondary">
             No hay citas agendadas
           </Alert>
         ) : (
-          apoFuture.map((e) => (
+          apoFuture && apoFuture.map((e) => (
             <Alert>
               Descripcion: {e.purpose} Fecha: {e.date} Hora: {e.hour}{" "}
               Nutricionista: {nutriInfo.name} {nutriInfo.lastName}
@@ -82,12 +81,12 @@ export default function UserProfile() {
         )}
         <h2>Pasadas</h2>
         <Card>
-          {appointments.length === 0 ? (
+          {appointments.length === 0 && appointments.length === 0 ? (
             <Alert key="secondary" variant="secondary">
               Todavia no agendaste citas
             </Alert>
           ) : (
-            apoBefore.map((e) => (
+            apoBefore && apoBefore?.map((e) => (
               <Alert>
                 Descripcion: {e.purpose} Fecha: {e.date} Nutricionista:{" "}
                 {nutriInfo.name} {nutriInfo.lastName}

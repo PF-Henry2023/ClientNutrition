@@ -44,7 +44,7 @@ const Calendar = () => {
     if(!appointments.length){
       dispatch(getSchedules())
     } else {
-      const id = window.localStorage.getItem("idNutri");
+      const id = window.localStorage.getItem("nutriId");
       dispatch(getNutritionistSchedule(id))
     }
   },[]);
@@ -53,15 +53,15 @@ const Calendar = () => {
     const day = dayjs(start).day();
     const date = dayjs(start).date();
     const hour = dayjs(start).hour();
-    const month = dayjs(start).month();
+    const month = dayjs(start).month() + 1;
     const year = dayjs(start).year();
-
+    const currentDate1 = dayjs(start);
     // Horarios ocupados
 
     const currentDate = dayjs(start).format('YYYY-MM-DD');
 
     // Horarios pasados
-
+    
     const currentDateL = dayjs();
     const selectedDate = dayjs(start);
     
@@ -69,7 +69,7 @@ const Calendar = () => {
     window.localStorage.setItem('infoEvent', JSON.stringify(info));
     const infoAppointment = JSON.parse(localStorage.getItem('infoEvent'));
     console.log(infoAppointment);
-  
+    console.log(month);
     let isHourAvailable = false;
     let isCustomSlotAvailable = true; 
   
