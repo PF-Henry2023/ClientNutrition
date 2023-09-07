@@ -1,7 +1,9 @@
 import style from "../AccordionHome/AccordionHome.module.css";
 import Accordion from 'react-bootstrap/Accordion';
+import ZUCCA from "../../assets/ZUCCA.png"
 
 export default function AccordionHome() {
+
   return (
     <div className={style.divConAlturaViewport} id="como-trabajamos">
     <div className={style.text}> Cómo trabajamos? </div>
@@ -43,6 +45,7 @@ export default function AccordionHome() {
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>
-    </div>
+    <img src={ZUCCA} alt="Zucca" className={style.centeredImage}/>
+       </div>
   );
 }
