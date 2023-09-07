@@ -20,7 +20,7 @@ function UserTable() {
 
   useEffect(() => {
     // Cargar nutricionistas activos e inactivos al montar el componente
-    fetch(`http://localhost:3001/users/allUsers`)
+    fetch(`/users/allUsers`)
       .then((response) => response.json())
       .then((data) => {
         // Dividir los nutricionistas en listas activas e inactivas
@@ -37,12 +37,12 @@ function UserTable() {
 
   const activateUser = async (id) => {
     try {
-      const currentUser = await axios.get("http://localhost:3001/users/" + id);
+      const currentUser = await axios.get("/users/" + id);
       const userState = currentUser.data.isActive;
       console.log("user state", userState);
 
       if (!userState) {
-        await axios.put(`http://localhost:3001/users/activate/${id}`);
+        await axios.put(`/users/activate/${id}`);
         // Actualizar las listas de nutricionistas
         const updatedInactiveUser = inactiveUsers.filter(
           (user) => user.id !== id
@@ -71,12 +71,12 @@ function UserTable() {
     try {
       // Eliminar el usuario
 
-      const currentUser = await axios.get("http://localhost:3001/users/" + id);
+      const currentUser = await axios.get("/users/" + id);
       const userState = currentUser.data.isActive;
       console.log("user state", userState);
 
       if (userState) {
-        await axios.delete(`http://localhost:3001/users/delete/${id}`, requestOptions);
+        await axios.delete(`/users/delete/${id}`, requestOptions);
         // Actualizar las listas de usuarios
         const updatedActiveUser = activeUsers.filter((user) => user.id !== id);
         const userToBlock = activeUsers.find((user) => user.id === id);

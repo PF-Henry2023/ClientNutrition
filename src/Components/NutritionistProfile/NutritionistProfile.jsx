@@ -22,7 +22,7 @@ const NutritionistProfile = () => {
     console.log("id:", id);
     (async () => {
       try {
-        const { data } = await axios.get("http://localhost:3001/events");
+        const { data } = await axios.get("/events");
         const filter = data.filter(e => e.NutritionistId == id);
         const userIds = filterUniqueUserIds(filter);
         console.log("estos son las ids:", userIds);

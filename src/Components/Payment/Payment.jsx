@@ -8,7 +8,7 @@ const StripePayment = (props) => {
         const stripe = await stripePromise;
 
         // Realizar una petición al backend para crear una sesión de pago
-        const response = await fetch("http://localhost:3001/create-checkout-session", {
+        const response = await fetch("/create-checkout-session", {
             method: "POST",
         });
 
