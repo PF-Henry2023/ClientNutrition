@@ -19,11 +19,9 @@ import NutriForm from "./Components/AdminView/NutriForm/NutriForm";
 import Success from "./Components/Payment/Success";
 import Cancel from "./Components/Payment/Cancel";
 import Protected from './Components/Protected/Protected'
-import Cloudinary from './Components/Cloudinary/Cloudinary'
 
-
-const URL = "http://localhost:5173/";
-axios.defaults.baseURL = URL;
+// const URL = "http://localhost:5173/";
+// axios.defaults.baseURL = URL;
 
 function App() {
 
@@ -66,8 +64,6 @@ function App() {
         ></Route>
         <Route path="/success" element={<Success />}></Route>
         <Route path="/cancel" element={<Cancel />}></Route>
-        {/* ruta para probar el cloudinary:
-        <Route path="/cloudinary" element={<Cloudinary />}></Route> */}
 
       </Routes>
     </div>
